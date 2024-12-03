@@ -27,9 +27,9 @@ const items: MenuProps['items'] = [
     type: 'group', // Non-clickable heading
     children: [
       {
-        key: 'dashboard',
+        key: 'trips',
         icon: <DashboardOutlined />,
-        label: <Link to='/trips'>Dashboard</Link> // Link added
+        label: <Link to='/trips'>Trips</Link> // Link added
       }
     ]
   },
@@ -42,6 +42,29 @@ const items: MenuProps['items'] = [
         key: 'widgets-item',
         icon: <AppstoreOutlined />,
         label: <Link to='/widgets'>Widgets</Link> // Link added
+      }
+    ]
+  },
+  {
+    label: 'Navigation Three - Submenu',
+    key: 'SubMenu',
+    icon: <SettingOutlined />,
+    children: [
+      {
+        type: 'group',
+        label: 'Item 1',
+        children: [
+          { label: 'Option 1', key: 'setting:1' },
+          { label: 'Option 2', key: 'setting:2' }
+        ]
+      },
+      {
+        type: 'group',
+        label: 'Item 2',
+        children: [
+          { label: 'Option 3', key: 'setting:3' },
+          { label: 'Option 4', key: 'setting:4' }
+        ]
       }
     ]
   },

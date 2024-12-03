@@ -2,15 +2,22 @@ import React, { useState } from 'react'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Breadcrumb, Button, Layout, theme } from 'antd'
 import Sidebar from '../../layout/Sidebar'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
+import { routesConfig } from '../../useRouter'
 
 const { Header, Content, Footer } = Layout
 
 const PrivateLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false)
   const {
-    token: { colorBgContainer, borderRadiusLG }
+    token: { colorBgContainer }
   } = theme.useToken()
+
+  const location = useLocation()
+  const childrenOfRootPath = routesConfig[0]?.children?.map((child) => child.path) || []
+  const isChildRoute = childrenOfRootPath.some((path) => location.pathname.startsWith(path))
+
+  const breadcrumbItems = [{ title: 'User' }, { title: 'Bill' }]
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -29,21 +36,16 @@ const PrivateLayout: React.FC = () => {
           />
         </Header>
         <Content style={{ margin: '0 16px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
+          <Breadcrumb style={{ margin: '16px 0' }} items={breadcrumbItems} />
           <div
             style={{
               padding: 24,
               minHeight: 360,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG
+              background: colorBgContainer
             }}
           >
-            Bill is a cat.
+            {isChildRoute ? <Outlet /> : <p>Private Layout</p>}
           </div>
-          <Outlet />
         </Content>
         <Footer style={{ textAlign: 'center' }}>VeXeRe CMS ©{new Date().getFullYear()}</Footer>
       </Layout>

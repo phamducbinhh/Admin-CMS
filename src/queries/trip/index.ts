@@ -13,7 +13,7 @@ export const useQueryTrips = (options?: Omit<UseQueryOptions<any>, 'queryKey' | 
       const response = await tripsApiRequest.GetTrips({ token })
       if (response.status === HttpStatusCode.Ok) {
         // console.log('response', response)
-        return response
+        return response.data
       }
     }
   })
