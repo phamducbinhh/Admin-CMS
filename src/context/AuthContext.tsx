@@ -1,4 +1,5 @@
-import { ReactNode, createContext, useContext, useState } from 'react'
+import { ReactNode, createContext, useContext, useLayoutEffect, useState } from 'react'
+import { useCookieServices } from '../utils/cookies/cookieServices'
 
 type AuthContextType = {
   isAuthenticated: boolean
@@ -9,11 +10,18 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+  const token = useCookieServices.getCookie('token')
 
   const value: AuthContextType = {
     isAuthenticated,
     setIsAuthenticated
   }
+
+  useLayoutEffect(() => {
+    if (token) {
+      setIsAuthenticated(true)
+    }
+  }, [token])
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

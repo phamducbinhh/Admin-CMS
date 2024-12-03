@@ -1,7 +1,7 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Form, Input } from 'antd'
 
-const LoginForm = ({ onFinish, styles }: any) => (
+const LoginForm = ({ onFinish, styles, loading }: any) => (
   <Form
     name='normal_login'
     initialValues={{ remember: true }}
@@ -33,7 +33,7 @@ const LoginForm = ({ onFinish, styles }: any) => (
       <Input.Password prefix={<LockOutlined />} type='password' placeholder='Mật khẩu' />
     </Form.Item>
     <Form.Item>
-      <Form.Item name='remember' valuePropName='checked' noStyle>
+      <Form.Item valuePropName='checked' noStyle>
         <Checkbox>Nhớ đăng nhập</Checkbox>
       </Form.Item>
       <a style={styles.forgotPassword} href=''>
@@ -41,7 +41,7 @@ const LoginForm = ({ onFinish, styles }: any) => (
       </a>
     </Form.Item>
     <Form.Item style={{ marginBottom: '0px' }}>
-      <Button block type='primary' htmlType='submit'>
+      <Button block type='primary' htmlType='submit' loading={loading}>
         Đăng nhập
       </Button>
     </Form.Item>
