@@ -1,4 +1,6 @@
-import { ReactNode, createContext, useContext, useState } from 'react'
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
+import { useLocalStorage } from '../utils/localStorage/localStorageService'
+import { useNavigate } from 'react-router-dom'
 
 type AuthContextType = {
   isAuthenticated: boolean
@@ -9,11 +11,21 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+  const token = useLocalStorage.getLocalStorageData('token')
+  const navigate = useNavigate()
 
   const value: AuthContextType = {
     isAuthenticated,
     setIsAuthenticated
   }
+
+  useEffect(() => {
+    if (token) {
+      setIsAuthenticated(true)
+    } else {
+      navigate('/login') // Redirect to the login page if no token
+    }
+  }, [token, navigate])
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

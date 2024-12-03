@@ -1,3 +1,9 @@
+import { useQueryTrips } from '../../../queries/trip'
+
 export default function TripsPages(): JSX.Element {
-  return <div>Trips Page</div>
+  const { data } = useQueryTrips()
+
+  console.log(data)
+
+  return <div>Trips Pages</div>
 }
