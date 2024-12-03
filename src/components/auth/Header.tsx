@@ -10,8 +10,8 @@ const Header = ({ styles }: any) => (
       <path d='M10.0643 9.6001H14.8643V14.4001H10.0643V9.6001Z' fill='white' />
       <path d='M4.06427 13.2001H11.2643V20.4001H4.06427V13.2001Z' fill='white' />
     </svg>
-    <Title style={styles.title}>Sign in</Title>
-    <Text style={styles.text}>Welcome back to AntBlocks UI! Please enter your details below to sign in.</Text>
+    <Title style={styles.title}>Đăng nhập</Title>
+    <Text style={styles.text}>Vui lòng nhập thông tin chi tiết của bạn bên dưới để đăng nhập.</Text>
   </div>
 )
 

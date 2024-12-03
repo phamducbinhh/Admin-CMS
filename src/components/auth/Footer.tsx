@@ -4,7 +4,7 @@ const { Text, Link } = Typography
 
 const Footer = ({ styles }: any) => (
   <div style={styles.footer}>
-    <Text style={styles.text}>Don't have an account?</Text> <Link href=''>Sign up now</Link>
+    <Text style={styles.text}>Bạn đã có tài khoản?</Text> <Link href=''>Đăng nhập ngay</Link>
   </div>
 )
 

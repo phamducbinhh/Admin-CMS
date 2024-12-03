@@ -1,5 +1,5 @@
+import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Form, Input } from 'antd'
-import { LockOutlined, MailOutlined } from '@ant-design/icons'
 
 const LoginForm = ({ onFinish, styles }: any) => (
   <Form
@@ -10,16 +10,16 @@ const LoginForm = ({ onFinish, styles }: any) => (
     requiredMark='optional'
   >
     <Form.Item
-      name='email'
+      name='username'
       rules={[
         {
-          type: 'email',
+          type: 'string',
           required: true,
-          message: 'Please input your Email!'
+          message: 'Please input your username!'
         }
       ]}
     >
-      <Input prefix={<MailOutlined />} placeholder='Email' />
+      <Input prefix={<UserOutlined />} placeholder='Tài khoản' />
     </Form.Item>
     <Form.Item
       name='password'
@@ -30,19 +30,19 @@ const LoginForm = ({ onFinish, styles }: any) => (
         }
       ]}
     >
-      <Input.Password prefix={<LockOutlined />} type='password' placeholder='Password' />
+      <Input.Password prefix={<LockOutlined />} type='password' placeholder='Mật khẩu' />
     </Form.Item>
     <Form.Item>
       <Form.Item name='remember' valuePropName='checked' noStyle>
-        <Checkbox>Remember me</Checkbox>
+        <Checkbox>Nhớ đăng nhập</Checkbox>
       </Form.Item>
       <a style={styles.forgotPassword} href=''>
-        Forgot password?
+        Quên mật khẩu?
       </a>
     </Form.Item>
     <Form.Item style={{ marginBottom: '0px' }}>
       <Button block type='primary' htmlType='submit'>
-        Log in
+        Đăng nhập
       </Button>
     </Form.Item>
   </Form>

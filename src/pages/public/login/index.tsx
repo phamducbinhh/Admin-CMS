@@ -1,8 +1,8 @@
-import { theme, Grid } from 'antd'
-import getStyles from '../../../components/auth/styles'
+import { Card, Grid, theme } from 'antd'
+import Footer from '../../../components/auth/Footer'
 import Header from '../../../components/auth/Header'
 import LoginForm from '../../../components/auth/LoginForm'
-import Footer from '../../../components/auth/Footer'
+import getStyles from '../../../components/auth/styles'
 
 const { useToken } = theme
 const { useBreakpoint } = Grid
@@ -19,9 +19,11 @@ export default function LoginPage() {
   return (
     <section style={styles.section}>
       <div style={styles.container}>
-        <Header styles={styles} />
-        <LoginForm onFinish={onFinish} styles={styles} />
-        <Footer styles={styles} />
+        <Card style={styles.card}>
+          <Header styles={styles} />
+          <LoginForm onFinish={onFinish} styles={styles} />
+          <Footer styles={styles} />
+        </Card>
       </div>
     </section>
   )

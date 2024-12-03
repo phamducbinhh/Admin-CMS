@@ -27,6 +27,10 @@ const getStyles = (token: any, screens: any) => ({
   },
   title: {
     fontSize: screens.md ? token.fontSizeHeading2 : token.fontSizeHeading3
+  },
+  card: {
+    width: '100%',
+    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)'
   }
 })
 
