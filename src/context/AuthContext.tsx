@@ -23,7 +23,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     if (token) {
       setIsAuthenticated(true)
     } else {
-      navigate('/login') // Redirect to the login page if no token
+      navigate('/login')
     }
   }, [token, navigate])
 

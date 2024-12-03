@@ -6,8 +6,8 @@ import { useQueryTrips } from '../../../queries/trip'
 interface DataType {
   key: string
   name: string
-  description: string,
-  price: number,
+  description: string
+  price: number
   tags: string[]
 }
 
@@ -31,7 +31,7 @@ const columns: TableProps<DataType>['columns'] = [
   {
     title: 'Action',
     key: 'action',
-    render: (_, record) => (
+    render: () => (
       <Space size='middle'>
         <a>Edit</a>
         <a>Delete</a>
@@ -43,11 +43,8 @@ const columns: TableProps<DataType>['columns'] = [
 const TripPage: React.FC = () => {
   const { data } = useQueryTrips()
 
-  console.log(data);
-  
-
   // Add `key` to each record if not present
-  const dataSource = data?.map((item) => ({
+  const dataSource = data?.map((item: any) => ({
     ...item,
     key: item.id || item.someUniqueField
   }))
