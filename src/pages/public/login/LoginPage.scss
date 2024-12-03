@@ -1,0 +1,20 @@
+/* Tùy chỉnh màu và font-size cho placeholder */
+.custom-input::placeholder {
+  color: rgba(255, 255, 255, 0.6); /* Màu placeholder */
+  font-size: 12px; /* Kích thước font placeholder */
+}
+
+/* Tùy chỉnh các thành phần khác nếu cần */
+.login-card {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  max-width: 460px;
+  width: 100%;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #6259ca;
+}
