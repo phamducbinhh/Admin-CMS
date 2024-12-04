@@ -1,6 +1,7 @@
 import type { TableProps } from 'antd'
 import { Button, Popconfirm, Space, Table } from 'antd'
 import React from 'react'
+import { ActionType, ActionTypeDescriptions } from '../../../enums/enum'
 import { useQueryRequest } from '../../../queries/request'
 
 interface DataType {
@@ -42,7 +43,13 @@ const columns: TableProps<DataType>['columns'] = [
     title: 'Type',
     dataIndex: 'typeId',
     key: 'typeId',
-    width: '20%'
+    width: '20%',
+    render: (type: ActionType) => <span>{ActionTypeDescriptions[type]}</span>,
+    filters: Object.entries(ActionTypeDescriptions).map(([key, value]) => ({
+      text: value,
+      value: Number(key)
+    })),
+    onFilter: (value, record) => record.typeId === value
   },
   {
     title: 'Action',
