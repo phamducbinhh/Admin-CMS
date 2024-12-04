@@ -54,14 +54,19 @@ const columns: TableProps<DataType>['columns'] = [
   {
     title: 'Action',
     key: 'action',
-    render: () => (
+    render: (_, record) => (
       <Space size='middle'>
         <Button type='primary'>Show</Button>
-        <Popconfirm title='Are you sure to delete this item?' okText='Yes' cancelText='No'>
+        <Popconfirm title='Bạn có chắc chắn muốn xóa yêu cầu này không?' okText='Yes' cancelText='No'>
           <Button type='primary' danger>
             Delete
           </Button>
         </Popconfirm>
+        {record.typeId === 3 && (
+          <Popconfirm title='Bạn có chắc chắn muốn hủy yêu cầu này không?' okText='Xác nhận' cancelText='Hủy'>
+            <Button type='default'>Cancel</Button>
+          </Popconfirm>
+        )}
       </Space>
     )
   }
