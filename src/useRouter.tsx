@@ -2,6 +2,7 @@ import { useRoutes } from 'react-router-dom'
 import PrivateLayout from './pages/private'
 import CostTypePage from './pages/private/CostType'
 import DriverPage from './pages/private/Driver'
+import FixedCostPage from './pages/private/FixedCost'
 import PromotionPage from './pages/private/Promotion'
 import TripsPages from './pages/private/trips'
 import UserProfilePage from './pages/private/UserProfile'
@@ -32,6 +33,10 @@ export const routesConfig = [
       {
         path: '/cost-type',
         element: <CostTypePage />
+      },
+      {
+        path: '/fixed-cost',
+        element: <FixedCostPage />
       },
       {
         path: '/user-profile',

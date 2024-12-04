@@ -8,6 +8,7 @@ import {
   GiftOutlined,
   SettingOutlined,
   ToolOutlined,
+  TruckFilled,
   UserOutlined
 } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
@@ -54,6 +55,11 @@ const items: MenuProps['items'] = [
         key: 'cost_type',
         icon: <EuroCircleFilled />,
         label: <Link to='/cost-type'>Cost Type</Link> // Link added
+      },
+      {
+        key: 'fixed-cost',
+        icon: <TruckFilled />,
+        label: <Link to='/fixed-cost'>Fixed Cost</Link> // Link added
       }
     ]
   },
