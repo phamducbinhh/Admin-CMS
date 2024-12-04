@@ -5,6 +5,7 @@ import PrivateLayout from './pages/private'
 import UserProfilePage from './pages/private/UserProfile'
 import VehiclesPage from './pages/private/Vehicles'
 import PromotionPage from './pages/private/Promotion'
+import DriverPage from './pages/private/Driver'
 
 export const routesConfig = [
   {
@@ -22,6 +23,10 @@ export const routesConfig = [
       {
         path: '/promotion',
         element: <PromotionPage />
+      },
+      {
+        path: '/driver',
+        element: <DriverPage />
       },
       {
         path: '/user-profile',

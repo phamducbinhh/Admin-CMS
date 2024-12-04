@@ -1,35 +1,38 @@
-import type { TableProps } from 'antd'
-import { Button, Popconfirm, Space, Table } from 'antd'
+import { Avatar, Button, Popconfirm, Space, Table, TableProps } from 'antd'
 import React from 'react'
-import { useQueryTrips } from '../../../queries/trip'
+import { useQueryDriver } from '../../../queries/driver'
 
 interface DataType {
   key: string
   name: string
-  startTime: number
-  price: number
+  numberPhone: string
+  avatar?: string
+  discount: number
   status: boolean
 }
 
 const columns: TableProps<DataType>['columns'] = [
   {
-    title: 'Tên chuyến đi',
+    title: 'Tên tài xế',
     dataIndex: 'name',
     key: 'name',
     render: (text) => <a>{text}</a>,
+    sorter: (a, b) => a.name.localeCompare(b.name),
     width: '25%'
   },
   {
-    title: 'Thời gian khởi hành',
-    dataIndex: 'startTime',
-    key: 'startTime',
+    title: 'Số điện thoại',
+    dataIndex: 'numberPhone',
+    key: 'numberPhone',
     width: '25%'
   },
   {
-    title: 'Giá vé',
-    dataIndex: 'price',
-    key: 'price',
-    sorter: (a, b) => a.price - b.price,
+    title: 'Avatar',
+    dataIndex: 'avatar',
+    key: 'avatar',
+    render: () => (
+      <Avatar src={'https://statics.oeg.vn/storage/DEFAULT%20AVATAR%20PROFILE/akirov6.webp'} alt='Avatar' />
+    ),
     width: '20%'
   },
   {
@@ -55,10 +58,9 @@ const columns: TableProps<DataType>['columns'] = [
   }
 ]
 
-const TripPage: React.FC = () => {
-  const { data } = useQueryTrips()
+const DriverPage: React.FC = () => {
+  const { data } = useQueryDriver()
 
-  // Add `key` to each record if not present
   const dataSource = data?.map((item: any) => ({
     ...item,
     key: item.id || item.someUniqueField
@@ -66,4 +68,5 @@ const TripPage: React.FC = () => {
 
   return <Table<DataType> columns={columns} dataSource={dataSource} />
 }
-export default TripPage
+
+export default DriverPage
