@@ -5,5 +5,8 @@ export const APP_API_ENDPOINT = Object.freeze({
   TRIPS: {
     GET_TRIPS: '/api/Trip',
     UPDATE_TRI: ({ id }: { id: string | number | null }) => `/api/Trip/updateTrip/${id}`
+  },
+  USER_PROFILE: {
+    GET_DATA: '/api/Auth/userProfile'
   }
 })

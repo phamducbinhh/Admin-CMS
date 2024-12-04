@@ -2,6 +2,7 @@ import { useRoutes } from 'react-router-dom'
 import LoginPage from './pages/public/login'
 import TripsPages from './pages/private/trips'
 import PrivateLayout from './pages/private'
+import UserProfilePage from './pages/private/UserProfile'
 
 export const routesConfig = [
   {
@@ -11,6 +12,10 @@ export const routesConfig = [
       {
         path: '/trips',
         element: <TripsPages />
+      },
+      {
+        path: '/user-profile',
+        element: <UserProfilePage />
       }
     ]
   },
