@@ -3,6 +3,7 @@ import {
   BarChartOutlined,
   CarOutlined,
   DashboardOutlined,
+  EuroCircleFilled,
   FileTextOutlined,
   GiftOutlined,
   SettingOutlined,
@@ -48,6 +49,11 @@ const items: MenuProps['items'] = [
         key: 'driver',
         icon: <UserOutlined />,
         label: <Link to='/driver'>Drivers</Link> // Link added
+      },
+      {
+        key: 'cost_type',
+        icon: <EuroCircleFilled />,
+        label: <Link to='/cost-type'>Cost Type</Link> // Link added
       }
     ]
   },

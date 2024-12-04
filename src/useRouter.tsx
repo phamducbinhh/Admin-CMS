@@ -1,11 +1,12 @@
 import { useRoutes } from 'react-router-dom'
-import LoginPage from './pages/public/login'
-import TripsPages from './pages/private/trips'
 import PrivateLayout from './pages/private'
+import CostTypePage from './pages/private/CostType'
+import DriverPage from './pages/private/Driver'
+import PromotionPage from './pages/private/Promotion'
+import TripsPages from './pages/private/trips'
 import UserProfilePage from './pages/private/UserProfile'
 import VehiclesPage from './pages/private/Vehicles'
-import PromotionPage from './pages/private/Promotion'
-import DriverPage from './pages/private/Driver'
+import LoginPage from './pages/public/login'
 
 export const routesConfig = [
   {
@@ -27,6 +28,10 @@ export const routesConfig = [
       {
         path: '/driver',
         element: <DriverPage />
+      },
+      {
+        path: '/cost-type',
+        element: <CostTypePage />
       },
       {
         path: '/user-profile',
