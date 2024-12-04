@@ -16,14 +16,14 @@ const columns: TableProps<DataType>['columns'] = [
     dataIndex: 'codePromotion',
     key: 'codePromotion',
     sorter: (a, b) => a.codePromotion.localeCompare(b.codePromotion),
-    width: '20%'
+    width: '25%'
   },
   {
     title: 'Mô tả',
     dataIndex: 'description',
     key: 'description',
     render: (text) => <a>{text}</a>,
-    width: '20%'
+    width: '25%'
   },
   {
     title: 'Giá trị',
