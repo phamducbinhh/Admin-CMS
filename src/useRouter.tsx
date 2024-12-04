@@ -3,6 +3,7 @@ import LoginPage from './pages/public/login'
 import TripsPages from './pages/private/trips'
 import PrivateLayout from './pages/private'
 import UserProfilePage from './pages/private/UserProfile'
+import VehiclesPage from './pages/private/Vehicles'
 
 export const routesConfig = [
   {
@@ -12,6 +13,10 @@ export const routesConfig = [
       {
         path: '/trips',
         element: <TripsPages />
+      },
+      {
+        path: '/vehicles',
+        element: <VehiclesPage />
       },
       {
         path: '/user-profile',
