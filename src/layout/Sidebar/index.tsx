@@ -4,6 +4,7 @@ import {
   CarOutlined,
   DashboardOutlined,
   FileTextOutlined,
+  GiftOutlined,
   SettingOutlined,
   ToolOutlined
 } from '@ant-design/icons'
@@ -36,6 +37,11 @@ const items: MenuProps['items'] = [
         key: 'vehicles',
         icon: <CarOutlined />,
         label: <Link to='/vehicles'>Vehicles</Link> // Link added
+      },
+      {
+        key: 'promotion',
+        icon: <GiftOutlined />,
+        label: <Link to='/promotion'>Promotions</Link> // Link added
       }
     ]
   },
