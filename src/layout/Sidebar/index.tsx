@@ -3,10 +3,12 @@ import {
   BarChartOutlined,
   CarOutlined,
   DashboardOutlined,
+  EuroCircleFilled,
   FileTextOutlined,
   GiftOutlined,
   SettingOutlined,
   ToolOutlined,
+  TruckFilled,
   UserOutlined
 } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
@@ -48,6 +50,16 @@ const items: MenuProps['items'] = [
         key: 'driver',
         icon: <UserOutlined />,
         label: <Link to='/driver'>Drivers</Link> // Link added
+      },
+      {
+        key: 'cost_type',
+        icon: <EuroCircleFilled />,
+        label: <Link to='/cost-type'>Cost Type</Link> // Link added
+      },
+      {
+        key: 'fixed-cost',
+        icon: <TruckFilled />,
+        label: <Link to='/fixed-cost'>Fixed Cost</Link> // Link added
       }
     ]
   },

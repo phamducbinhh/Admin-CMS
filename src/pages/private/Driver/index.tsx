@@ -33,7 +33,7 @@ const columns: TableProps<DataType>['columns'] = [
     render: () => (
       <Avatar src={'https://statics.oeg.vn/storage/DEFAULT%20AVATAR%20PROFILE/akirov6.webp'} alt='Avatar' />
     ),
-    width: '20%'
+    width: '15%'
   },
   {
     title: 'Trạng thái',
@@ -53,6 +53,7 @@ const columns: TableProps<DataType>['columns'] = [
             Delete
           </Button>
         </Popconfirm>
+        <Button type='default'>Block</Button>
       </Space>
     )
   }
