@@ -6,7 +6,8 @@ import {
   FileTextOutlined,
   GiftOutlined,
   SettingOutlined,
-  ToolOutlined
+  ToolOutlined,
+  UserOutlined
 } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Badge, Layout, Menu } from 'antd'
@@ -42,6 +43,11 @@ const items: MenuProps['items'] = [
         key: 'promotion',
         icon: <GiftOutlined />,
         label: <Link to='/promotion'>Promotions</Link> // Link added
+      },
+      {
+        key: 'driver',
+        icon: <UserOutlined />,
+        label: <Link to='/driver'>Drivers</Link> // Link added
       }
     ]
   },
