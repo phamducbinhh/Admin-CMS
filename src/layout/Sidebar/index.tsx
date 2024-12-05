@@ -196,7 +196,8 @@ const filteredItems = items
 const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
   return (
     <Sider trigger={null} collapsible collapsed={collapsed} width={250}>
-      <div
+      <Link
+        to='/'
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -207,7 +208,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
         }}
       >
         <img src={logo} alt='logo' />
-      </div>
+      </Link>
       <Menu
         mode='inline'
         items={filteredItems}
