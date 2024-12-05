@@ -5,6 +5,7 @@ import DriverPage from './pages/private/Driver'
 import FixedCostPage from './pages/private/FixedCost'
 import PromotionPage from './pages/private/Promotion'
 import RequestPage from './pages/private/Request'
+import ReviewsPage from './pages/private/Reviews'
 import TicketPage from './pages/private/Ticket'
 import TripsPages from './pages/private/trips'
 import UserProfilePage from './pages/private/UserProfile'
@@ -47,6 +48,10 @@ export const routesConfig = [
       {
         path: '/ticket',
         element: <TicketPage />
+      },
+      {
+        path: '/reviews',
+        element: <ReviewsPage />
       },
       {
         path: '/user-profile',

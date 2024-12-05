@@ -47,6 +47,10 @@ export const APP_API_ENDPOINT = Object.freeze({
     DELETE_TICKET: ({ id }: { id: string | number | null }) => `/api/Ticket/deleteTicketTimeOut/${id}`,
     UPDATE_STATUS_TICKET: ({ id }: { id: string | number | null }) => `/api/Ticket/updateStatusticketNotPaid/${id}`
   },
+  REVIEWS: {
+    GET_REVIEW: '/api/Review',
+    DELETE_REVIEWS: ({ id }: { id: string | number | null }) => `/api/Review/DeleteReview/${id}`
+  },
   USER_PROFILE: {
     GET_DATA: '/api/Auth/userProfile'
   }

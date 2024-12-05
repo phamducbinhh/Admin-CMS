@@ -8,6 +8,7 @@ import {
   GiftOutlined,
   SettingOutlined,
   ShoppingFilled,
+  StarFilled,
   SwitcherFilled,
   ToolOutlined,
   TruckFilled,
@@ -72,6 +73,11 @@ const items: MenuProps['items'] = [
         key: 'ticket',
         icon: <SwitcherFilled />,
         label: <Link to='/ticket'>Ticket</Link> // Link added
+      },
+      {
+        key: 'reviews',
+        icon: <StarFilled />,
+        label: <Link to='/reviews'>Reviews</Link> // Link added
       }
     ]
   },
