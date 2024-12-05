@@ -9,7 +9,7 @@ interface DataType {
   id: string | number
   description: string
   note: string
-  userId: string | number
+  userName: number
   typeId?: string | number
 }
 
@@ -21,10 +21,10 @@ const columns: TableProps<DataType>['columns'] = [
     width: '10%'
   },
   {
-    title: 'UserID',
-    dataIndex: 'userId',
-    key: 'userId',
-    width: '10%'
+    title: 'Tên',
+    dataIndex: 'userName',
+    key: 'userName',
+    width: '20%'
   },
   {
     title: 'Mô tả',
