@@ -111,7 +111,11 @@ export const routesConfig = [
       },
       {
         path: '/user-profile',
-        element: <UserProfilePage />
+        element: (
+          <PrivateRoute allowedRoles={['Admin', 'Staff', 'VehicleOwner', 'User']}>
+            <UserProfilePage />
+          </PrivateRoute>
+        )
       }
     ]
   },
