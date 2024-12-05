@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal, Form } from 'antd'
 
-interface ModalFormProps<T> {
+export interface ModalFormProps<T> {
   isVisible: boolean
   onSubmit: (values: T) => void
   initialValues: T | null
@@ -11,6 +11,7 @@ interface ModalFormProps<T> {
     component: React.ReactNode
     rules?: any[]
     description?: string
+    valuePropName?: string // Cho phép undefined
   }[]
 }
 
