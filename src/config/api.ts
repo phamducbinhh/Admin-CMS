@@ -51,6 +51,11 @@ export const APP_API_ENDPOINT = Object.freeze({
     GET_REVIEW: '/api/Review',
     DELETE_REVIEWS: ({ id }: { id: string | number | null }) => `/api/Review/DeleteReview/${id}`
   },
+  ACCOUNT: {
+    GET_ACCOUNT: '/api/Account/listAccount',
+    GET_ROLE: '/api/Account/listRole',
+    GET_ACCOUNT_DETAILS: ({ id }: { id: string | number | null }) => `/api/Account/detailsAccount/${id}`
+  },
   USER_PROFILE: {
     GET_DATA: '/api/Auth/userProfile'
   }
