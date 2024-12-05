@@ -40,6 +40,13 @@ export const APP_API_ENDPOINT = Object.freeze({
     REQUEST_DETAILS: ({ id }: { id: string | number | null }) => `/api/Request/${id}`,
     ACCEPT_CANCLE_REQUEST: ({ id }: { id: string | number | null }) => `/api/Request/acceptCancleTicket/${id}`
   },
+  TICKET: {
+    GET_TICKET: '/api/Ticket',
+    TICKET_DETAILS: ({ id }: { id: string | number | null }) => `/api/Ticket/ticketById/${id}`,
+    TICKET_NOT_PAID: ({ id }: { id: string | number | null }) => `/api/Ticket/tickeNotPaid/${id}`,
+    DELETE_TICKET: ({ id }: { id: string | number | null }) => `/api/Ticket/deleteTicketTimeOut/${id}`,
+    UPDATE_STATUS_TICKET: ({ id }: { id: string | number | null }) => `/api/Ticket/updateStatusticketNotPaid/${id}`
+  },
   USER_PROFILE: {
     GET_DATA: '/api/Auth/userProfile'
   }

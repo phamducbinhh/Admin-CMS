@@ -8,6 +8,7 @@ import {
   GiftOutlined,
   SettingOutlined,
   ShoppingFilled,
+  SwitcherFilled,
   ToolOutlined,
   TruckFilled,
   UserOutlined
@@ -66,6 +67,11 @@ const items: MenuProps['items'] = [
         key: 'request',
         icon: <ShoppingFilled />,
         label: <Link to='/request'>Request</Link> // Link added
+      },
+      {
+        key: 'ticket',
+        icon: <SwitcherFilled />,
+        label: <Link to='/ticket'>Ticket</Link> // Link added
       }
     ]
   },

@@ -5,6 +5,7 @@ import DriverPage from './pages/private/Driver'
 import FixedCostPage from './pages/private/FixedCost'
 import PromotionPage from './pages/private/Promotion'
 import RequestPage from './pages/private/Request'
+import TicketPage from './pages/private/Ticket'
 import TripsPages from './pages/private/trips'
 import UserProfilePage from './pages/private/UserProfile'
 import VehiclesPage from './pages/private/Vehicles'
@@ -42,6 +43,10 @@ export const routesConfig = [
       {
         path: '/request',
         element: <RequestPage />
+      },
+      {
+        path: '/ticket',
+        element: <TicketPage />
       },
       {
         path: '/user-profile',
