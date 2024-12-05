@@ -16,6 +16,10 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ allowedRoles, children }) =
     return <Navigate to='/login' />
   }
 
+  if (token && window.location.pathname === '/login') {
+    return <Navigate to='/' />
+  }
+
   if (!allowedRoles.includes(user.role)) {
     return <Navigate to='/unauthorized' replace />
   }

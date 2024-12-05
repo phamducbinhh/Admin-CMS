@@ -117,7 +117,11 @@ export const routesConfig = [
   },
   {
     path: '/login',
-    element: <LoginPage />
+    element: (
+      <PrivateRoute allowedRoles={[]}>
+        <LoginPage />
+      </PrivateRoute>
+    )
   },
   {
     path: '/unauthorized',
