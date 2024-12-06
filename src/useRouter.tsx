@@ -29,7 +29,11 @@ const staffRoutes = [
   { path: '/ticket', component: <TicketPage />, allowedRoles: ['Staff', 'Driver'] },
   { path: '/ticket-not-paid', component: <TicketNotPaidPage />, allowedRoles: ['Staff'] },
   { path: '/reviews', component: <ReviewsPage />, allowedRoles: ['Staff'] },
-  { path: '/user-profile', component: <UserProfilePage />, allowedRoles: ['Admin', 'Staff', 'VehicleOwner', 'User'] }
+  {
+    path: '/user-profile',
+    component: <UserProfilePage />,
+    allowedRoles: ['Admin', 'Staff', 'VehicleOwner', 'User', 'Driver']
+  }
 ]
 
 const adminRoutes = [
