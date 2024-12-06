@@ -27,7 +27,7 @@ const staffRoutes = [
   { path: '/fixed-cost', component: <FixedCostPage />, allowedRoles: ['Staff'] },
   { path: '/request', component: <RequestPage />, allowedRoles: ['Staff', 'Admin', 'Driver'] },
   { path: '/ticket', component: <TicketPage />, allowedRoles: ['Staff', 'Driver'] },
-  { path: '/ticket-not-paid', component: <TicketNotPaidPage />, allowedRoles: ['Staff'] },
+  { path: '/ticket-not-paid', component: <TicketNotPaidPage />, allowedRoles: ['Staff', 'Driver'] },
   { path: '/reviews', component: <ReviewsPage />, allowedRoles: ['Staff'] },
   {
     path: '/user-profile',
