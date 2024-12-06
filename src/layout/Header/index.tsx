@@ -2,7 +2,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/
 import { Avatar, Button, theme } from 'antd'
 import { Header } from 'antd/es/layout/layout'
 import styles from './Header.module.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useLocalStorage } from '../../utils/localStorage/localStorageService'
 
 interface HeaderProps {
@@ -15,9 +15,12 @@ const HeaderLayout: React.FC<HeaderProps> = ({ collapsed, setCollapsed }) => {
     token: { colorBgContainer }
   } = theme.useToken()
 
+  const navigate = useNavigate()
+
   const handleLogout = () => {
     useLocalStorage.removeLocalStorageData('role')
     useLocalStorage.removeLocalStorageData('token')
+    navigate('/login')
   }
 
   return (
