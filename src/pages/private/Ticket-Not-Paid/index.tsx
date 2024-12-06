@@ -1,6 +1,6 @@
 import { formatPrize } from '@/helpers'
 import useColumnSearch from '@/hooks/useColumnSearch'
-import { useQueryTicketNotPaid } from '@/queries/ticket'
+import { useQueryTicket, useQueryTicketNotPaid } from '@/queries/ticket'
 import renderWithLoading from '@/utils/renderWithLoading'
 import { Button, Popconfirm, Space, Table, TableProps } from 'antd'
 import React from 'react'
@@ -15,14 +15,16 @@ interface DataType {
 
 const TicketNotPaidPage: React.FC = () => {
   const { data, isLoading } = useQueryTicketNotPaid({ id: 1 })
+  const { data: dataTicket } = useQueryTicket()
 
   const columns: TableProps<DataType>['columns'] = [
     {
-      title: 'ticketId',
+      title: 'Tên chuyến đi',
       dataIndex: 'ticketId',
       align: 'center',
       key: 'ticketId',
       ...useColumnSearch().getColumnSearchProps('ticketId'),
+      render: (_, record) => <span>{record.ticketId}</span>,
       width: '20%'
     },
     {
@@ -64,10 +66,14 @@ const TicketNotPaidPage: React.FC = () => {
     }
   ]
 
-  const dataSource = data?.tickets?.map((item: any) => ({
-    ...item,
-    key: item.ticketId || item.someUniqueField
-  }))
+  const dataSource = data?.tickets?.map((item: any) => {
+    const ticketDetails = dataTicket?.find((ticket: any) => ticket.id === item.ticketId)
+    return {
+      ...item,
+      key: item.ticketId || item.someUniqueField,
+      ticketId: ticketDetails?.description
+    }
+  })
 
   return (
     <>
