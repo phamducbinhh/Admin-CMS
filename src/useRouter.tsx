@@ -15,6 +15,7 @@ import UnauthorizedPage from './pages/private/Unauthorized'
 import UserProfilePage from './pages/private/UserProfile'
 import VehiclesPage from './pages/private/Vehicles'
 import LoginPage from './pages/public/login'
+import VehicleUsingPage from './pages/private/VehicleUsing'
 
 const staffRoutes = [
   { path: '/trips', component: <TripsPages />, allowedRoles: ['Staff'] },
@@ -34,6 +35,8 @@ const adminRoutes = [
   { path: '/role', component: <RolePage />, allowedRoles: ['Admin'] }
 ]
 
+const driverRoutes = [{ path: '/vehicles-using', component: <VehicleUsingPage />, allowedRoles: ['Driver'] }]
+
 const routeGenerator = (routes: { path: string; component: React.ReactNode; allowedRoles: string[] }[]) =>
   routes.map((route) => ({
     path: route.path,
@@ -44,7 +47,7 @@ export const routesConfig = [
   {
     path: '/',
     element: <PrivateLayout />,
-    children: [...routeGenerator(staffRoutes), ...routeGenerator(adminRoutes)]
+    children: [...routeGenerator(driverRoutes), ...routeGenerator(staffRoutes), ...routeGenerator(adminRoutes)]
   },
   {
     path: '/login',

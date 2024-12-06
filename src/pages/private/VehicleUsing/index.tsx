@@ -1,20 +1,18 @@
 import React, { useState } from 'react'
-import { Table, Button, Space, Popconfirm, Input, InputNumber, Switch, Spin } from 'antd'
-import { TableProps } from 'antd'
-import TextArea from 'antd/es/input/TextArea'
+import { Button, Space, Popconfirm, Spin, Table } from 'antd'
+import type { TableProps } from 'antd'
 import { DataType } from '../../../types/DataType'
 import { handlingTsUndefined } from '../../../utils/handlingTsUndefined'
-import { useQueryTrips } from '../../../queries/trip'
-import ModalForm, { ModalFormProps } from '../../../components/Modal/ModalForm'
+import { useQueryVehiclesUsing } from '../../../queries/vehicle-using'
+import ModalForm from '../../../components/Modal/ModalForm'
 import { LoadingOutlined } from '@ant-design/icons'
+import { fieldModalTable } from '../../../utils/fieldModalTable'
 
-const TripPage: React.FC = () => {
+const VehicleUsingPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState<DataType | null>(null)
 
-  const { data, isLoading } = useQueryTrips()
-
-  console.log(isLoading)
+  const { data, isLoading } = useQueryVehiclesUsing()
 
   // Transform data source to ensure each record has a `key`
   const dataSource = data?.map((item: any) => ({
@@ -38,57 +36,6 @@ const TripPage: React.FC = () => {
     setSelectedItem(null)
     // Implement update logic
   }
-
-  const fields: ModalFormProps<DataType>['fields'] = [
-    {
-      name: 'name',
-      label: 'Tên chuyến đi',
-      component: <Input />,
-      rules: [{ required: true, message: 'Vui lòng nhập tên chuyến đi!' }]
-    },
-    {
-      name: 'startTime',
-      label: 'Thời gian khởi hành',
-      component: <InputNumber style={{ width: '100%' }} />,
-      rules: [{ required: true, message: 'Vui lòng nhập thời gian khởi hành!' }]
-    },
-    {
-      name: 'price',
-      label: 'Giá vé',
-      component: <InputNumber style={{ width: '100%' }} />,
-      rules: [{ required: true, message: 'Vui lòng nhập giá vé!' }]
-    },
-    {
-      name: 'licensePlate',
-      label: 'Biển số xe',
-      component: <Input />,
-      rules: [{ required: true, message: 'Vui lòng nhập Biển số xe!' }]
-    },
-    {
-      name: 'pointStart',
-      label: 'Điểm đến',
-      component: <Input />,
-      rules: [{ required: true, message: 'Vui lòng nhập điểm đến!' }]
-    },
-    {
-      name: 'pointEnd',
-      label: 'Điểm đi',
-      component: <Input />,
-      rules: [{ required: true, message: 'Vui lòng nhập điểm đi!' }]
-    },
-    {
-      name: 'description',
-      label: 'Mô tả',
-      component: <TextArea />,
-      rules: [{ required: true, message: 'Vui lòng nhập Mô tả!' }]
-    },
-    {
-      name: 'status',
-      label: 'Trạng thái',
-      component: <Switch checkedChildren='Khả dụng' unCheckedChildren='Không khả dụng' />,
-      valuePropName: 'checked'
-    }
-  ]
 
   const columns: TableProps<DataType>['columns'] = [
     {
@@ -158,6 +105,10 @@ const TripPage: React.FC = () => {
     )
   }
 
+  const filteredFields = fieldModalTable.filter(
+    (field) => field.name && ['name', 'licensePlate', 'price'].includes(field.name)
+  )
+
   return (
     <>
       {renderWithLoading(
@@ -168,7 +119,7 @@ const TripPage: React.FC = () => {
             isVisible={isModalOpen}
             onSubmit={handleFormSubmit}
             initialValues={selectedItem}
-            fields={fields}
+            fields={filteredFields}
             setIsModalOpen={setIsModalOpen}
           />
         </>
@@ -177,4 +128,4 @@ const TripPage: React.FC = () => {
   )
 }
 
-export default TripPage
+export default VehicleUsingPage

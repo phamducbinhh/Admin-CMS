@@ -13,6 +13,9 @@ export const APP_API_ENDPOINT = Object.freeze({
     VEHICLES_DETAILS: ({ id }: { id: string | number | null }) => `/api/Vehicle/getInforVehicle/${id}`,
     ADD_VEHICLES: '/api/Vehicle/addVehicle'
   },
+  VEHICLES_USING: {
+    GET: '/api/Vehicle/getVehicleByDriverId'
+  },
   PROMOTION: {
     GET_PROMOTION: '/api/Promotion',
     DELETE_PROMOTION: ({ id }: { id: string | number | null }) => `/api/Promotion/${id}`,
