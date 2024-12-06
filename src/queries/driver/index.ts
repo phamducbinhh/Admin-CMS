@@ -1,6 +1,6 @@
+import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
+import driverApiRequest from '@/services/driver'
 import { useMutation, UseMutationOptions, useQuery, UseQueryOptions } from '@tanstack/react-query'
-import { HttpStatusCode } from '../../constants/httpStatusCode.enum'
-import driverApiRequest from '../../services/driver'
 
 export const useQueryDriver = (options?: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'>) => {
   return useQuery<any>({

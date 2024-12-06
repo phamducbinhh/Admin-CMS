@@ -1,6 +1,6 @@
+import { useQueryRole } from '@/queries/account'
 import { Button, Popconfirm, Space, Table, TableProps } from 'antd'
 import React from 'react'
-import { useQueryRole } from '../../../queries/account'
 
 interface DataType {
   key: string

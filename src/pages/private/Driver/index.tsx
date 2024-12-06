@@ -1,6 +1,6 @@
+import { useQueryDriver } from '@/queries/driver'
 import { Avatar, Button, Popconfirm, Space, Table, TableProps } from 'antd'
 import React from 'react'
-import { useQueryDriver } from '../../../queries/driver'
 
 interface DataType {
   key: string

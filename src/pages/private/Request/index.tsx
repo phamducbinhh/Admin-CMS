@@ -1,11 +1,11 @@
+import { ActionType, ActionTypeDescriptions } from '@/enums/enum'
+import { useQueryRequest } from '@/queries/request'
 import { SearchOutlined } from '@ant-design/icons'
 import type { InputRef, TableColumnType, TableProps } from 'antd'
 import { Button, Input, Popconfirm, Space, Table } from 'antd'
 import { FilterDropdownProps } from 'antd/es/table/interface'
 import React, { useRef, useState } from 'react'
 import Highlighter from 'react-highlight-words'
-import { ActionType, ActionTypeDescriptions } from '../../../enums/enum'
-import { useQueryRequest } from '../../../queries/request'
 
 interface DataType {
   key: string

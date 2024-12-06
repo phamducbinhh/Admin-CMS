@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Breadcrumb, Layout, theme } from 'antd'
-import Sidebar from '../../layout/Sidebar'
 import { Outlet, useLocation } from 'react-router-dom'
-import HeaderLayout from '../../layout/Header'
-import { routesConfig } from '../../useRouter'
+import { routesConfig } from '@/useRouter'
+import HeaderLayout from '@/layout/Header'
+import Sidebar from '@/layout/Sidebar'
 
 const { Content, Footer } = Layout
 

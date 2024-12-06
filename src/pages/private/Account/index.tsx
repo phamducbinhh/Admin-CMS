@@ -1,9 +1,9 @@
+import { useQueryAccount } from '@/queries/account'
 import { SearchOutlined } from '@ant-design/icons'
 import { Avatar, Button, Input, InputRef, Popconfirm, Space, Table, TableColumnType, TableProps } from 'antd'
 import { FilterDropdownProps } from 'antd/es/table/interface'
 import React, { useRef, useState } from 'react'
 import Highlighter from 'react-highlight-words'
-import { useQueryAccount } from '../../../queries/account'
 
 interface DataType {
   key: string

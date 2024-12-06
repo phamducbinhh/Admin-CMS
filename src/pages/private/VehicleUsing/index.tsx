@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { Button, Space, Popconfirm, Spin, Table } from 'antd'
 import type { TableProps } from 'antd'
-import { DataType } from '../../../types/DataType'
-import { handlingTsUndefined } from '../../../utils/handlingTsUndefined'
-import { useQueryVehiclesUsing } from '../../../queries/vehicle-using'
-import ModalForm from '../../../components/Modal/ModalForm'
 import { LoadingOutlined } from '@ant-design/icons'
-import { fieldModalTable } from '../../../utils/fieldModalTable'
+import { DataType } from '@/types/DataType'
+import { useQueryVehiclesUsing } from '@/queries/vehicle-using'
+import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
+import { fieldModalTable } from '@/utils/fieldModalTable'
+import ModalForm from '@/components/Modal/ModalForm'
 
 const VehicleUsingPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)

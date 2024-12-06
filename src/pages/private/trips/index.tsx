@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { Table, Button, Space, Popconfirm, Input, InputNumber, Switch, Spin } from 'antd'
 import { TableProps } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
-import { DataType } from '../../../types/DataType'
-import { handlingTsUndefined } from '../../../utils/handlingTsUndefined'
-import { useQueryTrips } from '../../../queries/trip'
-import ModalForm, { ModalFormProps } from '../../../components/Modal/ModalForm'
 import { LoadingOutlined } from '@ant-design/icons'
+import { DataType } from '@/types/DataType'
+import { useQueryTrips } from '@/queries/trip'
+import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
+import ModalForm, { ModalFormProps } from '@/components/Modal/ModalForm'
 
 const TripPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)

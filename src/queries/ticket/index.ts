@@ -1,6 +1,7 @@
+import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
+import ticketApiRequest from '@/services/ticket'
 import { useMutation, UseMutationOptions, useQuery, UseQueryOptions } from '@tanstack/react-query'
-import { HttpStatusCode } from '../../constants/httpStatusCode.enum'
-import ticketApiRequest from '../../services/ticket'
+
 
 export const useQueryTicket = (options?: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'>) => {
   return useQuery<any>({

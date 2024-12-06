@@ -1,8 +1,8 @@
+import { formatTime } from '@/helpers'
+import { useQueryLossCost } from '@/queries/fixed-cost'
 import type { TableProps } from 'antd'
 import { Button, Popconfirm, Space, Table } from 'antd'
 import React from 'react'
-import { formatTime } from '../../../helpers'
-import { useQueryLossCost } from '../../../queries/fixed-cost'
 
 interface DataType {
   key: string

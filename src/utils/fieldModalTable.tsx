@@ -1,6 +1,6 @@
+import { ModalFormProps } from '@/components/Modal/ModalForm'
+import { DataType } from '@/types/DataType'
 import { Input, InputNumber, Switch } from 'antd'
-import { ModalFormProps } from '../components/Modal/ModalForm'
-import { DataType } from '../types/DataType'
 import TextArea from 'antd/es/input/TextArea'
 
 // muốn thêm fields nào vào trong modal form

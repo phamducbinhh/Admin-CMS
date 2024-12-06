@@ -3,7 +3,7 @@ import { Avatar, Button, theme } from 'antd'
 import { Header } from 'antd/es/layout/layout'
 import styles from './Header.module.css'
 import { Link, useNavigate } from 'react-router-dom'
-import { useLocalStorage } from '../../utils/localStorage/localStorageService'
+import { useLocalStorage } from '@/utils/localStorage/localStorageService'
 
 interface HeaderProps {
   collapsed: boolean

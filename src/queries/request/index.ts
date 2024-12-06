@@ -1,6 +1,7 @@
+import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
+import requestApiRequest from '@/services/request'
 import { useMutation, UseMutationOptions, useQuery, UseQueryOptions } from '@tanstack/react-query'
-import { HttpStatusCode } from '../../constants/httpStatusCode.enum'
-import requestApiRequest from '../../services/request'
+
 
 export const useQueryRequest = (options?: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'>) => {
   return useQuery<any>({

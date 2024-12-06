@@ -1,12 +1,11 @@
 import type { TableProps } from 'antd'
 import { Button, Form, Input, InputNumber, Popconfirm, Space, Switch, Table } from 'antd'
 import React, { useState } from 'react'
-import { DataType } from '../../../types/DataType'
-import { handlingTsUndefined } from '../../../utils/handlingTsUndefined'
-
 import TextArea from 'antd/es/input/TextArea'
-import ModalForm, { ModalFormProps } from '../../../components/Modal/ModalForm'
-import { useQueryVehicles } from '../../../queries/vehicle'
+import { DataType } from '@/types/DataType'
+import { useQueryVehicles } from '@/queries/vehicle'
+import ModalForm, { ModalFormProps } from '@/components/Modal/ModalForm'
+import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
 
 const VehiclesPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)

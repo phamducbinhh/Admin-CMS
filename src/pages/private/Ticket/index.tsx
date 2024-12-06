@@ -1,7 +1,7 @@
+import { formatTime } from '@/helpers'
+import { useQueryTicket } from '@/queries/ticket'
 import { Button, Popconfirm, Space, Table, TableProps } from 'antd'
 import React from 'react'
-import { formatTime } from '../../../helpers'
-import { useQueryTicket } from '../../../queries/ticket'
 
 interface DataType {
   key: string

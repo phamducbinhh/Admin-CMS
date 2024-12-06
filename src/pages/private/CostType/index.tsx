@@ -1,8 +1,8 @@
 import type { TableProps } from 'antd'
 import { Button, Popconfirm, Space, Table } from 'antd'
 import React from 'react'
-import { formatDate } from '../../../helpers'
-import { useQueryCostType } from '../../../queries/cost-type'
+import { useQueryCostType } from '@/queries/cost-type'
+import { formatDate } from '@/helpers'
 
 interface DataType {
   key: string

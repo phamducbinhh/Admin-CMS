@@ -1,6 +1,6 @@
+import { useQueryPromotion } from '@/queries/promotions'
 import { Button, Popconfirm, Space, Table, TableProps } from 'antd'
 import React from 'react'
-import { useQueryPromotion } from '../../../queries/promotions'
 
 interface DataType {
   key: string

@@ -1,8 +1,8 @@
+import { formatDate } from '@/helpers'
+import { useQueryReviews } from '@/queries/reviews'
+import { useQueryTrips } from '@/queries/trip'
 import { Button, Popconfirm, Space, Table, TableProps } from 'antd'
 import React from 'react'
-import { formatDate } from '../../../helpers'
-import { useQueryReviews } from '../../../queries/reviews'
-import { useQueryTrips } from '../../../queries/trip'
 
 interface DataType {
   key: string

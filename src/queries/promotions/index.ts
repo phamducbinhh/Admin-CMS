@@ -1,6 +1,6 @@
+import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
+import promotionApiRequest from '@/services/promotions'
 import { useMutation, UseMutationOptions, useQuery, UseQueryOptions } from '@tanstack/react-query'
-import { HttpStatusCode } from '../../constants/httpStatusCode.enum'
-import promotionApiRequest from '../../services/promotions'
 
 export const useQueryPromotion = (options?: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'>) => {
   return useQuery<any>({
