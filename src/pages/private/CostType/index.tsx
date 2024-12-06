@@ -4,6 +4,7 @@ import React from 'react'
 import { useQueryCostType } from '@/queries/cost-type'
 import { formatDate } from '@/helpers'
 import renderWithLoading from '@/utils/renderWithLoading'
+import useColumnSearch from '@/hooks/useColumnSearch'
 
 interface DataType {
   key: string
@@ -13,47 +14,47 @@ interface DataType {
   status: boolean
 }
 
-const columns: TableProps<DataType>['columns'] = [
-  {
-    title: 'Loại chi phí',
-    dataIndex: 'description',
-    key: 'description',
-    render: (text) => <a>{text}</a>,
-    width: '30%'
-  },
-  {
-    title: 'Thời gian tạo',
-    dataIndex: 'createdAt',
-    key: 'createdAt',
-    render: (date) => <span>{formatDate(date)}</span>,
-    width: '30%'
-  },
-  {
-    title: 'Thời gian cập nhật',
-    dataIndex: 'updateAt',
-    key: 'updateAt',
-    render: (date) => <span>{formatDate(date)}</span>,
-    width: '25%'
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: () => (
-      <Space size='middle'>
-        <Button type='primary'>Edit</Button>
-        <Popconfirm title='Are you sure to delete this item?' okText='Yes' cancelText='No'>
-          <Button type='primary' danger>
-            Delete
-          </Button>
-        </Popconfirm>
-      </Space>
-    )
-  }
-]
-
 const CostTypePage: React.FC = () => {
   const { data, isLoading } = useQueryCostType()
 
+  const columns: TableProps<DataType>['columns'] = [
+    {
+      title: 'Loại chi phí',
+      dataIndex: 'description',
+      key: 'description',
+      ...useColumnSearch().getColumnSearchProps('description'),
+      render: (text) => <a>{text}</a>,
+      width: '30%'
+    },
+    {
+      title: 'Thời gian tạo',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: (date) => <span>{formatDate(date)}</span>,
+      width: '30%'
+    },
+    {
+      title: 'Thời gian cập nhật',
+      dataIndex: 'updateAt',
+      key: 'updateAt',
+      render: (date) => <span>{formatDate(date)}</span>,
+      width: '25%'
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: () => (
+        <Space size='middle'>
+          <Button type='primary'>Edit</Button>
+          <Popconfirm title='Are you sure to delete this item?' okText='Yes' cancelText='No'>
+            <Button type='primary' danger>
+              Delete
+            </Button>
+          </Popconfirm>
+        </Space>
+      )
+    }
+  ]
   // Add `key` to each record if not present
   const dataSource = data?.map((item: any) => ({
     ...item,

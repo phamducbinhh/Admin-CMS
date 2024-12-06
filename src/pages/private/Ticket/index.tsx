@@ -1,4 +1,5 @@
 import { formatTime } from '@/helpers'
+import useColumnSearch from '@/hooks/useColumnSearch'
 import { useQueryTicket } from '@/queries/ticket'
 import renderWithLoading from '@/utils/renderWithLoading'
 import { Button, Popconfirm, Space, Table, TableProps } from 'antd'
@@ -16,77 +17,79 @@ interface DataType {
   status: string
 }
 
-const columns: TableProps<DataType>['columns'] = [
-  {
-    title: 'Code',
-    dataIndex: 'codePromotion',
-    key: 'codePromotion',
-    render: (text) => <span>{text ?? 'null'}</span>,
-    width: '10%'
-  },
-  {
-    title: 'Mô tả',
-    dataIndex: 'description',
-    key: 'description',
-    render: (text) => <a>{text}</a>,
-    width: '15%'
-  },
-  {
-    title: 'Ghi chú',
-    dataIndex: 'note',
-    key: 'note',
-    width: '15%'
-  },
-  {
-    title: 'Điểm đi',
-    dataIndex: 'pointStart',
-    key: 'pointStart',
-    width: '10%'
-  },
-  {
-    title: 'Điểm đến',
-    dataIndex: 'pointEnd',
-    key: 'pointEnd',
-    width: '10%'
-  },
-  {
-    title: 'Thời gian bắt dầu',
-    dataIndex: 'timeFrom',
-    key: 'timeFrom',
-    render: (text) => <span>{formatTime(text)}</span>,
-    width: '10%'
-  },
-  {
-    title: 'Thời gian kết thúc',
-    dataIndex: 'timeTo',
-    key: 'timeTo',
-    render: (text) => <span>{formatTime(text)}</span>,
-    width: '10%'
-  },
-  {
-    title: 'Trạng thái',
-    dataIndex: 'status',
-    key: 'status',
-    width: '10%'
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: () => (
-      <Space size='middle'>
-        <Button type='primary'>Edit</Button>
-        <Popconfirm title='Are you sure to delete this item?' okText='Yes' cancelText='No'>
-          <Button type='primary' danger>
-            Delete
-          </Button>
-        </Popconfirm>
-      </Space>
-    )
-  }
-]
-
 const TicketPage: React.FC = () => {
   const { data, isLoading } = useQueryTicket()
+
+  const columns: TableProps<DataType>['columns'] = [
+    {
+      title: 'Code',
+      dataIndex: 'codePromotion',
+      key: 'codePromotion',
+      ...useColumnSearch().getColumnSearchProps('codePromotion'),
+      render: (text) => <span>{text ?? 'null'}</span>,
+      width: '10%'
+    },
+    {
+      title: 'Mô tả',
+      dataIndex: 'description',
+      key: 'description',
+      ...useColumnSearch().getColumnSearchProps('description'),
+      render: (text) => <a>{text}</a>,
+      width: '15%'
+    },
+    {
+      title: 'Ghi chú',
+      dataIndex: 'note',
+      key: 'note',
+      width: '15%'
+    },
+    {
+      title: 'Điểm đi',
+      dataIndex: 'pointStart',
+      key: 'pointStart',
+      width: '10%'
+    },
+    {
+      title: 'Điểm đến',
+      dataIndex: 'pointEnd',
+      key: 'pointEnd',
+      width: '10%'
+    },
+    {
+      title: 'Thời gian bắt dầu',
+      dataIndex: 'timeFrom',
+      key: 'timeFrom',
+      render: (text) => <span>{formatTime(text)}</span>,
+      width: '10%'
+    },
+    {
+      title: 'Thời gian kết thúc',
+      dataIndex: 'timeTo',
+      key: 'timeTo',
+      render: (text) => <span>{formatTime(text)}</span>,
+      width: '10%'
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'status',
+      key: 'status',
+      width: '10%'
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: () => (
+        <Space size='middle'>
+          <Button type='primary'>Edit</Button>
+          <Popconfirm title='Are you sure to delete this item?' okText='Yes' cancelText='No'>
+            <Button type='primary' danger>
+              Delete
+            </Button>
+          </Popconfirm>
+        </Space>
+      )
+    }
+  ]
 
   const dataSource = data?.map((item: any) => ({
     ...item,

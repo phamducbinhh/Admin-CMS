@@ -1,12 +1,13 @@
-import type { TableProps } from 'antd'
-import { Button, Form, Input, InputNumber, Popconfirm, Space, Switch, Table } from 'antd'
-import React, { useState } from 'react'
-import TextArea from 'antd/es/input/TextArea'
-import { DataType } from '@/types/DataType'
-import { useQueryVehicles } from '@/queries/vehicle'
 import ModalForm, { ModalFormProps } from '@/components/Modal/ModalForm'
+import useColumnSearch from '@/hooks/useColumnSearch'
+import { useQueryVehicles } from '@/queries/vehicle'
+import { DataType } from '@/types/DataType'
 import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
 import renderWithLoading from '@/utils/renderWithLoading'
+import type { TableProps } from 'antd'
+import { Button, Form, Input, InputNumber, Popconfirm, Space, Switch, Table } from 'antd'
+import TextArea from 'antd/es/input/TextArea'
+import React, { useState } from 'react'
 
 const VehiclesPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -89,6 +90,7 @@ const VehiclesPage: React.FC = () => {
       title: 'Tên chuyến đi',
       dataIndex: 'description',
       key: 'description',
+      ...useColumnSearch().getColumnSearchProps('description'),
       render: (text) => <a>{text}</a>,
       width: '25%'
     },
@@ -96,6 +98,7 @@ const VehiclesPage: React.FC = () => {
       title: 'Biển số xe',
       dataIndex: 'licensePlate',
       key: 'licensePlate',
+      ...useColumnSearch().getColumnSearchProps('licensePlate'),
       sorter: (a, b) => handlingTsUndefined(a.licensePlate).localeCompare(handlingTsUndefined(b.licensePlate)),
       width: '25%'
     },

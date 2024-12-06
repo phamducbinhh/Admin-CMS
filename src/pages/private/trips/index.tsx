@@ -1,4 +1,5 @@
 import ModalForm, { ModalFormProps } from '@/components/Modal/ModalForm'
+import useColumnSearch from '@/hooks/useColumnSearch'
 import { useQueryTrips } from '@/queries/trip'
 import { DataType } from '@/types/DataType'
 import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
@@ -94,6 +95,7 @@ const TripPage: React.FC = () => {
       title: 'Tên chuyến đi',
       dataIndex: 'name',
       key: 'name',
+      ...useColumnSearch().getColumnSearchProps('name'),
       render: (text) => <a>{text}</a>,
       width: '25%'
     },

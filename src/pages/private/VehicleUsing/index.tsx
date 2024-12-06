@@ -1,4 +1,5 @@
 import ModalForm from '@/components/Modal/ModalForm'
+import useColumnSearch from '@/hooks/useColumnSearch'
 import { useQueryVehiclesUsing } from '@/queries/vehicle-using'
 import { DataType } from '@/types/DataType'
 import { fieldModalTable } from '@/utils/fieldModalTable'
@@ -42,6 +43,7 @@ const VehicleUsingPage: React.FC = () => {
       title: 'Tên chuyến đi',
       dataIndex: 'name',
       key: 'name',
+      ...useColumnSearch().getColumnSearchProps('name'),
       render: (text) => <a>{text}</a>,
       width: '25%'
     },
