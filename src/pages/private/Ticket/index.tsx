@@ -1,5 +1,6 @@
 import { formatTime } from '@/helpers'
 import { useQueryTicket } from '@/queries/ticket'
+import renderWithLoading from '@/utils/renderWithLoading'
 import { Button, Popconfirm, Space, Table, TableProps } from 'antd'
 import React from 'react'
 
@@ -85,14 +86,25 @@ const columns: TableProps<DataType>['columns'] = [
 ]
 
 const TicketPage: React.FC = () => {
-  const { data } = useQueryTicket()
+  const { data, isLoading } = useQueryTicket()
 
   const dataSource = data?.map((item: any) => ({
     ...item,
     key: item.id || item.someUniqueField
   }))
 
-  return <Table<DataType> columns={columns} dataSource={dataSource} />
+  return (
+    <>
+      {renderWithLoading({
+        isLoading,
+        content: (
+          <>
+            <Table columns={columns} dataSource={dataSource} />
+          </>
+        )
+      })}
+    </>
+  )
 }
 
 export default TicketPage

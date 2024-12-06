@@ -1,4 +1,5 @@
 import { useQueryAccount } from '@/queries/account'
+import renderWithLoading from '@/utils/renderWithLoading'
 import { SearchOutlined } from '@ant-design/icons'
 import { Avatar, Button, Input, InputRef, Popconfirm, Space, Table, TableColumnType, TableProps } from 'antd'
 import { FilterDropdownProps } from 'antd/es/table/interface'
@@ -18,7 +19,7 @@ interface DataType {
 type DataIndex = keyof DataType
 
 const AccountPage: React.FC = () => {
-  const { data } = useQueryAccount()
+  const { data, isLoading } = useQueryAccount()
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setSearchedColumn] = useState('')
   const searchInput = useRef<InputRef>(null)
@@ -172,7 +173,18 @@ const AccountPage: React.FC = () => {
     key: item.id || item.someUniqueField
   }))
 
-  return <Table<DataType> columns={columns} dataSource={dataSource} />
+  return (
+    <>
+      {renderWithLoading({
+        isLoading,
+        content: (
+          <>
+            <Table columns={columns} dataSource={dataSource} />
+          </>
+        )
+      })}
+    </>
+  )
 }
 
 export default AccountPage

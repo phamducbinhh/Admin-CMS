@@ -1,6 +1,7 @@
 import { formatDate } from '@/helpers'
 import { useQueryReviews } from '@/queries/reviews'
 import { useQueryTrips } from '@/queries/trip'
+import renderWithLoading from '@/utils/renderWithLoading'
 import { Button, Popconfirm, Space, Table, TableProps } from 'antd'
 import React from 'react'
 
@@ -64,7 +65,7 @@ const columns: TableProps<DataType>['columns'] = [
 ]
 
 const ReviewsPage: React.FC = () => {
-  const { data } = useQueryReviews()
+  const { data, isLoading } = useQueryReviews()
   const { data: tripData } = useQueryTrips()
 
   const dataSource = data?.map((item: any) => ({
@@ -73,7 +74,18 @@ const ReviewsPage: React.FC = () => {
     tripId: tripData?.find((trip: any) => trip.id === item.tripId)?.name || 'Unknown'
   }))
 
-  return <Table<DataType> columns={columns} dataSource={dataSource} />
+  return (
+    <>
+      {renderWithLoading({
+        isLoading,
+        content: (
+          <>
+            <Table columns={columns} dataSource={dataSource} />
+          </>
+        )
+      })}
+    </>
+  )
 }
 
 export default ReviewsPage

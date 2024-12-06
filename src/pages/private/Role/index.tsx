@@ -1,4 +1,5 @@
 import { useQueryRole } from '@/queries/account'
+import renderWithLoading from '@/utils/renderWithLoading'
 import { Button, Popconfirm, Space, Table, TableProps } from 'antd'
 import React from 'react'
 
@@ -37,14 +38,25 @@ const columns: TableProps<DataType>['columns'] = [
 ]
 
 const RolePage: React.FC = () => {
-  const { data } = useQueryRole()
+  const { data, isLoading } = useQueryRole()
 
   const dataSource = data?.map((item: any) => ({
     ...item,
     key: item.id || item.someUniqueField
   }))
 
-  return <Table<DataType> columns={columns} dataSource={dataSource} />
+  return (
+    <>
+      {renderWithLoading({
+        isLoading,
+        content: (
+          <>
+            <Table columns={columns} dataSource={dataSource} />
+          </>
+        )
+      })}
+    </>
+  )
 }
 
 export default RolePage

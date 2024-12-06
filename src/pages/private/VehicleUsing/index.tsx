@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import { Button, Space, Popconfirm, Spin, Table } from 'antd'
-import type { TableProps } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
-import { DataType } from '@/types/DataType'
-import { useQueryVehiclesUsing } from '@/queries/vehicle-using'
-import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
-import { fieldModalTable } from '@/utils/fieldModalTable'
 import ModalForm from '@/components/Modal/ModalForm'
+import { useQueryVehiclesUsing } from '@/queries/vehicle-using'
+import { DataType } from '@/types/DataType'
+import { fieldModalTable } from '@/utils/fieldModalTable'
+import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
+import renderWithLoading from '@/utils/renderWithLoading'
+import type { TableProps } from 'antd'
+import { Button, Popconfirm, Space, Table } from 'antd'
+import React, { useState } from 'react'
 
 const VehicleUsingPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -88,42 +88,27 @@ const VehicleUsingPage: React.FC = () => {
     }
   ]
 
-  const renderWithLoading = (isLoading: boolean, content: React.ReactNode) => {
-    return isLoading ? (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100%' // Full viewport height
-        }}
-      >
-        <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} />
-      </div>
-    ) : (
-      content
-    )
-  }
-
   const filteredFields = fieldModalTable.filter(
     (field) => field.name && ['name', 'licensePlate', 'price'].includes(field.name)
   )
 
   return (
     <>
-      {renderWithLoading(
+      {renderWithLoading({
         isLoading,
-        <>
-          <Table columns={columns} dataSource={dataSource} />
-          <ModalForm
-            isVisible={isModalOpen}
-            onSubmit={handleFormSubmit}
-            initialValues={selectedItem}
-            fields={filteredFields}
-            setIsModalOpen={setIsModalOpen}
-          />
-        </>
-      )}
+        content: (
+          <>
+            <Table columns={columns} dataSource={dataSource} />
+            <ModalForm
+              isVisible={isModalOpen}
+              onSubmit={handleFormSubmit}
+              initialValues={selectedItem}
+              fields={filteredFields}
+              setIsModalOpen={setIsModalOpen}
+            />
+          </>
+        )
+      })}
     </>
   )
 }

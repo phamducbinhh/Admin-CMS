@@ -3,6 +3,7 @@ import { Button, Popconfirm, Space, Table } from 'antd'
 import React from 'react'
 import { useQueryCostType } from '@/queries/cost-type'
 import { formatDate } from '@/helpers'
+import renderWithLoading from '@/utils/renderWithLoading'
 
 interface DataType {
   key: string
@@ -51,7 +52,7 @@ const columns: TableProps<DataType>['columns'] = [
 ]
 
 const CostTypePage: React.FC = () => {
-  const { data } = useQueryCostType()
+  const { data, isLoading } = useQueryCostType()
 
   // Add `key` to each record if not present
   const dataSource = data?.map((item: any) => ({
@@ -59,6 +60,17 @@ const CostTypePage: React.FC = () => {
     key: item.id || item.someUniqueField
   }))
 
-  return <Table<DataType> columns={columns} dataSource={dataSource} />
+  return (
+    <>
+      {renderWithLoading({
+        isLoading,
+        content: (
+          <>
+            <Table columns={columns} dataSource={dataSource} />
+          </>
+        )
+      })}
+    </>
+  )
 }
 export default CostTypePage

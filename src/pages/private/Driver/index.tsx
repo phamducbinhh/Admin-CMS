@@ -1,4 +1,5 @@
 import { useQueryDriver } from '@/queries/driver'
+import renderWithLoading from '@/utils/renderWithLoading'
 import { Avatar, Button, Popconfirm, Space, Table, TableProps } from 'antd'
 import React from 'react'
 
@@ -60,14 +61,25 @@ const columns: TableProps<DataType>['columns'] = [
 ]
 
 const DriverPage: React.FC = () => {
-  const { data } = useQueryDriver()
+  const { data, isLoading } = useQueryDriver()
 
   const dataSource = data?.map((item: any) => ({
     ...item,
     key: item.id || item.someUniqueField
   }))
 
-  return <Table<DataType> columns={columns} dataSource={dataSource} />
+  return (
+    <>
+      {renderWithLoading({
+        isLoading,
+        content: (
+          <>
+            <Table columns={columns} dataSource={dataSource} />
+          </>
+        )
+      })}
+    </>
+  )
 }
 
 export default DriverPage

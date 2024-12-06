@@ -6,6 +6,7 @@ import { DataType } from '@/types/DataType'
 import { useQueryVehicles } from '@/queries/vehicle'
 import ModalForm, { ModalFormProps } from '@/components/Modal/ModalForm'
 import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
+import renderWithLoading from '@/utils/renderWithLoading'
 
 const VehiclesPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -13,7 +14,7 @@ const VehiclesPage: React.FC = () => {
 
   const [form] = Form.useForm()
 
-  const { data } = useQueryVehicles()
+  const { data, isLoading } = useQueryVehicles()
 
   const dataSource = data?.map((item: any) => ({
     ...item,
@@ -133,14 +134,21 @@ const VehiclesPage: React.FC = () => {
 
   return (
     <>
-      <Table columns={columns} dataSource={dataSource} />
-      <ModalForm
-        isVisible={isModalOpen}
-        onSubmit={handleFormSubmit}
-        initialValues={selectedItem}
-        fields={fields}
-        setIsModalOpen={setIsModalOpen}
-      />
+      {renderWithLoading({
+        isLoading,
+        content: (
+          <>
+            <Table columns={columns} dataSource={dataSource} />
+            <ModalForm
+              isVisible={isModalOpen}
+              onSubmit={handleFormSubmit}
+              initialValues={selectedItem}
+              fields={fields}
+              setIsModalOpen={setIsModalOpen}
+            />
+          </>
+        )
+      })}
     </>
   )
 }

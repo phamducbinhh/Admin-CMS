@@ -1,5 +1,6 @@
 import { formatTime } from '@/helpers'
 import { useQueryLossCost } from '@/queries/fixed-cost'
+import renderWithLoading from '@/utils/renderWithLoading'
 import type { TableProps } from 'antd'
 import { Button, Popconfirm, Space, Table } from 'antd'
 import React from 'react'
@@ -58,7 +59,7 @@ const columns: TableProps<DataType>['columns'] = [
 ]
 
 const FixedCostPage: React.FC = () => {
-  const { data } = useQueryLossCost()
+  const { data, isLoading } = useQueryLossCost()
 
   // Add `key` to each record if not present
   const dataSource = data?.map((item: any) => ({
@@ -66,6 +67,17 @@ const FixedCostPage: React.FC = () => {
     key: item.id || `${item.description}-${item.licensePlate}-${item.dateIncurred}`
   }))
 
-  return <Table<DataType> columns={columns} dataSource={dataSource} />
+  return (
+    <>
+      {renderWithLoading({
+        isLoading,
+        content: (
+          <>
+            <Table columns={columns} dataSource={dataSource} />
+          </>
+        )
+      })}
+    </>
+  )
 }
 export default FixedCostPage

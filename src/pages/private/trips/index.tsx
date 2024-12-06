@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
-import { Table, Button, Space, Popconfirm, Input, InputNumber, Switch, Spin } from 'antd'
-import { TableProps } from 'antd'
-import TextArea from 'antd/es/input/TextArea'
-import { LoadingOutlined } from '@ant-design/icons'
-import { DataType } from '@/types/DataType'
-import { useQueryTrips } from '@/queries/trip'
-import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
 import ModalForm, { ModalFormProps } from '@/components/Modal/ModalForm'
+import { useQueryTrips } from '@/queries/trip'
+import { DataType } from '@/types/DataType'
+import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
+import renderWithLoading from '@/utils/renderWithLoading'
+import { Button, Input, InputNumber, Popconfirm, Space, Switch, Table, TableProps } from 'antd'
+import TextArea from 'antd/es/input/TextArea'
+import React, { useState } from 'react'
 
 const TripPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -141,38 +140,23 @@ const TripPage: React.FC = () => {
     }
   ]
 
-  const renderWithLoading = (isLoading: boolean, content: React.ReactNode) => {
-    return isLoading ? (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100%' // Full viewport height
-        }}
-      >
-        <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} />
-      </div>
-    ) : (
-      content
-    )
-  }
-
   return (
     <>
-      {renderWithLoading(
+      {renderWithLoading({
         isLoading,
-        <>
-          <Table columns={columns} dataSource={dataSource} />
-          <ModalForm
-            isVisible={isModalOpen}
-            onSubmit={handleFormSubmit}
-            initialValues={selectedItem}
-            fields={fields}
-            setIsModalOpen={setIsModalOpen}
-          />
-        </>
-      )}
+        content: (
+          <>
+            <Table columns={columns} dataSource={dataSource} />
+            <ModalForm
+              isVisible={isModalOpen}
+              onSubmit={handleFormSubmit}
+              initialValues={selectedItem}
+              fields={fields}
+              setIsModalOpen={setIsModalOpen}
+            />
+          </>
+        )
+      })}
     </>
   )
 }

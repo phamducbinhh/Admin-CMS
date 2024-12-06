@@ -1,5 +1,6 @@
 import { ActionType, ActionTypeDescriptions } from '@/enums/enum'
 import { useQueryRequest } from '@/queries/request'
+import renderWithLoading from '@/utils/renderWithLoading'
 import { SearchOutlined } from '@ant-design/icons'
 import type { InputRef, TableColumnType, TableProps } from 'antd'
 import { Button, Input, Popconfirm, Space, Table } from 'antd'
@@ -19,7 +20,7 @@ interface DataType {
 type DataIndex = keyof DataType
 
 const RequestPage: React.FC = () => {
-  const { data } = useQueryRequest()
+  const { data, isLoading } = useQueryRequest()
 
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setSearchedColumn] = useState('')
@@ -175,6 +176,17 @@ const RequestPage: React.FC = () => {
     key: item.id || item.someUniqueField
   }))
 
-  return <Table<DataType> columns={columns} dataSource={dataSource} />
+  return (
+    <>
+      {renderWithLoading({
+        isLoading,
+        content: (
+          <>
+            <Table columns={columns} dataSource={dataSource} />
+          </>
+        )
+      })}
+    </>
+  )
 }
 export default RequestPage
