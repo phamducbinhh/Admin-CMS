@@ -183,32 +183,32 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
       }
     ]
 
-    const allowAdminRoute = ['account', 'role']
-    const allowDriverRoute = ['vehicles-using']
+    // const allowAdminRoute = ['account', 'role']
+    // const allowDriverRoute = ['vehicles-using']
 
     const filteredItems = items
-      .map((group: any) => ({
-        ...group,
-        children: group.children?.filter((item: any) => {
-          switch (role) {
-            case 'Admin':
-              // Admin chỉ thấy account, role
-              return allowAdminRoute.includes(item.key)
+    // .map((group: any) => ({
+    //   ...group,
+    //   children: group.children?.filter((item: any) => {
+    //     switch (role) {
+    //       case 'Admin':
+    //         // Admin chỉ thấy account, role
+    //         return allowAdminRoute.includes(item.key)
 
-            case 'Staff':
-              // Staff thấy tất cả trừ account, role
-              return !allowAdminRoute.includes(item.key)
+    //       case 'Staff':
+    //         // Staff thấy tất cả trừ account, role
+    //         return !allowAdminRoute.includes(item.key)
 
-            case 'Driver':
-              return allowDriverRoute.includes(item.key)
+    //       case 'Driver':
+    //         return allowDriverRoute.includes(item.key)
 
-            default:
-              // Nếu không phải Admin hay Staff, không hiển thị gì
-              return false
-          }
-        })
-      }))
-      .filter((group) => group.children?.length > 0) // Loại nhóm không có mục con
+    //       default:
+    //         // Nếu không phải Admin hay Staff, không hiển thị gì
+    //         return false
+    //     }
+    //   })
+    // }))
+    // .filter((group) => group.children?.length > 0) // Loại nhóm không có mục con
 
     setFilteredItems(filteredItems)
   }, [role])

@@ -19,7 +19,7 @@ import VehicleUsingPage from './pages/private/VehicleUsing'
 
 const staffRoutes = [
   { path: '/trips', component: <TripsPages />, allowedRoles: ['Staff'] },
-  { path: '/vehicles', component: <VehiclesPage />, allowedRoles: ['Staff'] },
+  { path: '/vehicles', component: <VehiclesPage />, allowedRoles: ['Staff', 'VehicleOwner', 'Driver'] },
   { path: '/promotion', component: <PromotionPage />, allowedRoles: ['Staff'] },
   { path: '/driver', component: <DriverPage />, allowedRoles: ['Staff'] },
   { path: '/cost-type', component: <CostTypePage />, allowedRoles: ['Staff'] },
