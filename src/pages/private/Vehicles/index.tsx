@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
-import { Table, Button, Modal, Form, Input, InputNumber, Switch, Space, Popconfirm } from 'antd'
 import type { TableProps } from 'antd'
-import TextArea from 'antd/es/input/TextArea'
+import { Button, Form, Input, InputNumber, Popconfirm, Space, Switch, Table } from 'antd'
+import React, { useState } from 'react'
 import { DataType } from '../../../types/DataType'
 import { handlingTsUndefined } from '../../../utils/handlingTsUndefined'
 
+import TextArea from 'antd/es/input/TextArea'
+import ModalForm, { ModalFormProps } from '../../../components/Modal/ModalForm'
 import { useQueryVehicles } from '../../../queries/vehicle'
 
 const VehiclesPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [, setSelectedItem] = useState<DataType | null>(null)
+  const [selectedItem, setSelectedItem] = useState<DataType | null>(null)
+
   const [form] = Form.useForm()
 
   const { data } = useQueryVehicles()
@@ -22,20 +24,65 @@ const VehiclesPage: React.FC = () => {
   const handleEdit = (item: DataType) => {
     setSelectedItem(item)
     setIsModalOpen(true)
-    form.setFieldsValue(item) // Pre-fill the form with selected item's data
-  }
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-    setSelectedItem(null)
-    form.resetFields() // Reset form when closing the modal
+    form.setFieldsValue(item)
   }
 
   const handleFormSubmit = (values: any) => {
     console.log('Updated values:', values)
     setIsModalOpen(false)
-    // You can send updated data to the backend here
+    setSelectedItem(null)
   }
+
+  const fields: ModalFormProps<DataType>['fields'] = [
+    {
+      name: 'name',
+      label: 'Tên chuyến đi',
+      component: <Input />,
+      rules: [{ required: true, message: 'Vui lòng nhập tên chuyến đi!' }]
+    },
+    {
+      name: 'startTime',
+      label: 'Thời gian khởi hành',
+      component: <InputNumber style={{ width: '100%' }} />,
+      rules: [{ required: true, message: 'Vui lòng nhập thời gian khởi hành!' }]
+    },
+    {
+      name: 'price',
+      label: 'Giá vé',
+      component: <InputNumber style={{ width: '100%' }} />,
+      rules: [{ required: true, message: 'Vui lòng nhập giá vé!' }]
+    },
+    {
+      name: 'licensePlate',
+      label: 'Biển số xe',
+      component: <Input />,
+      rules: [{ required: true, message: 'Vui lòng nhập Biển số xe!' }]
+    },
+    {
+      name: 'pointStart',
+      label: 'Điểm đến',
+      component: <Input />,
+      rules: [{ required: true, message: 'Vui lòng nhập điểm đến!' }]
+    },
+    {
+      name: 'pointEnd',
+      label: 'Điểm đi',
+      component: <Input />,
+      rules: [{ required: true, message: 'Vui lòng nhập điểm đi!' }]
+    },
+    {
+      name: 'description',
+      label: 'Mô tả',
+      component: <TextArea />,
+      rules: [{ required: true, message: 'Vui lòng nhập Mô tả!' }]
+    },
+    {
+      name: 'status',
+      label: 'Trạng thái',
+      component: <Switch checkedChildren='Khả dụng' unCheckedChildren='Không khả dụng' />,
+      valuePropName: 'checked'
+    }
+  ]
 
   const columns: TableProps<DataType>['columns'] = [
     {
@@ -88,56 +135,13 @@ const VehiclesPage: React.FC = () => {
   return (
     <>
       <Table columns={columns} dataSource={dataSource} />
-      <Modal
-        title='Edit Trip'
-        open={isModalOpen}
-        onOk={() => form.submit()}
-        onCancel={handleCloseModal}
-        cancelButtonProps={{ style: { display: 'none' } }} // Hides the cancel button
-        okText='Update' // Change the OK button text to "Update"
-      >
-        <Form form={form} layout='vertical' onFinish={handleFormSubmit}>
-          <Form.Item name='id' noStyle>
-            <Input type='hidden' />
-          </Form.Item>
-          <Form.Item
-            label='Tên chuyến đi'
-            name='name'
-            rules={[{ required: true, message: 'Vui lòng nhập tên chuyến đi!' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label='Thời gian khởi hành'
-            name='startTime'
-            rules={[{ required: true, message: 'Vui lòng nhập thời gian khởi hành!' }]}
-          >
-            <InputNumber style={{ width: '100%' }} />
-          </Form.Item>
-          <Form.Item label='Giá vé' name='price' rules={[{ required: true, message: 'Vui lòng nhập giá vé!' }]}>
-            <InputNumber style={{ width: '100%' }} />
-          </Form.Item>
-          <Form.Item
-            label='Biển số xe'
-            name='licensePlate'
-            rules={[{ required: true, message: 'Vui lòng nhập Biển số xe' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item label='Điểm đến' name='pointStart' rules={[{ required: true, message: 'Vui lòng nhập điểm đến' }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item label='Điểm đi' name='pointEnd' rules={[{ required: true, message: 'Vui lòng nhập điểm đi' }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item label='Mô tả' name='description' rules={[{ required: true, message: 'Vui lòng nhập Mô tả' }]}>
-            <TextArea />
-          </Form.Item>
-          <Form.Item label='Trạng thái' name='status' valuePropName='checked'>
-            <Switch checkedChildren='Khả dụng' unCheckedChildren='Không khả dụng' />
-          </Form.Item>
-        </Form>
-      </Modal>
+      <ModalForm
+        isVisible={isModalOpen}
+        onSubmit={handleFormSubmit}
+        initialValues={selectedItem}
+        fields={fields}
+        setIsModalOpen={setIsModalOpen}
+      />
     </>
   )
 }
