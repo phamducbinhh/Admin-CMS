@@ -20,9 +20,9 @@ import type { MenuProps } from 'antd'
 import { Badge, Layout, Menu } from 'antd'
 import React, { useEffect, useState } from 'react'
 
-import { Link } from 'react-router-dom'
 import logo from '@/assets/logo.png'
 import { useLocalStorage } from '@/utils/localStorage/localStorageService'
+import { Link } from 'react-router-dom'
 
 interface SidebarProps {
   collapsed: boolean
