@@ -24,8 +24,8 @@ export const useQueryDriverDetails = (
     queryKey: ['Driver_details', id],
     queryFn: async () => {
       const response = await driverApiRequest.GetDriversDetails({ id })
-      if (response.code === HttpStatusCode.Ok) {
-        return response.metadata
+      if (response.status === HttpStatusCode.Ok) {
+        return response.data
       }
     }
   })

@@ -7,6 +7,7 @@ import {
   FileTextOutlined,
   GiftOutlined,
   SettingOutlined,
+  ShopFilled,
   ShoppingFilled,
   StarFilled,
   SwitcherFilled,
@@ -86,6 +87,11 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
             key: 'ticket',
             icon: <SwitcherFilled />,
             label: <Link to='/ticket'>Ticket</Link> // Link added
+          },
+          {
+            key: 'ticket-not-paid',
+            icon: <ShopFilled />,
+            label: <Link to='/ticket-not-paid'>Ticket Not Paid</Link> // Link added
           },
           {
             key: 'reviews',

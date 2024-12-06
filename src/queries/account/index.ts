@@ -36,8 +36,8 @@ export const useQueryAccountDetails = (
     queryKey: ['Account_details', id],
     queryFn: async () => {
       const response = await accountApiRequest.GetAccountDetails({ id })
-      if (response.code === HttpStatusCode.Ok) {
-        return response.metadata
+      if (response.status === HttpStatusCode.Ok) {
+        return response.data
       }
     }
   })

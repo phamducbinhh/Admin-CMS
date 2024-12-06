@@ -24,8 +24,8 @@ export const useQueryPromotionDetails = (
     queryKey: ['Promotion_details', id],
     queryFn: async () => {
       const response = await promotionApiRequest.GetPromotionsDetails({ id })
-      if (response.code === HttpStatusCode.Ok) {
-        return response.metadata
+      if (response.status === HttpStatusCode.Ok) {
+        return response.data
       }
     }
   })
