@@ -1,3 +1,4 @@
+import { formatPrize } from '@/helpers'
 import useColumnSearch from '@/hooks/useColumnSearch'
 import { useQueryTicketNotPaid } from '@/queries/ticket'
 import renderWithLoading from '@/utils/renderWithLoading'
@@ -45,6 +46,7 @@ const TicketNotPaidPage: React.FC = () => {
       dataIndex: 'price',
       align: 'center',
       key: 'price',
+      render: (text) => <span>{formatPrize(text)}</span>,
       width: '15%'
     },
     {

@@ -14,17 +14,20 @@ const columns: TableProps<DataType>['columns'] = [
     title: 'id',
     dataIndex: 'id',
     key: 'id',
+    align: 'center',
     width: '45%'
   },
   {
     title: 'Role name',
     dataIndex: 'roleName',
     key: 'roleName',
+    align: 'center',
     width: '45%'
   },
   {
     title: 'Action',
     key: 'action',
+    align: 'center',
     render: () => (
       <Space size='middle'>
         <Popconfirm title='Are you sure to delete this item?' okText='Yes' cancelText='No'>

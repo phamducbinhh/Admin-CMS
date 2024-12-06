@@ -21,6 +21,7 @@ const AccountPage: React.FC = () => {
       title: 'Avatar',
       dataIndex: 'avatar',
       key: 'avatar',
+      align: 'center',
       render: () => (
         <Avatar src={'https://statics.oeg.vn/storage/DEFAULT%20AVATAR%20PROFILE/akirov6.webp'} alt='Avatar' />
       ),
@@ -30,6 +31,7 @@ const AccountPage: React.FC = () => {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
+      align: 'center',
       ...useColumnSearch().getColumnSearchProps('email'),
       render: (text) => <a>{text}</a>,
       width: '20%'
@@ -38,6 +40,7 @@ const AccountPage: React.FC = () => {
       title: 'Tên',
       dataIndex: 'fullName',
       key: 'fullName',
+      align: 'center',
       width: '20%',
       ...useColumnSearch().getColumnSearchProps('fullName')
     },
@@ -45,6 +48,7 @@ const AccountPage: React.FC = () => {
       title: 'Số điện thoại',
       dataIndex: 'numberPhone',
       key: 'numberPhone',
+      align: 'center',
       width: '20%',
       ...useColumnSearch().getColumnSearchProps('numberPhone')
     },
@@ -52,6 +56,7 @@ const AccountPage: React.FC = () => {
       title: 'Tên đăng nhập',
       dataIndex: 'username',
       key: 'username',
+      align: 'center',
       width: '20%',
       ...useColumnSearch().getColumnSearchProps('username')
     },
@@ -59,12 +64,14 @@ const AccountPage: React.FC = () => {
       title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
+      align: 'center',
       render: (status) => <p>{status === true ? 'Khả dụng' : 'Không khả dụng'}</p>,
       width: '20%'
     },
     {
       title: 'Action',
       key: 'action',
+      align: 'center',
       render: () => (
         <Space size='middle'>
           <Button type='primary'>Edit</Button>

@@ -92,6 +92,7 @@ const VehiclesPage: React.FC = () => {
       key: 'description',
       ...useColumnSearch().getColumnSearchProps('description'),
       render: (text) => <a>{text}</a>,
+      align: 'center',
       width: '25%'
     },
     {
@@ -100,6 +101,7 @@ const VehiclesPage: React.FC = () => {
       key: 'licensePlate',
       ...useColumnSearch().getColumnSearchProps('licensePlate'),
       sorter: (a, b) => handlingTsUndefined(a.licensePlate).localeCompare(handlingTsUndefined(b.licensePlate)),
+      align: 'center',
       width: '25%'
     },
     {
@@ -107,12 +109,14 @@ const VehiclesPage: React.FC = () => {
       dataIndex: 'numberSeat',
       key: 'numberSeat',
       sorter: (a, b) => handlingTsUndefined(a.numberSeat) - handlingTsUndefined(b.numberSeat),
+      align: 'center',
       width: '20%'
     },
     {
       title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
+      align: 'center',
       sorter: (a, b) => Number(a.status) - Number(b.status),
       render: (status) => <p>{status ? 'Khả dụng' : 'Không khả dụng'}</p>,
       width: '20%'
@@ -120,6 +124,7 @@ const VehiclesPage: React.FC = () => {
     {
       title: 'Action',
       key: 'action',
+      align: 'center',
       render: (_, record) => (
         <Space size='middle'>
           <Button onClick={() => handleEdit(record)} type='primary'>

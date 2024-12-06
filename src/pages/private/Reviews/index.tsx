@@ -24,12 +24,14 @@ const ReviewsPage: React.FC = () => {
       title: 'ID',
       dataIndex: 'id',
       key: 'id',
+      align: 'center',
       width: '10%'
     },
     {
       title: 'Tên chuyến đi',
       dataIndex: 'tripId',
       key: 'tripId',
+      align: 'center',
       render: (_, record) => <span>{record.tripId}</span>,
       width: '25%'
     },
@@ -37,6 +39,7 @@ const ReviewsPage: React.FC = () => {
       title: 'Đánh giá',
       dataIndex: 'description',
       key: 'description',
+      align: 'center',
       ...useColumnSearch().getColumnSearchProps('description'),
       render: (text) => <span>{text ?? 'null'}</span>,
       width: '25%'
@@ -45,6 +48,7 @@ const ReviewsPage: React.FC = () => {
       title: 'Thời gian tạo',
       dataIndex: 'createdAt',
       key: 'createdAt',
+      align: 'center',
       render: (date) => <span>{formatDate(date)}</span>,
       width: '25%'
     },
@@ -52,12 +56,14 @@ const ReviewsPage: React.FC = () => {
       title: 'Thời gian cập nhật',
       dataIndex: 'updateAt',
       key: 'updateAt',
+      align: 'center',
       render: (date) => <span>{formatDate(date)}</span>,
       width: '25%'
     },
     {
       title: 'Action',
       key: 'action',
+      align: 'center',
       render: () => (
         <Space size='middle'>
           <Popconfirm title='Are you sure to delete this item?' okText='Yes' cancelText='No'>

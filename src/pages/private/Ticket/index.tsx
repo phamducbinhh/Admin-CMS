@@ -27,6 +27,7 @@ const TicketPage: React.FC = () => {
       key: 'codePromotion',
       ...useColumnSearch().getColumnSearchProps('codePromotion'),
       render: (text) => <span>{text ?? 'null'}</span>,
+      align: 'center',
       width: '10%'
     },
     {
@@ -35,30 +36,35 @@ const TicketPage: React.FC = () => {
       key: 'description',
       ...useColumnSearch().getColumnSearchProps('description'),
       render: (text) => <a>{text}</a>,
+      align: 'center',
       width: '15%'
     },
     {
       title: 'Ghi chú',
       dataIndex: 'note',
       key: 'note',
+      align: 'center',
       width: '15%'
     },
     {
       title: 'Điểm đi',
       dataIndex: 'pointStart',
       key: 'pointStart',
+      align: 'center',
       width: '10%'
     },
     {
       title: 'Điểm đến',
       dataIndex: 'pointEnd',
       key: 'pointEnd',
+      align: 'center',
       width: '10%'
     },
     {
       title: 'Thời gian bắt dầu',
       dataIndex: 'timeFrom',
       key: 'timeFrom',
+      align: 'center',
       render: (text) => <span>{formatTime(text)}</span>,
       width: '10%'
     },
@@ -66,6 +72,7 @@ const TicketPage: React.FC = () => {
       title: 'Thời gian kết thúc',
       dataIndex: 'timeTo',
       key: 'timeTo',
+      align: 'center',
       render: (text) => <span>{formatTime(text)}</span>,
       width: '10%'
     },
@@ -73,11 +80,13 @@ const TicketPage: React.FC = () => {
       title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
+      align: 'center',
       width: '10%'
     },
     {
       title: 'Action',
       key: 'action',
+      align: 'center',
       render: () => (
         <Space size='middle'>
           <Button type='primary'>Edit</Button>

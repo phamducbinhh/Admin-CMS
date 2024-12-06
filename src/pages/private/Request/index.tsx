@@ -23,12 +23,14 @@ const RequestPage: React.FC = () => {
       title: 'ID',
       dataIndex: 'id',
       key: 'id',
+      align: 'center',
       width: '10%'
     },
     {
       title: 'Tên',
       dataIndex: 'userName',
       key: 'userName',
+      align: 'center',
       width: '20%',
       ...useColumnSearch().getColumnSearchProps('userName')
     },
@@ -36,6 +38,7 @@ const RequestPage: React.FC = () => {
       title: 'Mô tả',
       dataIndex: 'description',
       key: 'description',
+      align: 'center',
       ...useColumnSearch().getColumnSearchProps('description'),
       render: (text) => <a>{text}</a>,
       width: '25%'
@@ -44,12 +47,14 @@ const RequestPage: React.FC = () => {
       title: 'Trạng thái',
       dataIndex: 'note',
       key: 'note',
+      align: 'center',
       width: '20%'
     },
     {
       title: 'Type',
       dataIndex: 'typeId',
       key: 'typeId',
+      align: 'center',
       width: '20%',
       render: (type: ActionType) => <span>{ActionTypeDescriptions[type]}</span>,
       filters: Object.entries(ActionTypeDescriptions).map(([key, value]) => ({
@@ -59,7 +64,7 @@ const RequestPage: React.FC = () => {
       onFilter: (value, record) => record.typeId === value
     },
     {
-      title: 'Action',
+      title: <div style={{ textAlign: 'center' }}>Action</div>,
       key: 'action',
       render: (_, record) => (
         <Space size='middle'>

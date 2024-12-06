@@ -20,6 +20,7 @@ const PromotionPage: React.FC = () => {
       title: 'Code',
       dataIndex: 'codePromotion',
       key: 'codePromotion',
+      align: 'center',
       ...useColumnSearch().getColumnSearchProps('codePromotion'),
       sorter: (a, b) => a.codePromotion.localeCompare(b.codePromotion),
       width: '25%'
@@ -28,6 +29,7 @@ const PromotionPage: React.FC = () => {
       title: 'Mô tả',
       dataIndex: 'description',
       key: 'description',
+      align: 'center',
       ...useColumnSearch().getColumnSearchProps('description'),
       render: (text) => <a>{text}</a>,
       width: '25%'
@@ -36,6 +38,7 @@ const PromotionPage: React.FC = () => {
       title: 'Giá trị',
       dataIndex: 'discount',
       key: 'discount',
+      align: 'center',
       sorter: (a, b) => a.discount - b.discount,
       width: '20%'
     },
@@ -43,12 +46,14 @@ const PromotionPage: React.FC = () => {
       title: 'Số điểm đổi',
       dataIndex: 'exchangePoint',
       key: 'exchangePoint',
+      align: 'center',
       sorter: (a, b) => a.exchangePoint - b.exchangePoint,
       width: '20%'
     },
     {
       title: 'Action',
       key: 'action',
+      align: 'center',
       render: () => (
         <Space size='middle'>
           <Button type='primary'>Edit</Button>

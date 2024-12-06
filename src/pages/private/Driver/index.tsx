@@ -21,6 +21,7 @@ const DriverPage: React.FC = () => {
       title: 'Tên tài xế',
       dataIndex: 'name',
       key: 'name',
+      align: 'center',
       ...useColumnSearch().getColumnSearchProps('name'),
       render: (text) => <a>{text}</a>,
       sorter: (a, b) => a.name.localeCompare(b.name),
@@ -31,12 +32,14 @@ const DriverPage: React.FC = () => {
       dataIndex: 'numberPhone',
       key: 'numberPhone',
       width: '25%',
+      align: 'center',
       ...useColumnSearch().getColumnSearchProps('numberPhone')
     },
     {
       title: 'Avatar',
       dataIndex: 'avatar',
       key: 'avatar',
+      align: 'center',
       render: () => (
         <Avatar src={'https://statics.oeg.vn/storage/DEFAULT%20AVATAR%20PROFILE/akirov6.webp'} alt='Avatar' />
       ),
@@ -46,12 +49,14 @@ const DriverPage: React.FC = () => {
       title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
+      align: 'center',
       render: (status) => <p>{status === true ? 'Khả dụng' : 'Không khả dụng'}</p>,
       width: '20%'
     },
     {
       title: 'Action',
       key: 'action',
+      align: 'center',
       render: () => (
         <Space size='middle'>
           <Button type='primary'>Edit</Button>

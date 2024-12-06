@@ -1,4 +1,4 @@
-import { formatTime } from '@/helpers'
+import { formatPrize, formatTime } from '@/helpers'
 import useColumnSearch from '@/hooks/useColumnSearch'
 import { useQueryLossCost } from '@/queries/fixed-cost'
 import renderWithLoading from '@/utils/renderWithLoading'
@@ -24,6 +24,7 @@ const FixedCostPage: React.FC = () => {
       key: 'description',
       ...useColumnSearch().getColumnSearchProps('description'),
       render: (text) => <a>{text}</a>,
+      align: 'center',
       width: '25%'
     },
     {
@@ -31,19 +32,23 @@ const FixedCostPage: React.FC = () => {
       dataIndex: 'licensePlate',
       key: 'licensePlate',
       width: '25%',
+      align: 'center',
       ...useColumnSearch().getColumnSearchProps('licensePlate')
     },
     {
       title: 'Chi phí',
       dataIndex: 'price',
       key: 'price',
+      render: (text) => <span>{formatPrize(text)}</span>,
       sorter: (a, b) => a.price - b.price,
+      align: 'center',
       width: '20%'
     },
     {
       title: 'Ngày phát sinh',
       dataIndex: 'dateIncurred',
       key: 'dateIncurred',
+      align: 'center',
       sorter: (a, b) => Date.parse(a.dateIncurred) - Date.parse(b.dateIncurred),
       render: (date) => <span>{formatTime(date)}</span>,
       width: '20%'
@@ -51,6 +56,7 @@ const FixedCostPage: React.FC = () => {
     {
       title: 'Action',
       key: 'action',
+      align: 'center',
       render: () => (
         <Space size='middle'>
           <Button type='primary'>Edit</Button>

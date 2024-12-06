@@ -22,6 +22,7 @@ const CostTypePage: React.FC = () => {
       title: 'Loại chi phí',
       dataIndex: 'description',
       key: 'description',
+      align: 'center',
       ...useColumnSearch().getColumnSearchProps('description'),
       render: (text) => <a>{text}</a>,
       width: '30%'
@@ -30,6 +31,7 @@ const CostTypePage: React.FC = () => {
       title: 'Thời gian tạo',
       dataIndex: 'createdAt',
       key: 'createdAt',
+      align: 'center',
       render: (date) => <span>{formatDate(date)}</span>,
       width: '30%'
     },
@@ -37,12 +39,14 @@ const CostTypePage: React.FC = () => {
       title: 'Thời gian cập nhật',
       dataIndex: 'updateAt',
       key: 'updateAt',
+      align: 'center',
       render: (date) => <span>{formatDate(date)}</span>,
       width: '25%'
     },
     {
       title: 'Action',
       key: 'action',
+      align: 'center',
       render: () => (
         <Space size='middle'>
           <Button type='primary'>Edit</Button>
