@@ -153,6 +153,7 @@ const VehiclesPage: React.FC = () => {
               initialValues={selectedItem}
               fields={fields}
               setIsModalOpen={setIsModalOpen}
+              setSelectedItem={setSelectedItem}
             />
           </>
         )
