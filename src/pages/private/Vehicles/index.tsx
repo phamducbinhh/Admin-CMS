@@ -1,17 +1,26 @@
 import ModalForm, { ModalFormProps } from '@/components/Modal/ModalForm'
 import useColumnSearch from '@/hooks/useColumnSearch'
-import { useQueryVehicles, useQueryVehiclesDetails } from '@/queries/vehicle'
+import {
+  useQueryTypeOfVehicles,
+  useQueryTypeVehiclesOwner,
+  useQueryVehicles,
+  useQueryVehiclesDetails
+} from '@/queries/vehicle'
 import { DataTypeVehicle } from '@/types/DataType'
 import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
 import renderWithLoading from '@/utils/renderWithLoading'
 import type { TableProps } from 'antd'
-import { Button, Form, Input, InputNumber, Popconfirm, Space, Switch, Table } from 'antd'
+import { Button, Form, Input, InputNumber, Popconfirm, Select, Space, Switch, Table } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
+import { Option } from 'antd/es/mentions'
 import React, { useEffect, useState } from 'react'
 
 const VehiclesPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+
   const [selectedItem, setSelectedItem] = useState<DataTypeVehicle | null>(null)
+
+  const [lastFetchedId, setLastFetchedId] = useState<number | null>(null)
 
   const [form] = Form.useForm()
 
@@ -24,6 +33,10 @@ const VehiclesPage: React.FC = () => {
     }
   )
 
+  const { data: dataTypeOfVehicles, refetch: refetchTypeOfVehicles } = useQueryTypeOfVehicles()
+
+  const { data: dataTypeOfVehiclesOwner, refetch: refetchTypeOfVehiclesOwner } = useQueryTypeVehiclesOwner()
+
   const dataSource = data?.map((item: any) => ({
     ...item,
     key: item.id || item.someUniqueField
@@ -35,10 +48,13 @@ const VehiclesPage: React.FC = () => {
   }
 
   useEffect(() => {
-    if (selectedItem && selectedItem?.id) {
+    if (selectedItem?.id && selectedItem.id !== lastFetchedId) {
       refetch()
+      refetchTypeOfVehicles()
+      refetchTypeOfVehiclesOwner()
+      setLastFetchedId(selectedItem.id)
     }
-  }, [refetch, selectedItem])
+  }, [refetch, refetchTypeOfVehicles, refetchTypeOfVehiclesOwner, selectedItem, lastFetchedId])
 
   useEffect(() => {
     if (formData) {
@@ -82,6 +98,34 @@ const VehiclesPage: React.FC = () => {
       label: 'Biển số xe',
       component: <Input />,
       rules: [{ required: true, message: 'Vui lòng nhập Biển số xe!' }]
+    },
+    {
+      name: 'vehicleTypeId',
+      label: 'Nhà xe',
+      component: (
+        <Select placeholder='Chọn nhà xe' style={{ width: '100%' }}>
+          {dataTypeOfVehicles?.map((item: any) => (
+            <Option key={item.id} value={item.id}>
+              {item.description}
+            </Option>
+          ))}
+        </Select>
+      ),
+      rules: [{ required: true, message: 'Vui lòng nhập nhà xe!' }]
+    },
+    {
+      name: 'vehicleOwner',
+      label: 'Chủ nhà xe',
+      component: (
+        <Select placeholder='Chọn nhà xe' style={{ width: '100%' }}>
+          {dataTypeOfVehiclesOwner?.map((item: any) => (
+            <Option key={item.id} value={item.id}>
+              {item.username}
+            </Option>
+          ))}
+        </Select>
+      ),
+      rules: [{ required: true, message: 'Vui lòng nhập chủ nhà xe!' }]
     },
     {
       name: 'status',

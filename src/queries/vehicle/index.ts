@@ -14,6 +14,30 @@ export const useQueryVehicles = (options?: Omit<UseQueryOptions<any>, 'queryKey'
     }
   })
 }
+export const useQueryTypeOfVehicles = (options?: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'>) => {
+  return useQuery<any>({
+    ...options,
+    queryKey: ['type_vehicles'],
+    queryFn: async () => {
+      const response = await vehicleApiRequest.GetTypeOfVehicles()
+      if (response.status === HttpStatusCode.Ok) {
+        return response.data
+      }
+    }
+  })
+}
+export const useQueryTypeVehiclesOwner = (options?: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'>) => {
+  return useQuery<any>({
+    ...options,
+    queryKey: ['type_vehicles_owner'],
+    queryFn: async () => {
+      const response = await vehicleApiRequest.GetTypeOfVehiclesOwner()
+      if (response.status === HttpStatusCode.Ok) {
+        return response.data
+      }
+    }
+  })
+}
 
 export const useQueryVehiclesDetails = (
   { id }: { id: string | number | null },
