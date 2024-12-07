@@ -17,7 +17,7 @@ const VehiclesPage: React.FC = () => {
 
   const { data, isLoading } = useQueryVehicles()
 
-  const { data: dataDetails, refetch } = useQueryVehiclesDetails(
+  const { data: formData, refetch } = useQueryVehiclesDetails(
     { id: selectedItem?.id },
     {
       enabled: false
@@ -32,10 +32,6 @@ const VehiclesPage: React.FC = () => {
   const handleEdit = (item: DataTypeVehicle) => {
     setSelectedItem(item)
     setIsModalOpen(true)
-
-    console.log('dataDetails', dataDetails)
-
-    form.setFieldsValue(item)
   }
 
   useEffect(() => {
@@ -43,6 +39,12 @@ const VehiclesPage: React.FC = () => {
       refetch()
     }
   }, [refetch, selectedItem])
+
+  useEffect(() => {
+    if (formData) {
+      form.setFieldsValue(formData)
+    }
+  }, [formData, form])
 
   const handleFormSubmit = (values: any) => {
     console.log('Updated values:', values)
@@ -56,6 +58,12 @@ const VehiclesPage: React.FC = () => {
       label: 'Mô tả',
       component: <TextArea />,
       rules: [{ required: true, message: 'Vui lòng nhập Mô tả!' }]
+    },
+    {
+      name: 'driverName',
+      label: 'Tên nhân viên',
+      component: <Input />,
+      rules: [{ required: true, message: 'Vui lòng nhập tên nhân viên!' }]
     },
     {
       name: 'numberSeat',
