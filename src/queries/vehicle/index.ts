@@ -58,6 +58,15 @@ export const useQueryVehiclesDetails = (
 export const useAddVehiclesMutation = (options?: UseMutationOptions<any, unknown, any, unknown>) => {
   return useMutation({
     ...options,
-    mutationFn: (body: Omit<any, 'addVehicle'>) => vehicleApiRequest.AdVehicles({ body })
+    mutationFn: (body: Omit<any, 'addVehicle'>) => vehicleApiRequest.AddVehicles({ body })
+  })
+}
+
+export const useUpdateVehiclesMutation = (
+  options?: UseMutationOptions<any, unknown, { id: string | number; body: any }, unknown>
+) => {
+  return useMutation({
+    ...options,
+    mutationFn: ({ id, body }: { id: string | number; body: any }) => vehicleApiRequest.UpdateVehicles({ id, body })
   })
 }

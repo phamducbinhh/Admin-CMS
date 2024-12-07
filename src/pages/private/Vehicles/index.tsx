@@ -1,22 +1,25 @@
 import ModalForm, { ModalFormProps } from '@/components/Modal/ModalForm'
+import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
 import useColumnSearch from '@/hooks/useColumnSearch'
 import {
   useQueryTypeOfVehicles,
   useQueryTypeVehiclesOwner,
   useQueryVehicles,
-  useQueryVehiclesDetails
+  useQueryVehiclesDetails,
+  useUpdateVehiclesMutation
 } from '@/queries/vehicle'
 import { DataTypeVehicle } from '@/types/DataType'
 import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
 import renderWithLoading from '@/utils/renderWithLoading'
 import type { TableProps } from 'antd'
-import { Button, Form, Input, InputNumber, Popconfirm, Select, Space, Switch, Table } from 'antd'
+import { Button, Form, Input, InputNumber, message, Popconfirm, Select, Space, Switch, Table } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
-import { Option } from 'antd/es/mentions'
 import React, { useEffect, useState } from 'react'
 
 const VehiclesPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const { Option } = Select
 
   const [selectedItem, setSelectedItem] = useState<DataTypeVehicle | null>(null)
 
@@ -24,7 +27,9 @@ const VehiclesPage: React.FC = () => {
 
   const [form] = Form.useForm()
 
-  const { data, isLoading } = useQueryVehicles()
+  const { data, refetch: refetchVehicles, isLoading } = useQueryVehicles()
+
+  const updateMutation = useUpdateVehiclesMutation()
 
   const { data: formData, refetch } = useQueryVehiclesDetails(
     { id: selectedItem?.id },
@@ -62,10 +67,21 @@ const VehiclesPage: React.FC = () => {
     }
   }, [formData, form])
 
-  const handleFormSubmit = (values: any) => {
-    console.log('Updated values:', values)
-    setIsModalOpen(false)
-    setSelectedItem(null)
+  const handleFormSubmit = async (values: any) => {
+    try {
+      const response = await updateMutation.mutateAsync({ id: selectedItem?.id, body: values })
+      if (response.status === HttpStatusCode.Ok) {
+        message.success('Update successfully')
+        refetchVehicles()
+      } else {
+        message.error('Update failed')
+      }
+    } catch (error) {
+      console.error('Error updating values:', error)
+    } finally {
+      setIsModalOpen(false)
+      setSelectedItem(null)
+    }
   }
 
   const fields: ModalFormProps<DataTypeVehicle>['fields'] = [

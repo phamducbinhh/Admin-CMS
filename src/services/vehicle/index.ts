@@ -33,9 +33,15 @@ class VehicleApiRequest {
       config: { method: METHOD_TYPE.POST, cors: false }
     })
   }
-  public AdVehicles({ body }: { body: any }): Promise<any> {
+  public AddVehicles({ body }: { body: any }): Promise<any> {
     return apiBaseServiceInstance.Http({
       path: APP_API_ENDPOINT.VEHICLES.ADD_VEHICLES,
+      config: { method: METHOD_TYPE.POST, body, cors: false }
+    })
+  }
+  public UpdateVehicles({ id, body }: { id: string | number | null; body: any }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.VEHICLES.UPDATE_VEHICLES({ id }),
       config: { method: METHOD_TYPE.POST, body, cors: false }
     })
   }
