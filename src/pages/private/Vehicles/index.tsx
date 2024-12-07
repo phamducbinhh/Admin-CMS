@@ -72,6 +72,10 @@ const VehiclesPage: React.FC = () => {
   useEffect(() => {
     if (formData) {
       form.setFieldsValue(formData)
+      setSelectedItem((prev) => ({
+        ...prev,
+        ...formData
+      }))
     }
   }, [formData, form])
 
