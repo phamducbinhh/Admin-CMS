@@ -13,6 +13,7 @@ import {
 import { DataTypeVehicle } from '@/types/DataType'
 import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
 import renderWithLoading from '@/utils/renderWithLoading'
+import { PlusOutlined } from '@ant-design/icons'
 import type { TableProps } from 'antd'
 import { Button, Form, Input, InputNumber, message, Popconfirm, Select, Space, Switch, Table } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
@@ -248,6 +249,19 @@ const VehiclesPage: React.FC = () => {
         isLoading,
         content: (
           <>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
+              <Button
+                type='primary'
+                onClick={() => {
+                  setIsModalOpen(true)
+                  setSelectedItem(null)
+                }}
+                icon={<PlusOutlined />}
+                ghost
+              >
+                Thêm mới
+              </Button>
+            </div>
             <Table columns={columns} dataSource={dataSource} />
             <ModalForm
               isVisible={isModalOpen}
