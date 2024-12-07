@@ -1,6 +1,7 @@
 import ModalForm, { ModalFormProps } from '@/components/Modal/ModalForm'
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
 import useColumnSearch from '@/hooks/useColumnSearch'
+import { useQueryDriver } from '@/queries/driver'
 import {
   useQueryTypeOfVehicles,
   useQueryTypeVehiclesOwner,
@@ -42,6 +43,8 @@ const VehiclesPage: React.FC = () => {
 
   const { data: dataTypeOfVehiclesOwner, refetch: refetchTypeOfVehiclesOwner } = useQueryTypeVehiclesOwner()
 
+  const { data: dataTypeDriver, refetch: refetchDriver } = useQueryDriver()
+
   const dataSource = data?.map((item: any) => ({
     ...item,
     key: item.id || item.someUniqueField
@@ -57,9 +60,10 @@ const VehiclesPage: React.FC = () => {
       refetch()
       refetchTypeOfVehicles()
       refetchTypeOfVehiclesOwner()
+      refetchDriver()
       setLastFetchedId(selectedItem.id)
     }
-  }, [refetch, refetchTypeOfVehicles, refetchTypeOfVehiclesOwner, selectedItem, lastFetchedId])
+  }, [refetch, refetchTypeOfVehicles, refetchTypeOfVehiclesOwner, selectedItem, lastFetchedId, refetchDriver])
 
   useEffect(() => {
     if (formData) {
@@ -92,10 +96,18 @@ const VehiclesPage: React.FC = () => {
       rules: [{ required: true, message: 'Vui lòng nhập Mô tả!' }]
     },
     {
-      name: 'driverName',
-      label: 'Tên tài xế',
-      component: <Input />,
-      rules: [{ required: true, message: 'Vui lòng nhập tên tài xế!' }]
+      name: 'driverId',
+      label: 'Tài xế',
+      component: (
+        <Select placeholder='Chọn tài xế' style={{ width: '100%' }}>
+          {dataTypeDriver?.map((item: any) => (
+            <Option key={item.id} value={item.id}>
+              {item.userName}
+            </Option>
+          ))}
+        </Select>
+      ),
+      rules: [{ required: true, message: 'Vui lòng chọn tài xế!' }]
     },
     {
       name: 'image',
@@ -127,7 +139,7 @@ const VehiclesPage: React.FC = () => {
           ))}
         </Select>
       ),
-      rules: [{ required: true, message: 'Vui lòng nhập nhà xe!' }]
+      rules: [{ required: true, message: 'Vui lòng chọn nhà xe!' }]
     },
     {
       name: 'vehicleOwner',
@@ -141,7 +153,7 @@ const VehiclesPage: React.FC = () => {
           ))}
         </Select>
       ),
-      rules: [{ required: true, message: 'Vui lòng nhập chủ nhà xe!' }]
+      rules: [{ required: true, message: 'Vui lòng chọn chủ nhà xe!' }]
     },
     {
       name: 'status',
