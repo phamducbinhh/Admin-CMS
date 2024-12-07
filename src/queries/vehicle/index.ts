@@ -62,6 +62,13 @@ export const useAddVehiclesMutation = (options?: UseMutationOptions<any, unknown
   })
 }
 
+export const useDeleteVehiclesMutation = (options?: UseMutationOptions<any, unknown, any, unknown>) => {
+  return useMutation({
+    ...options,
+    mutationFn: ({ id }: { id: string | number | null }) => vehicleApiRequest.DeleteVehicles({ id })
+  })
+}
+
 export const useUpdateVehiclesMutation = (
   options?: UseMutationOptions<any, unknown, { id: string | number; body: any }, unknown>
 ) => {

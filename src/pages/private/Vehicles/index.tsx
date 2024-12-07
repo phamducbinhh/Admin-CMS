@@ -3,6 +3,7 @@ import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
 import useColumnSearch from '@/hooks/useColumnSearch'
 import { useQueryDriver } from '@/queries/driver'
 import {
+  useDeleteVehiclesMutation,
   useQueryTypeOfVehicles,
   useQueryTypeVehiclesOwner,
   useQueryVehicles,
@@ -31,6 +32,8 @@ const VehiclesPage: React.FC = () => {
   const { data, refetch: refetchVehicles, isLoading } = useQueryVehicles()
 
   const updateMutation = useUpdateVehiclesMutation()
+
+  const deleteMutaion = useDeleteVehiclesMutation()
 
   const { data: formData, refetch } = useQueryVehiclesDetails(
     { id: selectedItem?.id },
@@ -85,6 +88,20 @@ const VehiclesPage: React.FC = () => {
     } finally {
       setIsModalOpen(false)
       setSelectedItem(null)
+    }
+  }
+
+  const handleFormDelete = async (id: number) => {
+    try {
+      const response = await deleteMutaion.mutateAsync({ id })
+      if (response.status === HttpStatusCode.Ok) {
+        message.success('Delete successfully')
+        refetchVehicles()
+      } else {
+        message.error('Delete failed')
+      }
+    } catch (error) {
+      console.error('Error deleting:', error)
     }
   }
 
@@ -208,7 +225,14 @@ const VehiclesPage: React.FC = () => {
           <Button onClick={() => handleEdit(record)} type='primary'>
             Edit
           </Button>
-          <Popconfirm title='Are you sure to delete this item?' okText='Yes' cancelText='No'>
+          <Popconfirm
+            title='Are you sure to delete this item?'
+            okText='Yes'
+            cancelText='No'
+            onConfirm={() => {
+              handleFormDelete(record.id)
+            }}
+          >
             <Button type='primary' danger>
               Delete
             </Button>
