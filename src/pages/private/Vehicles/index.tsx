@@ -1,32 +1,48 @@
 import ModalForm, { ModalFormProps } from '@/components/Modal/ModalForm'
 import useColumnSearch from '@/hooks/useColumnSearch'
-import { useQueryVehicles } from '@/queries/vehicle'
-import { DataType } from '@/types/DataType'
+import { useQueryVehicles, useQueryVehiclesDetails } from '@/queries/vehicle'
+import { DataTypeVehicle } from '@/types/DataType'
 import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
 import renderWithLoading from '@/utils/renderWithLoading'
 import type { TableProps } from 'antd'
 import { Button, Form, Input, InputNumber, Popconfirm, Space, Switch, Table } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const VehiclesPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedItem, setSelectedItem] = useState<DataType | null>(null)
+  const [selectedItem, setSelectedItem] = useState<DataTypeVehicle | null>(null)
 
   const [form] = Form.useForm()
 
   const { data, isLoading } = useQueryVehicles()
+
+  const { data: dataDetails, refetch } = useQueryVehiclesDetails(
+    { id: selectedItem?.id },
+    {
+      enabled: false
+    }
+  )
 
   const dataSource = data?.map((item: any) => ({
     ...item,
     key: item.id || item.someUniqueField
   }))
 
-  const handleEdit = (item: DataType) => {
+  const handleEdit = (item: DataTypeVehicle) => {
     setSelectedItem(item)
     setIsModalOpen(true)
+
+    console.log('dataDetails', dataDetails)
+
     form.setFieldsValue(item)
   }
+
+  useEffect(() => {
+    if (selectedItem && selectedItem?.id) {
+      refetch()
+    }
+  }, [refetch, selectedItem])
 
   const handleFormSubmit = (values: any) => {
     console.log('Updated values:', values)
@@ -34,48 +50,24 @@ const VehiclesPage: React.FC = () => {
     setSelectedItem(null)
   }
 
-  const fields: ModalFormProps<DataType>['fields'] = [
+  const fields: ModalFormProps<DataTypeVehicle>['fields'] = [
     {
-      name: 'name',
-      label: 'Tên chuyến đi',
-      component: <Input />,
-      rules: [{ required: true, message: 'Vui lòng nhập tên chuyến đi!' }]
+      name: 'description',
+      label: 'Mô tả',
+      component: <TextArea />,
+      rules: [{ required: true, message: 'Vui lòng nhập Mô tả!' }]
     },
     {
-      name: 'startTime',
-      label: 'Thời gian khởi hành',
+      name: 'numberSeat',
+      label: 'Số ghế ngồi',
       component: <InputNumber style={{ width: '100%' }} />,
-      rules: [{ required: true, message: 'Vui lòng nhập thời gian khởi hành!' }]
-    },
-    {
-      name: 'price',
-      label: 'Giá vé',
-      component: <InputNumber style={{ width: '100%' }} />,
-      rules: [{ required: true, message: 'Vui lòng nhập giá vé!' }]
+      rules: [{ required: true, message: 'Vui lòng nhập số chỗ ngồi!' }]
     },
     {
       name: 'licensePlate',
       label: 'Biển số xe',
       component: <Input />,
       rules: [{ required: true, message: 'Vui lòng nhập Biển số xe!' }]
-    },
-    {
-      name: 'pointStart',
-      label: 'Điểm đến',
-      component: <Input />,
-      rules: [{ required: true, message: 'Vui lòng nhập điểm đến!' }]
-    },
-    {
-      name: 'pointEnd',
-      label: 'Điểm đi',
-      component: <Input />,
-      rules: [{ required: true, message: 'Vui lòng nhập điểm đi!' }]
-    },
-    {
-      name: 'description',
-      label: 'Mô tả',
-      component: <TextArea />,
-      rules: [{ required: true, message: 'Vui lòng nhập Mô tả!' }]
     },
     {
       name: 'status',
@@ -85,7 +77,7 @@ const VehiclesPage: React.FC = () => {
     }
   ]
 
-  const columns: TableProps<DataType>['columns'] = [
+  const columns: TableProps<DataTypeVehicle>['columns'] = [
     {
       title: 'Tên chuyến đi',
       dataIndex: 'description',
