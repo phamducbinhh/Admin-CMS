@@ -61,9 +61,15 @@ const VehiclesPage: React.FC = () => {
     },
     {
       name: 'driverName',
-      label: 'Tên nhân viên',
+      label: 'Tên tài xế',
       component: <Input />,
-      rules: [{ required: true, message: 'Vui lòng nhập tên nhân viên!' }]
+      rules: [{ required: true, message: 'Vui lòng nhập tên tài xế!' }]
+    },
+    {
+      name: 'image',
+      label: 'Link ảnh',
+      component: <Input />,
+      rules: [{ required: true, message: 'Vui lòng nhập link ảnh!' }]
     },
     {
       name: 'numberSeat',
