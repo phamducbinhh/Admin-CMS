@@ -250,15 +250,7 @@ const VehiclesPage: React.FC = () => {
         content: (
           <>
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
-              <Button
-                type='primary'
-                onClick={() => {
-                  setIsModalOpen(true)
-                  setSelectedItem(null)
-                }}
-                icon={<PlusOutlined />}
-                ghost
-              >
+              <Button type='primary' icon={<PlusOutlined />} ghost>
                 Thêm mới
               </Button>
             </div>
