@@ -28,3 +28,12 @@ export interface DataTypeVehicle {
   updateAt: string // ISO Date string
   updateBy: number | null // Nullable field
 }
+
+export interface DataTypeCost {
+  id: number | any
+  key: string
+  description: string
+  createdAt: number
+  updateAt: number
+  status: boolean
+}
