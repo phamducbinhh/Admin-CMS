@@ -12,6 +12,7 @@ import {
 } from '@/queries/vehicle'
 import { DataTypeVehicle } from '@/types/DataType'
 import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
+import { useLocalStorage } from '@/utils/localStorage/localStorageService'
 import renderWithLoading from '@/utils/renderWithLoading'
 import { PlusOutlined } from '@ant-design/icons'
 import type { TableProps } from 'antd'
@@ -20,9 +21,14 @@ import TextArea from 'antd/es/input/TextArea'
 import React, { useEffect, useState } from 'react'
 
 const VehiclesPage: React.FC = () => {
+
+  const role = useLocalStorage.getLocalStorageData("role");
+
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const { Option } = Select
+
+  const [mode, setMode] = useState('add')
 
   const [selectedItem, setSelectedItem] = useState<DataTypeVehicle | null>(null)
 
@@ -55,6 +61,7 @@ const VehiclesPage: React.FC = () => {
   }))
 
   const handleEdit = (item: DataTypeVehicle) => {
+    setMode('edit')
     setSelectedItem(item)
     setIsModalOpen(true)
   }
@@ -72,24 +79,25 @@ const VehiclesPage: React.FC = () => {
   useEffect(() => {
     if (formData) {
       form.setFieldsValue(formData)
-      setSelectedItem((prev) => ({
-        ...prev,
-        ...formData
-      }))
+      setSelectedItem(null)
     }
   }, [formData, form])
 
   const handleFormSubmit = async (values: any) => {
     try {
-      const response = await updateMutation.mutateAsync({ id: selectedItem?.id, body: values })
-      if (response.status === HttpStatusCode.Ok) {
-        message.success('Update successfully')
-        refetchVehicles()
-      } else {
-        message.error('Update failed')
+      if (mode === 'add') {
+        console.log(values)
+      } else if (mode === 'edit') {
+        const response = await updateMutation.mutateAsync({ id: lastFetchedId, body: values })
+        if (response.status === HttpStatusCode.Ok) {
+          message.success('Update successfully')
+          refetchVehicles()
+        } else {
+          message.error('Update failed')
+        }
       }
     } catch (error) {
-      console.error('Error updating values:', error)
+      console.error('Error values:', error)
     } finally {
       setIsModalOpen(false)
       setSelectedItem(null)
@@ -108,6 +116,12 @@ const VehiclesPage: React.FC = () => {
     } catch (error) {
       console.error('Error deleting:', error)
     }
+  }
+
+  const openAddModal = () => {
+    setMode('add')
+    form.resetFields()
+    setIsModalOpen(true)
   }
 
   const fields: ModalFormProps<DataTypeVehicle>['fields'] = [
@@ -254,12 +268,13 @@ const VehiclesPage: React.FC = () => {
         content: (
           <>
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
-              <Button type='primary' icon={<PlusOutlined />} ghost>
+              <Button onClick={() => openAddModal()} type='primary' icon={<PlusOutlined />} ghost>
                 Thêm mới
               </Button>
             </div>
             <Table columns={columns} dataSource={dataSource} />
             <ModalForm
+              form={form}
               isVisible={isModalOpen}
               onSubmit={handleFormSubmit}
               initialValues={selectedItem}
