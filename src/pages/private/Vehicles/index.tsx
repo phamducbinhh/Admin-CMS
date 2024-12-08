@@ -3,6 +3,7 @@ import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
 import useColumnSearch from '@/hooks/useColumnSearch'
 import { useQueryDriver } from '@/queries/driver'
 import {
+  useAddVehiclesMutation,
   useDeleteVehiclesMutation,
   useQueryTypeOfVehicles,
   useQueryTypeVehiclesOwner,
@@ -21,8 +22,7 @@ import TextArea from 'antd/es/input/TextArea'
 import React, { useEffect, useState } from 'react'
 
 const VehiclesPage: React.FC = () => {
-
-  const role = useLocalStorage.getLocalStorageData("role");
+  const role = useLocalStorage.getLocalStorageData('role')
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -37,6 +37,8 @@ const VehiclesPage: React.FC = () => {
   const [form] = Form.useForm()
 
   const { data, refetch: refetchVehicles, isLoading } = useQueryVehicles()
+
+  const addMutation = useAddVehiclesMutation()
 
   const updateMutation = useUpdateVehiclesMutation()
 
@@ -87,6 +89,14 @@ const VehiclesPage: React.FC = () => {
     try {
       if (mode === 'add') {
         console.log(values)
+
+        const response = await addMutation.mutateAsync(values)
+        if (response.status === HttpStatusCode.Ok) {
+          message.success(response.message)
+          refetchVehicles()
+        } else {
+          message.error('Add failed')
+        }
       } else if (mode === 'edit') {
         const response = await updateMutation.mutateAsync({ id: lastFetchedId, body: values })
         if (response.status === HttpStatusCode.Ok) {
