@@ -9,6 +9,7 @@ export interface DataType {
   licensePlate?: string
   pointStart?: string
   pointEnd?: string
+  driverId?: number
 }
 
 export interface DataTypeVehicle {
