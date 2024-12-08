@@ -12,6 +12,7 @@ export interface DataType {
 }
 
 export interface DataTypeVehicle {
+  type: string
   id: number | any
   driverName: string
   image: string
