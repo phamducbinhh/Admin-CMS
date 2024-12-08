@@ -104,8 +104,10 @@ const CostTypePage: React.FC = () => {
   }
 
   useEffect(() => {
-    setSelectedItem(null)
-  }, [selectedItem])
+    if (mode === 'add') {
+      setSelectedItem(null)
+    }
+  }, [mode])
 
   const fields: ModalFormProps<DataTypeCost>['fields'] = [
     {

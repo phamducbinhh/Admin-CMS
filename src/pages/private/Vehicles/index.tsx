@@ -1,10 +1,6 @@
-
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
 import useColumnSearch from '@/hooks/useColumnSearch'
-import {
-  useDeleteVehiclesMutation,
-  useQueryVehicles,
-} from '@/queries/vehicle'
+import { useDeleteVehiclesMutation, useQueryVehicles } from '@/queries/vehicle'
 import { DataTypeVehicle } from '@/types/DataType'
 import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
 // import { useLocalStorage } from '@/utils/localStorage/localStorageService'
@@ -24,7 +20,6 @@ const VehiclesPage: React.FC = () => {
     ...item,
     key: item.id || item.someUniqueField
   }))
-
 
   useEffect(() => {
     refetchVehicles()
