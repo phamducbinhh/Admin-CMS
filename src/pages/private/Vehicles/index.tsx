@@ -1,10 +1,6 @@
-
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
 import useColumnSearch from '@/hooks/useColumnSearch'
-import {
-  useDeleteVehiclesMutation,
-  useQueryVehicles,
-} from '@/queries/vehicle'
+import { useDeleteVehiclesMutation, useQueryVehicles } from '@/queries/vehicle'
 import { DataTypeVehicle } from '@/types/DataType'
 import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
 // import { useLocalStorage } from '@/utils/localStorage/localStorageService'
@@ -24,7 +20,6 @@ const VehiclesPage: React.FC = () => {
     ...item,
     key: item.id || item.someUniqueField
   }))
-
 
   useEffect(() => {
     refetchVehicles()
@@ -229,9 +224,11 @@ const VehiclesPage: React.FC = () => {
         content: (
           <>
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
-              <Button type='primary' icon={<PlusOutlined />} ghost>
-                Thêm mới
-              </Button>
+              <Link to='add'>
+                <Button type='primary' icon={<PlusOutlined />} ghost>
+                  Thêm mới
+                </Button>
+              </Link>
             </div>
             <Table columns={columns} dataSource={dataSource} />
             {/* <ModalForm
