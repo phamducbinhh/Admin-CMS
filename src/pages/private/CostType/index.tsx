@@ -95,13 +95,19 @@ const CostTypePage: React.FC = () => {
 
   const openAddModal = () => {
     setMode('add')
+    console.log('Before clearing:', selectedItem)
+    setSelectedItem(null)
+    console.log('After clearing:', selectedItem)
+    // setSelectedItem(null)
+    setTimeout(() => setIsModalOpen(true), 0) // Open modal after state updates
     form.resetFields()
-    setIsModalOpen(true)
   }
 
   useEffect(() => {
-    setSelectedItem(null)
-  }, [selectedItem])
+    if (mode === 'add') {
+      setSelectedItem(null)
+    }
+  }, [mode])
 
   const fields: ModalFormProps<DataTypeCost>['fields'] = [
     {
@@ -144,7 +150,13 @@ const CostTypePage: React.FC = () => {
       align: 'center',
       render: (_, record) => (
         <Space size='middle'>
-          <Button onClick={() => handleEdit(record)} type='primary'>
+          <Button
+            onClick={() => {
+              console.log(record)
+              handleEdit(record)
+            }}
+            type='primary'
+          >
             Edit
           </Button>
           <Popconfirm
