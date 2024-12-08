@@ -14,7 +14,7 @@ import { PlusOutlined } from '@ant-design/icons'
 import type { TableProps } from 'antd'
 import { Button, Form, message, Popconfirm, Space, Table } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface DataType {
   id: number
@@ -98,6 +98,10 @@ const CostTypePage: React.FC = () => {
     form.resetFields()
     setIsModalOpen(true)
   }
+
+  useEffect(() => {
+    setSelectedItem(null)
+  }, [selectedItem])
 
   const fields: ModalFormProps<DataTypeCost>['fields'] = [
     {
