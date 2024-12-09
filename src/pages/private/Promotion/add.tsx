@@ -1,7 +1,7 @@
 import { useAddPromotionMutation } from '@/queries/promotions'
 import { DataTypeVehicle } from '@/types/DataType'
 import { fieldModalTable } from '@/utils/fieldModalTable'
-import { Form, Button, message } from 'antd'
+import { Button, Form, message } from 'antd'
 import { HttpStatusCode } from 'axios'
 // import TextArea from 'antd/es/input/TextArea'
 import React from 'react'
@@ -24,10 +24,10 @@ const AddPromotionPage: React.FC = () => {
     try {
       const response = await addMutation.mutateAsync(values)
       if (response.status === HttpStatusCode.Ok) {
-        message.success(response.data.message)
+        message.success('Add successfully')
         navigate('/promotion')
       } else {
-        message.error(response.message)
+        message.error('Add failed')
       }
     } catch (error) {
       console.error('Error values:', error)

@@ -32,7 +32,7 @@ export const APP_API_ENDPOINT = Object.freeze({
     ADD_DRIVER: '/api/Driver/Driver'
   },
   LOSS_COST_VEHICLE: {
-    GET_COST: '/api/LossCostVehicle/lossCostCar/vehicleId/startDate/endDate',
+    GET_COST: '/api/LossCostVehicle/totalLossVehicel',
     DELETE_COST: ({ id }: { id: string | number | null }) => `/api/LossCostVehicle/deleteLossCost/id?id=${id}`,
     UPDATE_COST: ({ id }: { id: string | number | null }) => `/api/LossCostVehicle/updateLossCost/id?id=${id}`,
     ADD_COST: '/api/LossCostVehicle/addLossCostVehicle'

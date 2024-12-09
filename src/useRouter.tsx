@@ -25,6 +25,7 @@ import AddVehiclePage from './pages/private/Vehicles/add'
 import EditVehiclePage from './pages/private/Vehicles/edit'
 import VehicleUsingPage from './pages/private/VehicleUsing'
 import LoginPage from './pages/public/login'
+import EditFixedCostPage from './pages/private/FixedCost/edit'
 
 const staffRoutes = [
   { path: '/trips', component: <TripsPages />, allowedRoles: ['Staff'] },
@@ -77,6 +78,11 @@ const staffRoutes = [
     allowedRoles: ['Staff']
   },
   { path: '/fixed-cost', component: <FixedCostPage />, allowedRoles: ['Staff'] },
+  {
+    path: '/fixed-cost/edit', // Note: Relative to the parent route
+    component: <EditFixedCostPage />,
+    allowedRoles: ['Staff']
+  },
   { path: '/request', component: <RequestPage />, allowedRoles: ['Staff', 'Admin', 'Driver'] },
   { path: '/ticket', component: <TicketPage />, allowedRoles: ['Staff', 'Driver'] },
   { path: '/ticket-not-paid', component: <TicketNotPaidPage />, allowedRoles: ['Staff', 'Driver'] },

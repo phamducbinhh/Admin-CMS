@@ -38,11 +38,11 @@ const EditCostTypePage: React.FC = () => {
     try {
       const response = await updateMutation.mutateAsync({ id: costTypeID, body: values })
       if (response.status === HttpStatusCode.Ok) {
-        message.success(response.data.message)
+        message.success('Update successfully')
         refetch()
         navigate('/cost-type')
       } else {
-        message.error(response.message)
+        message.error('Update failed')
       }
     } catch (error) {
       console.error('Error values:', error)
