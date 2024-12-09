@@ -15,6 +15,7 @@ import PromotionPage from './pages/private/Promotion'
 import AddPromotionPage from './pages/private/Promotion/add'
 import EditPromotionPage from './pages/private/Promotion/edit'
 import RequestPage from './pages/private/Request'
+import DetailsRequestPage from './pages/private/Request/details'
 import ReviewsPage from './pages/private/Reviews'
 import RolePage from './pages/private/Role'
 import TicketPage from './pages/private/Ticket'
@@ -90,6 +91,7 @@ const staffRoutes = [
     allowedRoles: ['Staff']
   },
   { path: '/request', component: <RequestPage />, allowedRoles: ['Staff', 'Admin', 'Driver'] },
+  { path: '/request/details', component: <DetailsRequestPage />, allowedRoles: ['Staff', 'Admin', 'Driver'] },
   { path: '/ticket', component: <TicketPage />, allowedRoles: ['Staff', 'Driver'] },
   { path: '/ticket-not-paid', component: <TicketNotPaidPage />, allowedRoles: ['Staff', 'Driver'] },
   { path: '/reviews', component: <ReviewsPage />, allowedRoles: ['Staff'] },

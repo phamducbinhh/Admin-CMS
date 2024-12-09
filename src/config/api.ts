@@ -45,7 +45,7 @@ export const APP_API_ENDPOINT = Object.freeze({
   },
   REQUEST: {
     GET_REQUEST: '/api/Request',
-    REQUEST_DETAILS: ({ id }: { id: string | number | null }) => `/api/Request/${id}`,
+    REQUEST_DETAILS: ({ id }: { id: string | number | null }) => `/GetRequestDetailById/${id}`,
     ACCEPT_CANCLE_REQUEST: ({ id }: { id: string | number | null }) => `/api/Request/acceptCancleTicket/${id}`
   },
   TICKET: {
