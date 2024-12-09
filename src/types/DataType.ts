@@ -44,3 +44,15 @@ export interface DataTypeCost {
   updateAt: number
   status: boolean
 }
+export interface DataTypeFixedCost {
+  id: number | any
+  dateIncurred: string // ISO Date string
+  description: string
+  licensePlate: string
+  lossCostType: string | null // Nullable field
+  price: number
+  vehicleId: number
+  lossCostTypeId?: number
+  vehicleOwner: string | null // Nullable field
+  vehicleOwnerId: number
+}

@@ -3,11 +3,15 @@ import PrivateRoute from './middleware'
 import PrivateLayout from './pages/private'
 import AccountPage from './pages/private/Account'
 import CostTypePage from './pages/private/CostType'
+import AddCostTypePage from './pages/private/CostType/add'
+import EditCostTypePage from './pages/private/CostType/edit'
 import DriverPage from './pages/private/Driver'
 import FixedCostPage from './pages/private/FixedCost'
 import HistoryRentDriverPage from './pages/private/History-Driver'
 import HistoryRentVehiclePage from './pages/private/History-Vehicle'
 import PromotionPage from './pages/private/Promotion'
+import AddPromotionPage from './pages/private/Promotion/add'
+import EditPromotionPage from './pages/private/Promotion/edit'
 import RequestPage from './pages/private/Request'
 import ReviewsPage from './pages/private/Reviews'
 import RolePage from './pages/private/Role'
@@ -17,12 +21,10 @@ import TripsPages from './pages/private/trips'
 import UnauthorizedPage from './pages/private/Unauthorized'
 import UserProfilePage from './pages/private/UserProfile'
 import VehiclesPage from './pages/private/Vehicles'
+import AddVehiclePage from './pages/private/Vehicles/add'
+import EditVehiclePage from './pages/private/Vehicles/edit'
 import VehicleUsingPage from './pages/private/VehicleUsing'
 import LoginPage from './pages/public/login'
-import EditVehiclePage from './pages/private/Vehicles/edit'
-import AddVehiclePage from './pages/private/Vehicles/add'
-import AddPromotionPage from './pages/private/Promotion/add'
-import EditPromotionPage from './pages/private/Promotion/edit'
 
 const staffRoutes = [
   { path: '/trips', component: <TripsPages />, allowedRoles: ['Staff'] },
@@ -64,6 +66,16 @@ const staffRoutes = [
     allowedRoles: ['Staff', 'VehicleOwner', 'Driver']
   },
   { path: '/cost-type', component: <CostTypePage />, allowedRoles: ['Staff'] },
+  {
+    path: '/cost-type/edit', // Note: Relative to the parent route
+    component: <EditCostTypePage />,
+    allowedRoles: ['Staff']
+  },
+  {
+    path: '/cost-type/add', // Note: Relative to the parent route
+    component: <AddCostTypePage />,
+    allowedRoles: ['Staff']
+  },
   { path: '/fixed-cost', component: <FixedCostPage />, allowedRoles: ['Staff'] },
   { path: '/request', component: <RequestPage />, allowedRoles: ['Staff', 'Admin', 'Driver'] },
   { path: '/ticket', component: <TicketPage />, allowedRoles: ['Staff', 'Driver'] },
