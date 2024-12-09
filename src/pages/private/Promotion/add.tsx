@@ -23,8 +23,10 @@ const AddPromotionPage: React.FC = () => {
   const handleFormSubmit = async (values: DataTypeVehicle) => {
     try {
       const response = await addMutation.mutateAsync(values)
-      if (response.status === HttpStatusCode.Ok) {
-        message.success(response.data.message)
+      console.log(response)
+
+      if (response.status === HttpStatusCode.Created) {
+        message.success('Create promotion success')
         navigate('/promotion')
       } else {
         message.error(response.message)

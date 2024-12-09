@@ -112,6 +112,9 @@ const PromotionPage: React.FC = () => {
                   Thêm mới
                 </Button>
               </Link>
+              <Button style={{ marginLeft: 16 }} type='primary' icon={<PlusOutlined />} ghost>
+                Thêm promotion cho tất cả user
+              </Button>
             </div>
             <Table columns={columns} dataSource={dataSource} />
           </>
