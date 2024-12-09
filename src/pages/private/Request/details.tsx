@@ -15,9 +15,9 @@ const DetailsRequestPage: React.FC = () => {
   const renderComponent = () => {
     switch (data?.typeRequestId) {
       case ActionType.ADD_VEHICLE:
-        return <AddVehicleForm data={data} typeId={requestID} />
+        return <AddVehicleForm data={data} />
       case ActionType.RENT_VEHICLE:
-        return <RentVehicleForm data={data} typeId={requestID} />
+        return <RentVehicleForm data={data} />
       default:
         return <p>Không tìm thấy loại yêu cầu phù hợp.</p>
     }
