@@ -21,6 +21,8 @@ import VehicleUsingPage from './pages/private/VehicleUsing'
 import LoginPage from './pages/public/login'
 import EditVehiclePage from './pages/private/Vehicles/edit'
 import AddVehiclePage from './pages/private/Vehicles/add'
+import AddPromotionPage from './pages/private/Promotion/add'
+import EditPromotionPage from './pages/private/Promotion/edit'
 
 const staffRoutes = [
   { path: '/trips', component: <TripsPages />, allowedRoles: ['Staff'] },
@@ -30,16 +32,26 @@ const staffRoutes = [
     allowedRoles: ['Staff', 'VehicleOwner', 'Driver']
   },
   {
-    path: '/vehicles/add', // Note: Relative to the parent route
+    path: '/vehicles/add',
     component: <AddVehiclePage />,
     allowedRoles: ['Staff']
   },
   {
-    path: '/vehicles/edit', // Note: Relative to the parent route
+    path: '/vehicles/edit',
     component: <EditVehiclePage />,
     allowedRoles: ['Staff']
   },
   { path: '/promotion', component: <PromotionPage />, allowedRoles: ['Staff'] },
+  {
+    path: '/promotion/add',
+    component: <AddPromotionPage />,
+    allowedRoles: ['Staff']
+  },
+  {
+    path: '/promotion/edit',
+    component: <EditPromotionPage />,
+    allowedRoles: ['Staff']
+  },
   { path: '/driver', component: <DriverPage />, allowedRoles: ['Staff', 'Admin'] },
   {
     path: '/history-rent-vehicle',
