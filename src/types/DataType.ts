@@ -10,6 +10,12 @@ export interface DataType {
   pointStart?: string
   pointEnd?: string
   driverId?: number
+  codePromotion?: string
+  discount?: string
+  endDate?: string
+  exchangePoint?: number
+  imagePromotion?: string
+  startDate?: string
 }
 
 export interface DataTypeVehicle {
