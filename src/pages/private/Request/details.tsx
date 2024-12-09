@@ -4,6 +4,7 @@ import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 import AddVehicleForm from './type_1'
 import RentVehicleForm from './type_2'
+import RentDriverForm from './type_4'
 
 const DetailsRequestPage: React.FC = () => {
   const [searchParams] = useSearchParams()
@@ -18,6 +19,8 @@ const DetailsRequestPage: React.FC = () => {
         return <AddVehicleForm data={data} />
       case ActionType.RENT_VEHICLE:
         return <RentVehicleForm data={data} />
+      case ActionType.RENT_DRIVER:
+        return <RentDriverForm data={data} />
       default:
         return <p>Không tìm thấy loại yêu cầu phù hợp.</p>
     }
