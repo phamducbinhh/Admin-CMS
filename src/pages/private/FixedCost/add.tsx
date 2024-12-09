@@ -1,51 +1,28 @@
 import { ModalFormProps } from '@/components/Modal/ModalForm'
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
 import { useQueryCostType } from '@/queries/cost-type'
-import { useQueryLossCost, useUpdatelossCostMutation } from '@/queries/fixed-cost'
+import { useAddLossCostMutation, useQueryLossCost } from '@/queries/fixed-cost'
 import { useQueryVehicles } from '@/queries/vehicle'
 import { DataTypeCost, DataTypeFixedCost } from '@/types/DataType'
 import { Button, DatePicker, Form, InputNumber, message, Select } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
-import dayjs from 'dayjs'
-import { useEffect, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-const EditFixedCostPage: React.FC = () => {
-  const [searchParams] = useSearchParams()
-
-  const fixedcostTypeID: string | number | null = searchParams.get('id')
+const AddFixedCostPage: React.FC = () => {
+  const [form] = Form.useForm()
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  if (fixedcostTypeID === null) {
-    throw new Error('Invalid cost type ID')
-  }
-
-  const [form] = Form.useForm()
-
-  const updateMutation = useUpdatelossCostMutation()
+  const addMutation = useAddLossCostMutation()
 
   const navigate = useNavigate()
 
-  const { data, refetch } = useQueryLossCost()
+  const { refetch } = useQueryLossCost()
 
   const { data: vehicleData } = useQueryVehicles()
 
   const { data: costTypeData } = useQueryCostType()
-
-  useEffect(() => {
-    if (data && Array.isArray(data)) {
-      const formData = data.find((item) => item.id === Number(fixedcostTypeID))
-      if (formData) {
-        const updatedFormData = {
-          ...formData,
-          dateIncurred: dayjs(formData.dateIncurred)
-        }
-
-        form.setFieldsValue(updatedFormData)
-      }
-    }
-  }, [data, fixedcostTypeID, form])
 
   const fields: ModalFormProps<DataTypeFixedCost>['fields'] = [
     {
@@ -103,17 +80,16 @@ const EditFixedCostPage: React.FC = () => {
       rules: [{ required: true, message: 'Vui lòng chọn ngày phát sinh!' }]
     }
   ]
-
   const handleFormSubmit = async (values: DataTypeCost) => {
     setIsLoading(true)
     try {
-      const response = await updateMutation.mutateAsync({ id: fixedcostTypeID, body: values })
+      const response = await addMutation.mutateAsync(values)
       if (response.status === HttpStatusCode.Ok) {
-        message.success('Update successfully')
+        message.success('Add successfully')
         refetch()
         navigate('/fixed-cost')
       } else {
-        message.error('Update failed')
+        message.error('Add failed')
       }
     } catch (error) {
       console.error('Error values:', error)
@@ -130,10 +106,10 @@ const EditFixedCostPage: React.FC = () => {
         </Form.Item>
       ))}
       <Button type='primary' htmlType='submit' loading={isLoading}>
-        Update
+        Add
       </Button>
     </Form>
   )
 }
 
-export default EditFixedCostPage
+export default AddFixedCostPage

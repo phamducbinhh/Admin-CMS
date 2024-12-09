@@ -109,9 +109,11 @@ const FixedCostPage: React.FC = () => {
         content: (
           <>
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
-              <Button type='primary' icon={<PlusOutlined />} ghost>
-                Thêm mới
-              </Button>
+              <Link to='add'>
+                <Button type='primary' icon={<PlusOutlined />} ghost>
+                  Thêm mới
+                </Button>
+              </Link>
             </div>
             <Table columns={columns} dataSource={dataSource} />
           </>

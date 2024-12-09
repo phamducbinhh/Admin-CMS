@@ -3,11 +3,13 @@ import { useQueryCostType, useUpdateCostTypeMutation } from '@/queries/cost-type
 import { DataTypeCost } from '@/types/DataType'
 import { fieldModalTable } from '@/utils/fieldModalTable'
 import { Button, Form, message } from 'antd'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 const EditCostTypePage: React.FC = () => {
   const [searchParams] = useSearchParams()
+
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const costTypeID: string | number | null = searchParams.get('id')
 
@@ -35,6 +37,7 @@ const EditCostTypePage: React.FC = () => {
   const filteredFields = fieldModalTable.filter((field) => field.name && ['description'].includes(field.name))
 
   const handleFormSubmit = async (values: DataTypeCost) => {
+    setIsLoading(true)
     try {
       const response = await updateMutation.mutateAsync({ id: costTypeID, body: values })
       if (response.status === HttpStatusCode.Ok) {
@@ -44,8 +47,8 @@ const EditCostTypePage: React.FC = () => {
       } else {
         message.error('Update failed')
       }
-    } catch (error) {
-      console.error('Error values:', error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -56,7 +59,7 @@ const EditCostTypePage: React.FC = () => {
           {field.component}
         </Form.Item>
       ))}
-      <Button type='primary' htmlType='submit'>
+      <Button type='primary' htmlType='submit' loading={isLoading}>
         Update
       </Button>
     </Form>

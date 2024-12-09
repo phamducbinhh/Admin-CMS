@@ -7,6 +7,8 @@ import AddCostTypePage from './pages/private/CostType/add'
 import EditCostTypePage from './pages/private/CostType/edit'
 import DriverPage from './pages/private/Driver'
 import FixedCostPage from './pages/private/FixedCost'
+import AddFixedCostPage from './pages/private/FixedCost/add'
+import EditFixedCostPage from './pages/private/FixedCost/edit'
 import HistoryRentDriverPage from './pages/private/History-Driver'
 import HistoryRentVehiclePage from './pages/private/History-Vehicle'
 import PromotionPage from './pages/private/Promotion'
@@ -25,7 +27,6 @@ import AddVehiclePage from './pages/private/Vehicles/add'
 import EditVehiclePage from './pages/private/Vehicles/edit'
 import VehicleUsingPage from './pages/private/VehicleUsing'
 import LoginPage from './pages/public/login'
-import EditFixedCostPage from './pages/private/FixedCost/edit'
 
 const staffRoutes = [
   { path: '/trips', component: <TripsPages />, allowedRoles: ['Staff'] },
@@ -81,6 +82,11 @@ const staffRoutes = [
   {
     path: '/fixed-cost/edit', // Note: Relative to the parent route
     component: <EditFixedCostPage />,
+    allowedRoles: ['Staff']
+  },
+  {
+    path: '/fixed-cost/add', // Note: Relative to the parent route
+    component: <AddFixedCostPage />,
     allowedRoles: ['Staff']
   },
   { path: '/request', component: <RequestPage />, allowedRoles: ['Staff', 'Admin', 'Driver'] },

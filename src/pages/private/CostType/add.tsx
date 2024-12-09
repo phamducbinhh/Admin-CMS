@@ -3,12 +3,15 @@ import { useAddCostTypeMutation, useQueryCostType } from '@/queries/cost-type'
 import { DataTypeCost } from '@/types/DataType'
 import { fieldModalTable } from '@/utils/fieldModalTable'
 import { Button, Form, message } from 'antd'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const AddCostTypePage: React.FC = () => {
   const [form] = Form.useForm()
 
   const addMutation = useAddCostTypeMutation()
+
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const navigate = useNavigate()
 
@@ -17,6 +20,7 @@ const AddCostTypePage: React.FC = () => {
   const filteredFields = fieldModalTable.filter((field) => field.name && ['description'].includes(field.name))
 
   const handleFormSubmit = async (values: DataTypeCost) => {
+    setIsLoading(true)
     try {
       const response = await addMutation.mutateAsync(values)
       if (response.status === HttpStatusCode.Ok) {
@@ -28,6 +32,9 @@ const AddCostTypePage: React.FC = () => {
       }
     } catch (error) {
       console.error('Error values:', error)
+      message.error('Add failed')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -38,7 +45,7 @@ const AddCostTypePage: React.FC = () => {
           {field.component}
         </Form.Item>
       ))}
-      <Button type='primary' htmlType='submit'>
+      <Button type='primary' htmlType='submit' loading={isLoading}>
         Add
       </Button>
     </Form>
