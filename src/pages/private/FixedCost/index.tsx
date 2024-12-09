@@ -1,5 +1,5 @@
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
-import { formatPrize, formatTime } from '@/helpers'
+import { formatPrize, formatTime, generateFilters } from '@/helpers'
 import useColumnSearch from '@/hooks/useColumnSearch'
 import { useDeleteLossCostMutation, useQueryLossCost } from '@/queries/fixed-cost'
 import { DataTypeFixedCost } from '@/types/DataType'
@@ -34,6 +34,8 @@ const FixedCostPage: React.FC = () => {
     }
   }
 
+  const lossCostTypeFilters = data ? generateFilters(data, 'lossCostType') : []
+
   const columns: TableProps<DataTypeFixedCost>['columns'] = [
     {
       title: 'Tên chi phí',
@@ -48,7 +50,7 @@ const FixedCostPage: React.FC = () => {
       title: 'Biển số xe',
       dataIndex: 'licensePlate',
       key: 'licensePlate',
-      width: '20%',
+      width: '15%',
       align: 'center',
       ...useColumnSearch().getColumnSearchProps('licensePlate')
     },
@@ -61,13 +63,23 @@ const FixedCostPage: React.FC = () => {
       ...useColumnSearch().getColumnSearchProps('vehicleOwner')
     },
     {
+      title: 'Loại chi phí',
+      dataIndex: 'lossCostType',
+      key: 'lossCostType',
+      align: 'center',
+      width: '20%',
+      filters: lossCostTypeFilters,
+      onFilter: (value, record) => record.lossCostType === value,
+      render: (value) => value || 'N/A'
+    },
+    {
       title: 'Chi phí',
       dataIndex: 'price',
       key: 'price',
       render: (text) => <span>{formatPrize(text)}</span>,
       sorter: (a, b) => a.price - b.price,
       align: 'center',
-      width: '20%'
+      width: '10%'
     },
     {
       title: 'Ngày phát sinh',
