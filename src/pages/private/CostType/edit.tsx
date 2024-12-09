@@ -1,33 +1,46 @@
-import { ModalFormProps } from '@/components/Modal/ModalForm'
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
-import { useAddCostTypeMutation } from '@/queries/cost-type'
-import { DataTypeCost, DataTypeVehicle } from '@/types/DataType'
+import { useQueryCostType, useUpdateCostTypeMutation } from '@/queries/cost-type'
+import { DataTypeCost } from '@/types/DataType'
+import { fieldModalTable } from '@/utils/fieldModalTable'
 import { Button, Form, message } from 'antd'
-import TextArea from 'antd/es/input/TextArea'
-import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 const EditCostTypePage: React.FC = () => {
+  const [searchParams] = useSearchParams()
+
+  const costTypeID: string | number | null = searchParams.get('id')
+
+  if (costTypeID === null) {
+    throw new Error('Invalid cost type ID')
+  }
+
   const [form] = Form.useForm()
 
-  const addMutation = useAddCostTypeMutation()
+  const updateMutation = useUpdateCostTypeMutation()
 
   const navigate = useNavigate()
 
-  const fields: ModalFormProps<DataTypeCost>['fields'] = [
-    {
-      name: 'description',
-      label: 'Mô tả',
-      component: <TextArea />,
-      rules: [{ required: true, message: 'Vui lòng nhập Mô tả!' }]
-    }
-  ]
+  const { data: formData, refetch } = useQueryCostType()
 
-  const handleFormSubmit = async (values: DataTypeVehicle) => {
+  useEffect(() => {
+    if (formData && Array.isArray(formData)) {
+      const selectedItem = formData.find((item) => item.id === Number(costTypeID))
+      if (selectedItem) {
+        form.setFieldsValue(selectedItem)
+      }
+    }
+  }, [formData, costTypeID, form])
+
+  const filteredFields = fieldModalTable.filter((field) => field.name && ['description'].includes(field.name))
+
+  const handleFormSubmit = async (values: DataTypeCost) => {
     try {
-      const response = await addMutation.mutateAsync(values)
+      const response = await updateMutation.mutateAsync({ id: costTypeID, body: values })
       if (response.status === HttpStatusCode.Ok) {
         message.success(response.data.message)
-        navigate('/vehicles')
+        refetch()
+        navigate('/cost-type')
       } else {
         message.error(response.message)
       }
@@ -38,7 +51,7 @@ const EditCostTypePage: React.FC = () => {
 
   return (
     <Form onFinish={handleFormSubmit} form={form} layout='vertical'>
-      {fields.map((field) => (
+      {filteredFields.map((field) => (
         <Form.Item key={String(field.name)} name={field.name as string} label={field.label} rules={field.rules || []}>
           {field.component}
         </Form.Item>
