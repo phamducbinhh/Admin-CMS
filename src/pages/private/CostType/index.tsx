@@ -1,10 +1,11 @@
+import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
 import { formatDate } from '@/helpers'
 import useColumnSearch from '@/hooks/useColumnSearch'
-import { useQueryCostType } from '@/queries/cost-type'
+import { useDeleteCostTypeMutation, useQueryCostType } from '@/queries/cost-type'
 import renderWithLoading from '@/utils/renderWithLoading'
 import { PlusOutlined } from '@ant-design/icons'
 import type { TableProps } from 'antd'
-import { Button, Popconfirm, Space, Table } from 'antd'
+import { Button, message, Popconfirm, Space, Table } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -18,12 +19,28 @@ interface DataType {
 }
 
 const CostTypePage: React.FC = () => {
-  const { data, isLoading } = useQueryCostType()
+  const { data, isLoading, refetch } = useQueryCostType()
+
+  const deleteMutaion = useDeleteCostTypeMutation()
 
   const dataSource = data?.map((item: any) => ({
     ...item,
     key: item.id || item.someUniqueField
   }))
+
+  const handleFormDelete = async (id: number) => {
+    try {
+      const response = await deleteMutaion.mutateAsync({ id })
+      if (response.status === HttpStatusCode.Ok) {
+        message.success('Delete successfully')
+        refetch()
+      } else {
+        message.error('Delete failed')
+      }
+    } catch (error) {
+      console.error('Error deleting:', error)
+    }
+  }
 
   const columns: TableProps<DataType>['columns'] = [
     {
@@ -60,7 +77,14 @@ const CostTypePage: React.FC = () => {
           <Link to={`edit?id=${record.id}`}>
             <Button type='primary'>Edit</Button>
           </Link>
-          <Popconfirm title='Are you sure to delete this item?' okText='Yes' cancelText='No'>
+          <Popconfirm
+            title='Are you sure to delete this item?'
+            okText='Yes'
+            cancelText='No'
+            onConfirm={() => {
+              handleFormDelete(record.id)
+            }}
+          >
             <Button type='primary' danger>
               Delete
             </Button>
@@ -76,9 +100,11 @@ const CostTypePage: React.FC = () => {
         content: (
           <>
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
-              <Button type='primary' icon={<PlusOutlined />} ghost>
-                Thêm mới
-              </Button>
+              <Link to='add'>
+                <Button type='primary' icon={<PlusOutlined />} ghost>
+                  Thêm mới
+                </Button>
+              </Link>
             </div>
             <Table columns={columns} dataSource={dataSource} />
           </>
