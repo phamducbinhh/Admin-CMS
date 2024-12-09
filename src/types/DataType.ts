@@ -60,7 +60,7 @@ export interface DataTypeFixedCost {
 export interface DataTypeRequest {
   requestId: number
   ticketId: number | null // Nullable field
-  vehicleId: number
+  vehicleId: number | any
   driverId: number
   note: string | null // Nullable field
   typeRequestId: number

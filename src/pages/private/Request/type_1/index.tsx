@@ -1,7 +1,7 @@
+import { useQueryVehiclesDetails } from '@/queries/vehicle'
 import { DataTypeRequest } from '@/types/DataType'
 import { Button, Col, Form, Row, Table } from 'antd'
-import dayjs from 'dayjs'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 
 const AddVehicleForm = ({
   data,
@@ -14,45 +14,60 @@ const AddVehicleForm = ({
 }) => {
   const [form] = Form.useForm()
 
-  const tableData = [
-    { key: 'driverId', label: 'Tài xế', value: data?.driverId || 'N/A' },
-    { key: 'vehicleId', label: 'Xe', value: data?.vehicleId || 'N/A' },
-    { key: 'seats', label: 'Số chỗ ngồi', value: data?.seats || 'N/A' },
-    { key: 'typeName', label: 'Loại xe', value: data?.typeName || 'N/A' },
-    { key: 'price', label: 'Giá vé', value: data?.price || 'N/A' },
+  const { data: vehicleData, refetch: refetchVehicle } = useQueryVehiclesDetails(
+    { id: data?.vehicleId },
     {
-      key: 'startTime',
-      label: 'Ngày bắt đầu',
-      value: data?.startTime ? dayjs(data.startTime).format('YYYY-MM-DD HH:mm:ss') : 'N/A'
-    },
-    {
-      key: 'endTime',
-      label: 'Ngày kết thúc',
-      value: data?.endTime ? dayjs(data.endTime).format('YYYY-MM-DD HH:mm:ss') : 'N/A'
+      enabled: data?.typeRequestId === 1
     }
-  ]
+  )
 
-  const columns = [
-    {
-      title: 'Key',
-      dataIndex: 'label',
-      key: 'label',
-      width: '30%'
-    },
-    {
-      title: 'Value',
-      dataIndex: 'value',
-      key: 'value',
-      width: '70%'
-    }
-  ]
-
+  // Refetch data khi `typeId` hoặc `vehicleId` thay đổi
   useEffect(() => {
-    refetch()
+    if (typeId) refetch()
   }, [typeId, refetch])
 
+  useEffect(() => {
+    if (data?.vehicleId) refetchVehicle()
+  }, [data?.vehicleId, refetchVehicle])
+
+  // Chuẩn bị dữ liệu bảng
+  const tableData = useMemo(
+    () => [
+      { key: 'driverName', label: 'Tài xế', value: vehicleData?.driverName || 'N/A' },
+      { key: 'vehicleId', label: 'Xe', value: data?.vehicleId || 'N/A' },
+      { key: 'numberSeat', label: 'Số ghế ngồi', value: vehicleData?.numberSeat || 'N/A' },
+      { key: 'licensePlate', label: 'Biển số xe', value: vehicleData?.licensePlate || 'N/A' },
+      { key: 'description', label: 'Mô tả', value: vehicleData?.description || 'N/A' }
+    ],
+    [vehicleData, data]
+  )
+
+  // Cấu hình cột bảng
+  const columns = useMemo(
+    () => [
+      {
+        title: 'Key',
+        dataIndex: 'label',
+        key: 'label',
+        width: '30%'
+      },
+      {
+        title: 'Value',
+        dataIndex: 'value',
+        key: 'value',
+        width: '70%'
+      }
+    ],
+    []
+  )
+
+  // Xử lý form submit (tùy chỉnh logic)
+  const handleFormSubmit = () => {
+    console.log('Form Submitted')
+  }
+
   return (
-    <Form form={form} layout='vertical'>
+    <Form form={form} layout='vertical' onFinish={handleFormSubmit}>
       <Table columns={columns} dataSource={tableData} pagination={false} bordered />
       <Row justify='start' gutter={16} style={{ marginTop: '16px' }}>
         <Col>
@@ -61,12 +76,7 @@ const AddVehicleForm = ({
           </Button>
         </Col>
         <Col>
-          <Button
-            type='primary'
-            htmlType='button'
-            danger
-            style={{ backgroundColor: '#ff4d4f', borderColor: '#ff4d4f' }}
-          >
+          <Button type='primary' htmlType='button' danger>
             Deny
           </Button>
         </Col>
