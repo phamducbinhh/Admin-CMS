@@ -4,7 +4,7 @@ import renderWithLoading from '@/utils/renderWithLoading'
 import { PlusOutlined } from '@ant-design/icons'
 import { Button, message, Popconfirm, Space, Table, TableProps } from 'antd'
 import { HttpStatusCode } from 'axios'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 interface DataType {
@@ -25,6 +25,10 @@ const PromotionPage: React.FC = () => {
     key: item.id || item.someUniqueField
   }))
 
+  useEffect(() => {
+    refetch()
+  }, [refetch])
+
   const handleFormDelete = async (id: number) => {
     try {
       const response = await deleteMutation.mutateAsync({ id })
@@ -41,6 +45,14 @@ const PromotionPage: React.FC = () => {
 
   const columns: TableProps<DataType>['columns'] = [
     {
+      title: 'Id',
+      dataIndex: 'id',
+      key: 'id',
+      align: 'center',
+      width: '10%',
+      render: (link) => <Link to={`/promotion/detail?id=${link}`}>{link}</Link>
+    },
+    {
       title: 'Code',
       dataIndex: 'codePromotion',
       key: 'codePromotion',
@@ -55,7 +67,6 @@ const PromotionPage: React.FC = () => {
       key: 'description',
       align: 'center',
       ...useColumnSearch().getColumnSearchProps('description'),
-      render: (text) => <a>{text}</a>,
       width: '25%'
     },
     {

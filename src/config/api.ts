@@ -23,7 +23,8 @@ export const APP_API_ENDPOINT = Object.freeze({
     GET_PROMOTION: '/api/Promotion',
     DELETE_PROMOTION: ({ id }: { id: string | number | null }) => `/api/Promotion/deletePromotion/id?id=${id}`,
     PROMOTION_DETAILS: ({ id }: { id: string | number | null }) => `/api/Promotion/getPromotionById/${id}`,
-    ADD_PROMOTION: '/api/Promotion/CreatePromotion'
+    ADD_PROMOTION: '/api/Promotion/CreatePromotion',
+    ADD_PROMOTION_ALL_USER: '/api/Promotion/givePromotionAllUser'
   },
   DRIVER: {
     GET_DRIVER: '/api/Driver',

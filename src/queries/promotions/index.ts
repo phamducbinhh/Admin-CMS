@@ -38,6 +38,13 @@ export const useAddPromotionMutation = (options?: UseMutationOptions<any, unknow
   })
 }
 
+export const useAddPromotionToAllUserMutation = (options?: UseMutationOptions<any, unknown, any, unknown>) => {
+  return useMutation({
+    ...options,
+    mutationFn: (body: Omit<any, 'addPromotionToAllUser'>) => promotionApiRequest.AddPromotionToAllUsers({ body })
+  })
+}
+
 export const useDeletePromotionMutation = (options?: UseMutationOptions<any, unknown, any, unknown>) => {
   return useMutation({
     ...options,
