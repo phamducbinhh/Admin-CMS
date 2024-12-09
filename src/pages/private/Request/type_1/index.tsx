@@ -1,36 +1,23 @@
+import { ActionType } from '@/enums/enum'
 import { useQueryVehiclesDetails } from '@/queries/vehicle'
 import { DataTypeRequest } from '@/types/DataType'
 import { Button, Col, Form, Row, Table } from 'antd'
 import { useEffect, useMemo } from 'react'
 
-const AddVehicleForm = ({
-  data,
-  refetch,
-  typeId
-}: {
-  data: DataTypeRequest | undefined
-  refetch: () => void
-  typeId: string | number | undefined | null
-}) => {
+const AddVehicleForm = ({ data }: { data: DataTypeRequest | undefined }) => {
   const [form] = Form.useForm()
 
   const { data: vehicleData, refetch: refetchVehicle } = useQueryVehiclesDetails(
     { id: data?.vehicleId },
     {
-      enabled: data?.typeRequestId === 1
+      enabled: data?.typeRequestId === ActionType.ADD_VEHICLE
     }
   )
-
-  // Refetch data khi `typeId` hoặc `vehicleId` thay đổi
-  useEffect(() => {
-    if (typeId) refetch()
-  }, [typeId, refetch])
 
   useEffect(() => {
     if (data?.vehicleId) refetchVehicle()
   }, [data?.vehicleId, refetchVehicle])
 
-  // Chuẩn bị dữ liệu bảng
   const tableData = useMemo(
     () => [
       { key: 'driverName', label: 'Tài xế', value: vehicleData?.driverName || 'N/A' },
@@ -42,7 +29,6 @@ const AddVehicleForm = ({
     [vehicleData, data]
   )
 
-  // Cấu hình cột bảng
   const columns = useMemo(
     () => [
       {
@@ -61,7 +47,6 @@ const AddVehicleForm = ({
     []
   )
 
-  // Xử lý form submit (tùy chỉnh logic)
   const handleFormSubmit = () => {
     console.log('Form Submitted')
   }
