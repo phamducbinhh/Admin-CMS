@@ -25,6 +25,7 @@ import AddVehiclePage from './pages/private/Vehicles/add'
 import EditVehiclePage from './pages/private/Vehicles/edit'
 import VehicleUsingPage from './pages/private/VehicleUsing'
 import LoginPage from './pages/public/login'
+import DetailPromotionPage from './pages/private/Promotion/detail'
 
 const staffRoutes = [
   { path: '/trips', component: <TripsPages />, allowedRoles: ['Staff'] },
@@ -52,6 +53,11 @@ const staffRoutes = [
   {
     path: '/promotion/edit',
     component: <EditPromotionPage />,
+    allowedRoles: ['Staff']
+  },
+  {
+    path: '/promotion/detail',
+    component: <DetailPromotionPage />,
     allowedRoles: ['Staff']
   },
   { path: '/driver', component: <DriverPage />, allowedRoles: ['Staff', 'Admin'] },
