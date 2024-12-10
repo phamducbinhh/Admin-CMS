@@ -71,7 +71,8 @@ export const APP_API_ENDPOINT = Object.freeze({
     GET_ACCOUNT_DETAILS: ({ id }: { id: string | number | null }) => `/api/Account/detailsAccount/${id}`
   },
   HISTORY_RENT_VEHICLE: {
-    GET_HISTORY_RENT_VEHICLE: '/api/HistoryRentVehicle/listHistoryRentVehicle'
+    GET_HISTORY_RENT_VEHICLE: '/api/HistoryRentVehicle/listHistoryRentVehicle',
+    GET_LIST_VEHICLE_RENT: '/api/HistoryRentVehicle/ListVehicleUseRent'
   },
   HISTORY_RENT_DRIVER: {
     GET_HISTORY_RENT_DRIVER: '/api/HistoryRentDriver/listHistoryRentDriver',
