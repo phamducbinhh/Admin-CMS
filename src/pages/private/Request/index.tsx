@@ -16,6 +16,7 @@ interface DataType {
   note: string
   userName: number
   typeId: string | number
+  status: boolean
 }
 
 const RequestPage: React.FC = () => {
@@ -49,10 +50,11 @@ const RequestPage: React.FC = () => {
     },
     {
       title: 'Trạng thái',
-      dataIndex: 'note',
-      key: 'note',
+      dataIndex: 'status',
+      key: 'status',
       align: 'center',
-      width: '20%'
+      width: '20%',
+      render: (status: boolean) => <span>{status ? 'Đã xác nhận' : 'Chưa xác nhận'}</span>
     },
     {
       title: 'Type',
@@ -82,7 +84,7 @@ const RequestPage: React.FC = () => {
               Delete
             </Button>
           </Popconfirm>
-          {record.typeId === 3 && (
+          {record.typeId === 3 && !record.status && (
             <Popconfirm title='Bạn có chắc chắn muốn hủy yêu cầu này không?' okText='Xác nhận' cancelText='Hủy'>
               <Button type='default'>Cancel</Button>
             </Popconfirm>
