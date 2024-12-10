@@ -1,5 +1,6 @@
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
 import requestApiRequest from '@/services/request'
+import { RequestOption } from '@/types/DataType'
 import { useMutation, UseMutationOptions, useQuery, UseQueryOptions } from '@tanstack/react-query'
 
 export const useQueryRequest = (options?: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'>) => {
@@ -47,5 +48,13 @@ export const useAddVehicleByStaffMutation = (
     ...options,
     mutationFn: ({ id, isApprove }: { id: string | number | null; isApprove: boolean }) =>
       requestApiRequest.AddVehicleByStaff({ id, isApprove })
+  })
+}
+
+export const useCreateTicketForRentCarMutation = (options?: UseMutationOptions<any, unknown, any, unknown>) => {
+  return useMutation({
+    ...options,
+    mutationFn: (body: Omit<RequestOption, 'createTicketForRentCar'>) =>
+      requestApiRequest.CreateTicketForRentCar({ body })
   })
 }

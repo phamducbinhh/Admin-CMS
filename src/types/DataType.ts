@@ -90,3 +90,10 @@ export interface DataTypeRequest {
   phoneNumber: string
   promotionCode: string
 }
+
+export interface RequestOption {
+  requestId?: number | string | null
+  choose?: boolean
+  vehicleId?: number
+  price?: number
+}
