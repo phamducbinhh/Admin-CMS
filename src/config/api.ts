@@ -58,6 +58,9 @@ export const APP_API_ENDPOINT = Object.freeze({
     UPDATE_STATUS_TICKET: ({ id }: { id: string | number | null }) => `/api/Ticket/updateStatusticketNotPaid/${id}`,
     GET_TRAVEL_CAR_BY_REQUEST: ({ id }: { id: string | number | null }) => `/api/Ticket/GetTravelCarByRequest/${id}`
   },
+  REVENUE: {
+    GET_REVENUE: '/api/Revenue/getRevenue'
+  },
   REVIEWS: {
     GET_REVIEW: '/api/Review',
     DELETE_REVIEWS: ({ id }: { id: string | number | null }) => `/api/Review/DeleteReview/${id}`
