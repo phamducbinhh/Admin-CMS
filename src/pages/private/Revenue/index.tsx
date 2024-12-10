@@ -12,6 +12,10 @@ const RevenuePage: React.FC = () => {
 
   const revenueTicketData = data?.revenueTicketDTOs[0]?.listTicket || []
   const totalLossCosts = data?.totalLossCosts[0]?.listLossCostVehicle || []
+  const rentDriverData = data?.totalPayementRentDrivers[0]?.paymentRentDriverDTOs || []
+  const rentVehicleData = data?.totalPaymentRentVehicleDTOs[0]?.paymentRentVehicelDTOs || []
+
+  const total = data?.totalRevenue
 
   const revenueTicketDataColumns = [
     generateColumn('pricePromotion', 'Price Promotion', {
@@ -28,6 +32,16 @@ const RevenuePage: React.FC = () => {
     generateColumn('typeOfPayment', 'Type Of Payment', { width: '25%' })
   ]
 
+  const rentDriverDataColumns = [
+    generateColumn('driverName', 'Driver Name', {
+      searchable: true,
+      getColumnSearchProps
+    }),
+    generateColumn('vehicleId', 'Vehicle Id'),
+    generateColumn('vehicleOwner', 'Vehicle Owner'),
+    generateColumn('createdAt', 'Date', { formatter: formatDate })
+  ]
+
   const lossCostDataColumns = [
     generateColumn('licensePlate', 'Liscense Vehicle', {
       searchable: true,
@@ -40,10 +54,28 @@ const RevenuePage: React.FC = () => {
     generateColumn('description', 'Description')
   ]
 
-  const revenueTicketSource = revenueTicketData.map((item: any) => ({
-    ...item,
-    key: item.id || item.someUniqueField
-  }))
+  const rentVehicleDataColumns = [
+    generateColumn('licenseVehicle', 'Liscense Vehicle', {
+      searchable: true,
+      getColumnSearchProps
+    }),
+    generateColumn('driverName', 'Driver Name'),
+    generateColumn('carOwner', 'Vehicle Owner'),
+    generateColumn('price', 'Price'),
+    generateColumn('price', 'Price', { formatter: formatPrize }),
+    generateColumn('createdAt', 'Date', { formatter: formatDate })
+  ]
+
+  const generateDataSource = (data: any[], uniqueKey: string) =>
+    data.map((item: any, index: number) => ({
+      ...item,
+      key: item[uniqueKey] || index
+    }))
+
+  const revenueTicketSource = generateDataSource(revenueTicketData, 'id')
+  const rentDriverSource = generateDataSource(rentDriverData, 'id')
+  const rentVehicleSource = generateDataSource(rentVehicleData, 'id')
+  const lossCostSource = generateDataSource(totalLossCosts, 'id')
 
   return (
     <>
@@ -56,8 +88,19 @@ const RevenuePage: React.FC = () => {
               <Table columns={revenueTicketDataColumns} dataSource={revenueTicketSource} />
             </div>
             <div>
+              <h4 style={{ fontSize: 24, marginBottom: 30 }}>Rent Driver</h4>
+              <Table columns={rentDriverDataColumns} dataSource={rentDriverSource} />
+            </div>
+            <div>
+              <h4 style={{ fontSize: 24, marginBottom: 30 }}>Rent Vehicle</h4>
+              <Table columns={rentVehicleDataColumns} dataSource={rentVehicleSource} />
+            </div>
+            <div>
               <h4 style={{ fontSize: 24, marginBottom: 30 }}>Lost Cost</h4>
-              <Table columns={lossCostDataColumns} dataSource={totalLossCosts} />
+              <Table columns={lossCostDataColumns} dataSource={lossCostSource} />
+            </div>
+            <div>
+              Total : <span style={{ fontSize: 20 }}>{formatPrize(total)}</span>
             </div>
           </>
         )

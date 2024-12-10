@@ -19,8 +19,8 @@ export const generateColumn = (
     width,
     ...(searchable && getColumnSearchProps ? getColumnSearchProps(field) : {}),
     render: (text: any) => {
-      if (formatter) return <span>{formatter(text)}</span>
-      return <span>{text === null || text === undefined ? '(Không)' : text}</span>
+      const formattedValue = formatter ? formatter(text) : text
+      return <span>{formattedValue === null || formattedValue === undefined ? '(Không)' : formattedValue}</span>
     }
   }
 }
