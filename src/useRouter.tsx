@@ -32,94 +32,99 @@ import AddVehiclePage from './pages/private/Vehicles/add'
 import EditVehiclePage from './pages/private/Vehicles/edit'
 import VehicleUsingPage from './pages/private/VehicleUsing'
 import LoginPage from './pages/public/login'
+import { RoleType } from './enums/enum'
 
 const staffRoutes = [
-  { path: '/trips', component: <TripsPages />, allowedRoles: ['Staff'] },
+  { path: '/trips', component: <TripsPages />, allowedRoles: [RoleType.STAFF] },
   {
     path: '/vehicles',
     component: <VehiclesPage />,
-    allowedRoles: ['Staff', 'VehicleOwner', 'Driver']
+    allowedRoles: [RoleType.STAFF, RoleType.VEHICLE_OWNER, RoleType.DRIVER]
   },
   {
     path: '/vehicles/add',
     component: <AddVehiclePage />,
-    allowedRoles: ['Staff']
+    allowedRoles: [RoleType.STAFF]
   },
   {
     path: '/vehicles/edit',
     component: <EditVehiclePage />,
-    allowedRoles: ['Staff']
+    allowedRoles: [RoleType.STAFF]
   },
-  { path: '/promotion', component: <PromotionPage />, allowedRoles: ['Staff'] },
+  { path: '/promotion', component: <PromotionPage />, allowedRoles: [RoleType.STAFF] },
   {
     path: '/promotion/add',
     component: <AddPromotionPage />,
-    allowedRoles: ['Staff']
+    allowedRoles: [RoleType.STAFF]
   },
   {
     path: '/promotion/edit',
     component: <EditPromotionPage />,
-    allowedRoles: ['Staff']
+    allowedRoles: [RoleType.STAFF]
   },
   {
     path: '/promotion/detail',
     component: <DetailPromotionPage />,
-    allowedRoles: ['Staff']
+    allowedRoles: [RoleType.STAFF]
   },
-  { path: '/driver', component: <DriverPage />, allowedRoles: ['Staff', 'Admin'] },
+  { path: '/driver', component: <DriverPage />, allowedRoles: [RoleType.STAFF, RoleType.ADMIN] },
   {
     path: '/history-rent-vehicle',
     component: <HistoryRentVehiclePage />,
-    allowedRoles: ['Staff', 'VehicleOwner', 'Driver']
+    allowedRoles: [RoleType.STAFF, RoleType.VEHICLE_OWNER, RoleType.DRIVER]
   },
   {
     path: '/history-rent-driver',
     component: <HistoryRentDriverPage />,
-    allowedRoles: ['Staff', 'VehicleOwner', 'Driver']
+    allowedRoles: [RoleType.STAFF, RoleType.VEHICLE_OWNER, RoleType.DRIVER]
   },
-  { path: '/cost-type', component: <CostTypePage />, allowedRoles: ['Staff'] },
+  { path: '/cost-type', component: <CostTypePage />, allowedRoles: [RoleType.STAFF] },
   {
     path: '/cost-type/edit', // Note: Relative to the parent route
     component: <EditCostTypePage />,
-    allowedRoles: ['Staff']
+    allowedRoles: [RoleType.STAFF]
   },
   {
     path: '/cost-type/add', // Note: Relative to the parent route
     component: <AddCostTypePage />,
-    allowedRoles: ['Staff']
+    allowedRoles: [RoleType.STAFF]
   },
-  { path: '/fixed-cost', component: <FixedCostPage />, allowedRoles: ['Staff'] },
+  { path: '/fixed-cost', component: <FixedCostPage />, allowedRoles: [RoleType.STAFF] },
   {
     path: '/fixed-cost/edit', // Note: Relative to the parent route
     component: <EditFixedCostPage />,
-    allowedRoles: ['Staff']
+    allowedRoles: [RoleType.STAFF]
   },
   {
     path: '/fixed-cost/add', // Note: Relative to the parent route
     component: <AddFixedCostPage />,
-    allowedRoles: ['Staff']
+    allowedRoles: [RoleType.STAFF]
   },
-  { path: '/request', component: <RequestPage />, allowedRoles: ['Staff', 'Admin', 'Driver'] },
-  { path: '/request/details', component: <DetailsRequestPage />, allowedRoles: ['Staff', 'Admin', 'Driver'] },
-  { path: '/revenue', component: <RevenuePage />, allowedRoles: ['Staff', 'VehicleOwner'] },
-  { path: '/ticket', component: <TicketPage />, allowedRoles: ['Staff'] },
-  { path: '/ticket/detail', component: <DetailTicketPage />, allowedRoles: ['Staff'] },
-  { path: '/ticket/edit', component: <EditTicketPage />, allowedRoles: ['Staff'] },
-  { path: '/ticket-not-paid', component: <TicketNotPaidPage />, allowedRoles: ['Staff', 'Driver'] },
-  { path: '/reviews', component: <ReviewsPage />, allowedRoles: ['Staff'] },
+  { path: '/request', component: <RequestPage />, allowedRoles: [RoleType.STAFF, RoleType.ADMIN, RoleType.DRIVER] },
+  {
+    path: '/request/details',
+    component: <DetailsRequestPage />,
+    allowedRoles: [RoleType.STAFF, RoleType.ADMIN, RoleType.DRIVER]
+  },
+  { path: '/revenue', component: <RevenuePage />, allowedRoles: [RoleType.STAFF, RoleType.VEHICLE_OWNER] },
+  { path: '/ticket', component: <TicketPage />, allowedRoles: [RoleType.STAFF] },
+  { path: '/ticket/detail', component: <DetailTicketPage />, allowedRoles: [RoleType.STAFF] },
+  { path: '/ticket/edit', component: <EditTicketPage />, allowedRoles: [RoleType.STAFF] },
+  { path: '/ticket-not-paid', component: <TicketNotPaidPage />, allowedRoles: [RoleType.STAFF, RoleType.DRIVER] },
+  { path: '/reviews', component: <ReviewsPage />, allowedRoles: [RoleType.STAFF] },
   {
     path: '/user-profile',
     component: <UserProfilePage />,
-    allowedRoles: ['Admin', 'Staff', 'VehicleOwner', 'User', 'Driver']
+    allowedRoles: [RoleType.ADMIN, RoleType.STAFF, RoleType.VEHICLE_OWNER, RoleType.USER, RoleType.DRIVER]
   }
 ]
 
 const adminRoutes = [
-  { path: '/account', component: <AccountPage />, allowedRoles: ['Admin'] },
-  { path: '/role', component: <RolePage />, allowedRoles: ['Admin'] }
+  { path: '/account', component: <AccountPage />, allowedRoles: [RoleType.ADMIN] },
+  { path: '/role', component: <RolePage />, allowedRoles: [RoleType.ADMIN] }
 ]
 
-const driverRoutes = [{ path: '/vehicles-using', component: <VehicleUsingPage />, allowedRoles: ['Driver'] }]
+const driverRoutes = [{ path: '/vehicles-using', component: <VehicleUsingPage />, allowedRoles: [RoleType.DRIVER] }]
 
 const routeGenerator = (
   routes: {
