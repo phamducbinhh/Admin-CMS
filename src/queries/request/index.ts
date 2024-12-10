@@ -50,6 +50,15 @@ export const useAddVehicleByStaffMutation = (
       requestApiRequest.AddVehicleByStaff({ id, isApprove })
   })
 }
+export const useUpdateConvenientTripMutation = (
+  options?: UseMutationOptions<any, unknown, { id: string | number | null; choose: boolean }, unknown>
+) => {
+  return useMutation({
+    ...options,
+    mutationFn: ({ id, choose }: { id: string | number | null; choose: boolean }) =>
+      requestApiRequest.UpdateConvenientTrip({ id, choose })
+  })
+}
 
 export const useCreateTicketForRentCarMutation = (options?: UseMutationOptions<any, unknown, any, unknown>) => {
   return useMutation({

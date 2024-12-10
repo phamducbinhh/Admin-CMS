@@ -3,10 +3,10 @@ import { useQueryRequestDetails } from '@/queries/request'
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 import AddVehicleForm from './AddVehicleForm'
-import RentVehicleForm from './RentVehicleForm'
+import RentCarForDriver from './RentCarForDriver'
 import RentDriverForm from './RentDriverForm'
 import RentOrBookCar from './RentOrBookCar'
-import RentCarForDriver from './RentCarForDriver'
+import RentVehicleForm from './RentVehicleForm'
 
 const DetailsRequestPage: React.FC = () => {
   const [searchParams] = useSearchParams()
@@ -23,7 +23,8 @@ const DetailsRequestPage: React.FC = () => {
         return <RentVehicleForm data={data} />
       case ActionType.RENT_DRIVER:
         return <RentDriverForm data={data} />
-      case ActionType.RENT_TRIP || ActionType.CHARTER_TRIP:
+      case ActionType.RENT_TRIP:
+      case ActionType.CHARTER_TRIP:
         return <RentOrBookCar data={data} />
       case ActionType.DRIVER_RENT_VEHICLE:
         return <RentCarForDriver data={data} />
