@@ -21,6 +21,12 @@ class RequestApiRequest {
       config: { method: METHOD_TYPE.POST, cors: false }
     })
   }
+  public AddVehicleByStaff({ id, isApprove }: { id: string | number | null; isApprove: boolean }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.VEHICLES.ADD_VEHICLES_STAFF({ id, isApprove }),
+      config: { method: METHOD_TYPE.POST, cors: false }
+    })
+  }
 }
 
 const requestApiRequest = new RequestApiRequest()

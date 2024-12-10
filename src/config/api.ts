@@ -10,6 +10,8 @@ export const APP_API_ENDPOINT = Object.freeze({
   VEHICLES: {
     GET_VEHICLES: '/api/Vehicle/listVehicle',
     DELETE_VEHICLES: ({ id }: { id: string | number | null }) => `/api/Vehicle/deleteVehicleByStatus/${id}`,
+    ADD_VEHICLES_STAFF: ({ id, isApprove }: { id: string | number | null; isApprove: boolean }) =>
+      `/api/Vehicle/addVehicleByStaff?requestID=${id}&isApprove=${isApprove}`,
     VEHICLES_DETAILS: ({ id }: { id: string | number | null }) => `/api/Vehicle/getInforVehicle/${id}`,
     UPDATE_VEHICLES: ({ id }: { id: string | number | null }) => `/api/Vehicle/updateVehicleInformation/${id}`,
     ADD_VEHICLES: '/api/Vehicle/addVehicle',

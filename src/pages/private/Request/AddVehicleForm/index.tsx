@@ -1,11 +1,21 @@
+import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
 import { ActionType } from '@/enums/enum'
+import { useAddVehicleByStaffMutation } from '@/queries/request'
 import { useQueryVehiclesDetails } from '@/queries/vehicle'
 import { DataTypeRequest } from '@/types/DataType'
-import { Button, Col, Form, Row, Table } from 'antd'
-import { useEffect, useMemo } from 'react'
+import { Button, Col, Form, message, Row, Table } from 'antd'
+import { useEffect, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const AddVehicleForm = ({ data }: { data: DataTypeRequest | undefined }) => {
   const [form] = Form.useForm()
+
+  const navigate = useNavigate()
+
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoadingDeny, setIsLoadingDeny] = useState<boolean>(false)
+
+  const AddVehicleByStaff = useAddVehicleByStaffMutation()
 
   const { data: vehicleData, refetch: refetchVehicle } = useQueryVehiclesDetails(
     { id: data?.vehicleId },
@@ -47,21 +57,56 @@ const AddVehicleForm = ({ data }: { data: DataTypeRequest | undefined }) => {
     []
   )
 
-  const handleFormSubmit = () => {
-    console.log('Form Submitted')
+  const handleFormAction = async (isApprove: boolean, successMessage: string, errorMessage: string) => {
+    if (isLoading || isLoadingDeny) return
+
+    if (isApprove) {
+      setIsLoading(true)
+    } else {
+      setIsLoadingDeny(true)
+    }
+
+    try {
+      const response = await AddVehicleByStaff.mutateAsync({
+        id: data?.requestId ?? null,
+        isApprove
+      })
+
+      if (response.status === HttpStatusCode.Ok) {
+        message.success(successMessage)
+        navigate('/ticket')
+      } else {
+        message.error(errorMessage)
+      }
+    } catch (error) {
+      console.error('Error values:', error)
+      message.error(errorMessage)
+    } finally {
+      if (isApprove) {
+        setIsLoading(false)
+      } else {
+        setIsLoadingDeny(false)
+      }
+    }
   }
 
   return (
-    <Form form={form} layout='vertical' onFinish={handleFormSubmit}>
+    <Form form={form} layout='vertical' onFinish={() => handleFormAction(true, 'Accept successfully', 'Accept failed')}>
       <Table columns={columns} dataSource={tableData} pagination={false} bordered />
       <Row justify='start' gutter={16} style={{ marginTop: '16px' }}>
         <Col>
-          <Button type='primary' htmlType='submit' style={{ marginRight: '10px' }}>
+          <Button type='primary' htmlType='submit' style={{ marginRight: '10px' }} loading={isLoading}>
             Accept
           </Button>
         </Col>
         <Col>
-          <Button type='primary' htmlType='button' danger>
+          <Button
+            type='primary'
+            htmlType='button'
+            danger
+            onClick={() => handleFormAction(false, 'Deny successfully', 'Deny failed')}
+            loading={isLoadingDeny}
+          >
             Deny
           </Button>
         </Col>

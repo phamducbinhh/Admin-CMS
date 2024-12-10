@@ -39,3 +39,13 @@ export const useAcceptCancleRequestMutation = (
     mutationFn: ({ id }: { id: string | number | null }) => requestApiRequest.AcceptCancleRequest({ id })
   })
 }
+
+export const useAddVehicleByStaffMutation = (
+  options?: UseMutationOptions<any, unknown, { id: string | number | null; isApprove: boolean }, unknown>
+) => {
+  return useMutation({
+    ...options,
+    mutationFn: ({ id, isApprove }: { id: string | number | null; isApprove: boolean }) =>
+      requestApiRequest.AddVehicleByStaff({ id, isApprove })
+  })
+}

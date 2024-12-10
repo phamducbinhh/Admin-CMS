@@ -77,7 +77,7 @@ export interface DataTypeRequest {
   vehicleId: number | any
   driverId: number
   note: string | null // Nullable field
-  typeRequestId: number
+  typeRequestId: string | number | null
   typeName: string
   startLocation: string
   endLocation: string
