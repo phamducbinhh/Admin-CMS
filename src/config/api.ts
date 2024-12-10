@@ -79,7 +79,8 @@ export const APP_API_ENDPOINT = Object.freeze({
   },
   HISTORY_RENT_DRIVER: {
     GET_HISTORY_RENT_DRIVER: '/api/HistoryRentDriver/listHistoryRentDriver',
-    GET_LIST_DRIVER_RENT: '/api/HistoryRentDriver/ListDriverRent'
+    GET_LIST_DRIVER_RENT: '/api/HistoryRentDriver/ListDriverRent',
+    ADD_HISTORY_DRIVER: '/api/HistoryRentDriver/AddHistoryDriver'
   },
   USER_PROFILE: {
     GET_DATA: '/api/Auth/userProfile'

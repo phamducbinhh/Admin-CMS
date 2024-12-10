@@ -58,3 +58,9 @@ export const useCreateTicketForRentCarMutation = (options?: UseMutationOptions<a
       requestApiRequest.CreateTicketForRentCar({ body })
   })
 }
+export const useAddHistoryDriverMutation = (options?: UseMutationOptions<any, unknown, any, unknown>) => {
+  return useMutation({
+    ...options,
+    mutationFn: (body: Omit<RequestOption, 'addHistoryDriver'>) => requestApiRequest.AddHistoryDriver({ body })
+  })
+}

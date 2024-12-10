@@ -29,6 +29,12 @@ class RequestApiRequest {
       config: { method: METHOD_TYPE.POST, body, cors: false }
     })
   }
+  public AddHistoryDriver({ body }: { body: RequestOption }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.HISTORY_RENT_DRIVER.ADD_HISTORY_DRIVER,
+      config: { method: METHOD_TYPE.POST, body, cors: false }
+    })
+  }
   public AddVehicleByStaff({ id, isApprove }: { id: string | number | null; isApprove: boolean }): Promise<any> {
     return apiBaseServiceInstance.Http({
       path: APP_API_ENDPOINT.VEHICLES.ADD_VEHICLES_STAFF({ id, isApprove }),
