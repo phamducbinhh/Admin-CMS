@@ -31,6 +31,7 @@ import LoginPage from './pages/public/login'
 import DetailPromotionPage from './pages/private/Promotion/detail'
 import DetailTicketPage from './pages/private/Ticket/detail'
 import EditTicketPage from './pages/private/Ticket/edit'
+import RevenuePage from './pages/private/Revenue'
 
 const staffRoutes = [
   { path: '/trips', component: <TripsPages />, allowedRoles: ['Staff'] },
@@ -100,6 +101,7 @@ const staffRoutes = [
   },
   { path: '/request', component: <RequestPage />, allowedRoles: ['Staff', 'Admin', 'Driver'] },
   { path: '/request/details', component: <DetailsRequestPage />, allowedRoles: ['Staff', 'Admin', 'Driver'] },
+  { path: '/revenue', component: <RevenuePage />, allowedRoles: ['Staff', 'VehicleOwner'] },
   { path: '/ticket', component: <TicketPage />, allowedRoles: ['Staff'] },
   { path: '/ticket/detail', component: <DetailTicketPage />, allowedRoles: ['Staff'] },
   { path: '/ticket/edit', component: <EditTicketPage />, allowedRoles: ['Staff'] },

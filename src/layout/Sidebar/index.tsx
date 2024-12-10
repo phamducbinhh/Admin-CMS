@@ -1,4 +1,5 @@
 import {
+  AccountBookOutlined,
   AppstoreOutlined,
   BarChartOutlined,
   CarOutlined,
@@ -118,6 +119,11 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
             key: 'account',
             icon: <UserSwitchOutlined />,
             label: <Link to='/account'>Account</Link> // Link added
+          },
+          {
+            key: 'revenue',
+            icon: <AccountBookOutlined />,
+            label: <Link to='/revenue'>Revenue</Link> // Link added
           },
           {
             key: 'role',
