@@ -1,12 +1,13 @@
 import { ActionType, ActionTypeDescriptions, RoleType } from '@/enums/enum'
 import useColumnSearch from '@/hooks/useColumnSearch'
-import { useQueryRequest } from '@/queries/request'
+import { useAcceptCancleRequestMutation, useQueryRequest } from '@/queries/request'
 import { useLocalStorage } from '@/utils/localStorage/localStorageService'
 import renderWithLoading from '@/utils/renderWithLoading'
 import { PlusOutlined } from '@ant-design/icons'
 import type { TableProps } from 'antd'
-import { Button, Popconfirm, Space, Table } from 'antd'
-import React from 'react'
+import { Button, message, Popconfirm, Space, Table } from 'antd'
+import { HttpStatusCode } from 'axios'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 interface DataType {
@@ -20,8 +21,37 @@ interface DataType {
 }
 
 const RequestPage: React.FC = () => {
-  const { data, isLoading } = useQueryRequest()
+  const { data, isLoading, refetch } = useQueryRequest()
+
   const role = useLocalStorage.getLocalStorageData('role')
+
+  const acceptMutaion = useAcceptCancleRequestMutation()
+
+  const [isAcceptLoading, setIsAcceptLoading] = useState<boolean>(false)
+
+  // Add `key` to each record if not present
+  const dataSource = data?.map((item: any) => ({
+    ...item,
+    key: item.id || item.someUniqueField
+  }))
+
+  const handleAccept = async (id: number) => {
+    try {
+      setIsAcceptLoading(true)
+      const response = await acceptMutaion.mutateAsync({ id })
+      if (response.status === HttpStatusCode.Ok) {
+        message.success('Accept successfully')
+        refetch()
+      } else {
+        message.error('Accept failed')
+      }
+    } catch (error) {
+      console.error('Error values:', error)
+      message.error('Accept failed')
+    } finally {
+      setIsAcceptLoading(false)
+    }
+  }
 
   const columns: TableProps<DataType>['columns'] = [
     {
@@ -85,20 +115,21 @@ const RequestPage: React.FC = () => {
             </Button>
           </Popconfirm>
           {record.typeId === 3 && !record.status && (
-            <Popconfirm title='Bạn có chắc chắn muốn hủy yêu cầu này không?' okText='Xác nhận' cancelText='Hủy'>
-              <Button type='default'>Cancel</Button>
+            <Popconfirm
+              title='Bạn có chắc chắn muốn hủy yêu cầu này không?'
+              okText='Xác nhận'
+              cancelText='Hủy'
+              onConfirm={() => handleAccept(record.id as number)}
+            >
+              <Button type='default' loading={isAcceptLoading} disabled={isAcceptLoading}>
+                Cancel
+              </Button>
             </Popconfirm>
           )}
         </Space>
       )
     }
   ]
-  // Add `key` to each record if not present
-  const dataSource = data?.map((item: any) => ({
-    ...item,
-    key: item.id || item.someUniqueField
-  }))
-
   return (
     <>
       {renderWithLoading({
