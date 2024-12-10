@@ -73,3 +73,9 @@ export const useAddHistoryDriverMutation = (options?: UseMutationOptions<any, un
     mutationFn: (body: Omit<RequestOption, 'addHistoryDriver'>) => requestApiRequest.AddHistoryDriver({ body })
   })
 }
+export const useAddHistoryVehicleMutation = (options?: UseMutationOptions<any, unknown, any, unknown>) => {
+  return useMutation({
+    ...options,
+    mutationFn: (body: Omit<RequestOption, 'addHistoryVehicle'>) => requestApiRequest.AddHistoryVehicle({ body })
+  })
+}
