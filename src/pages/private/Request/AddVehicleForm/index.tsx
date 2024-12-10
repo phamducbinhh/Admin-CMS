@@ -1,6 +1,6 @@
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
 import { ActionType } from '@/enums/enum'
-import { useAddVehicleByStaffMutation } from '@/queries/request'
+import { useAddVehicleByStaffMutation, useQueryRequest } from '@/queries/request'
 import { useQueryVehiclesDetails } from '@/queries/vehicle'
 import { DataTypeRequest } from '@/types/DataType'
 import { Button, Col, Form, message, Row, Table } from 'antd'
@@ -10,9 +10,14 @@ import { useNavigate } from 'react-router-dom'
 const AddVehicleForm = ({ data }: { data: DataTypeRequest | undefined }) => {
   const [form] = Form.useForm()
 
+  const { data: requestData, refetch } = useQueryRequest()
+
+  const [isCheck, setIsCheck] = useState<boolean>(false)
+
   const navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
   const [isLoadingDeny, setIsLoadingDeny] = useState<boolean>(false)
 
   const AddVehicleByStaff = useAddVehicleByStaffMutation()
@@ -27,6 +32,16 @@ const AddVehicleForm = ({ data }: { data: DataTypeRequest | undefined }) => {
   useEffect(() => {
     if (data?.vehicleId) refetchVehicle()
   }, [data?.vehicleId, refetchVehicle])
+
+  const filtered = useMemo(() => {
+    return requestData?.find((item: DataTypeRequest) => item.id === data?.requestId)
+  }, [data?.requestId, requestData])
+
+  useEffect(() => {
+    if (filtered && filtered.status !== isCheck) {
+      setIsCheck(filtered.status)
+    }
+  }, [filtered, isCheck])
 
   const tableData = useMemo(
     () => [
@@ -73,8 +88,9 @@ const AddVehicleForm = ({ data }: { data: DataTypeRequest | undefined }) => {
       })
 
       if (response.status === HttpStatusCode.Ok) {
+        refetch()
         message.success(successMessage)
-        navigate('/ticket')
+        navigate('/request')
       } else {
         message.error(errorMessage)
       }
@@ -93,24 +109,26 @@ const AddVehicleForm = ({ data }: { data: DataTypeRequest | undefined }) => {
   return (
     <Form form={form} layout='vertical' onFinish={() => handleFormAction(true, 'Accept successfully', 'Accept failed')}>
       <Table columns={columns} dataSource={tableData} pagination={false} bordered />
-      <Row justify='start' gutter={16} style={{ marginTop: '16px' }}>
-        <Col>
-          <Button type='primary' htmlType='submit' style={{ marginRight: '10px' }} loading={isLoading}>
-            Accept
-          </Button>
-        </Col>
-        <Col>
-          <Button
-            type='primary'
-            htmlType='button'
-            danger
-            onClick={() => handleFormAction(false, 'Deny successfully', 'Deny failed')}
-            loading={isLoadingDeny}
-          >
-            Deny
-          </Button>
-        </Col>
-      </Row>
+      {!isCheck && (
+        <Row justify='start' gutter={16} style={{ marginTop: '16px' }}>
+          <Col>
+            <Button type='primary' htmlType='submit' style={{ marginRight: '10px' }} loading={isLoading}>
+              Accept
+            </Button>
+          </Col>
+          <Col>
+            <Button
+              type='primary'
+              htmlType='button'
+              danger
+              onClick={() => handleFormAction(false, 'Deny successfully', 'Deny failed')}
+              loading={isLoadingDeny}
+            >
+              Deny
+            </Button>
+          </Col>
+        </Row>
+      )}
     </Form>
   )
 }
