@@ -1,4 +1,5 @@
 import { RouteObject, useRoutes } from 'react-router-dom'
+import { RoleType } from './enums/enum'
 import PrivateRoute from './middleware'
 import PrivateLayout from './pages/private'
 import AccountPage from './pages/private/Account'
@@ -16,6 +17,7 @@ import AddPromotionPage from './pages/private/Promotion/add'
 import DetailPromotionPage from './pages/private/Promotion/detail'
 import EditPromotionPage from './pages/private/Promotion/edit'
 import RequestPage from './pages/private/Request'
+import AddRequestRentVehiclePage from './pages/private/Request/add'
 import DetailsRequestPage from './pages/private/Request/details'
 import RevenuePage from './pages/private/Revenue'
 import ReviewsPage from './pages/private/Reviews'
@@ -32,7 +34,6 @@ import AddVehiclePage from './pages/private/Vehicles/add'
 import EditVehiclePage from './pages/private/Vehicles/edit'
 import VehicleUsingPage from './pages/private/VehicleUsing'
 import LoginPage from './pages/public/login'
-import { RoleType } from './enums/enum'
 
 const staffRoutes = [
   { path: '/trips', component: <TripsPages />, allowedRoles: [RoleType.STAFF] },
@@ -105,6 +106,11 @@ const staffRoutes = [
     path: '/request/details',
     component: <DetailsRequestPage />,
     allowedRoles: [RoleType.STAFF, RoleType.ADMIN, RoleType.DRIVER]
+  },
+  {
+    path: '/request/add',
+    component: <AddRequestRentVehiclePage />,
+    allowedRoles: [RoleType.DRIVER]
   },
   { path: '/revenue', component: <RevenuePage />, allowedRoles: [RoleType.STAFF, RoleType.VEHICLE_OWNER] },
   { path: '/ticket', component: <TicketPage />, allowedRoles: [RoleType.STAFF] },
