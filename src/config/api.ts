@@ -16,7 +16,9 @@ export const APP_API_ENDPOINT = Object.freeze({
     UPDATE_VEHICLES: ({ id }: { id: string | number | null }) => `/api/Vehicle/updateVehicleInformation/${id}`,
     ADD_VEHICLES: '/api/Vehicle/addVehicle',
     TYPE_OF_VEHICLES: '/api/Vehicle/listVehicleType',
-    TYPE_VEHICLES_OWNER: '/api/Account/listVehicleOwner'
+    TYPE_VEHICLES_OWNER: '/api/Account/listVehicleOwner',
+    IMPORT_VEHICLE: '/api/Vehicle/import_vehicle',
+    ADD_VEHICLES_FROM_EXCEL: '/api/Vehicle/confirmImportVehicle'
   },
   VEHICLES_USING: {
     GET: '/api/Vehicle/getVehicleByDriverId'

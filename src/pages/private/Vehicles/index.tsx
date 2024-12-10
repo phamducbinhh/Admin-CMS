@@ -106,10 +106,15 @@ const VehiclesPage: React.FC = () => {
         isLoading,
         content: (
           <>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16, gap: 16 }}>
               <Link to='add'>
                 <Button type='primary' icon={<PlusOutlined />} ghost>
                   Thêm mới
+                </Button>
+              </Link>
+              <Link to='excel'>
+                <Button type='primary' icon={<PlusOutlined />} ghost>
+                  Import Excel
                 </Button>
               </Link>
             </div>
