@@ -1,4 +1,4 @@
-import { ActionType } from '@/enums/enum'
+import { ActionType, RoleType } from '@/enums/enum'
 import { formatTime } from '@/helpers'
 import { useQueryVehicleRent } from '@/queries/history'
 import { useAddHistoryVehicleMutation, useQueryRequest } from '@/queries/request'
@@ -13,7 +13,15 @@ interface TableData {
   label: string
   value: string | number | JSX.Element | undefined
 }
-const RentCarForDriver = ({ data }: { data: DataTypeRequest | undefined }) => {
+const RentCarForDriver = ({
+  data,
+  account
+}: {
+  data: DataTypeRequest | undefined
+  account: {
+    role: string
+  }
+}) => {
   const [form] = Form.useForm()
 
   const navigate = useNavigate()
@@ -173,7 +181,7 @@ const RentCarForDriver = ({ data }: { data: DataTypeRequest | undefined }) => {
       onFinish={(values) => handleAction({ choose: true, vehicleId: values.vehicleId, price: values.price })}
     >
       <Table columns={columns} dataSource={tableData} pagination={false} bordered />
-      {!isCheck && (
+      {!isCheck && [RoleType.ADMIN, RoleType.STAFF].includes(account.role as RoleType) && (
         <Row justify='start' gutter={16} style={{ marginTop: '16px' }}>
           <Col>
             <Button type='primary' htmlType='submit' style={{ marginRight: '10px' }} loading={isLoading}>

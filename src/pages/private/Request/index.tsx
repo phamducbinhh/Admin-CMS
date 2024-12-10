@@ -1,7 +1,7 @@
 import { ActionType, ActionTypeDescriptions, RoleType } from '@/enums/enum'
 import useColumnSearch from '@/hooks/useColumnSearch'
 import { useAcceptCancleRequestMutation, useQueryRequest } from '@/queries/request'
-import { useLocalStorage } from '@/utils/localStorage/localStorageService'
+import { useQueryUserProfile } from '@/queries/user-profile'
 import renderWithLoading from '@/utils/renderWithLoading'
 import { PlusOutlined } from '@ant-design/icons'
 import type { TableProps } from 'antd'
@@ -23,7 +23,7 @@ interface DataType {
 const RequestPage: React.FC = () => {
   const { data, isLoading, refetch } = useQueryRequest()
 
-  const role = useLocalStorage.getLocalStorageData('role')
+  const { data: account } = useQueryUserProfile()
 
   const acceptMutaion = useAcceptCancleRequestMutation()
 
@@ -136,7 +136,7 @@ const RequestPage: React.FC = () => {
         isLoading,
         content: (
           <>
-            {role && role === RoleType.DRIVER && (
+            {account && account?.role === RoleType.DRIVER && (
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
                 <Link to='add'>
                   <Button type='primary' icon={<PlusOutlined />} ghost>
