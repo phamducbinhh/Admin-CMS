@@ -21,6 +21,12 @@ class AccountApiRequest {
       config: { method: METHOD_TYPE.GET, cors: false }
     })
   }
+  public DeleteAccount({ id }: { id: string | number | null }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.ACCOUNT.DELETE_ACCOUNT({ id }),
+      config: { method: METHOD_TYPE.POST, cors: false }
+    })
+  }
   public UpdateRoleAccount({
     id,
     newRoleId
