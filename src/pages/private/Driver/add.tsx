@@ -148,15 +148,15 @@ const AddDriverPage: React.FC = () => {
     try {
       const response = await addMutation.mutateAsync(values)
       if (response.status === HttpStatusCode.Ok) {
-        message.success('Update successfully')
+        message.success('Add successfully')
         refetch()
         navigate('/driver')
       } else {
-        message.error('Update failed')
+        message.error('Add failed')
       }
     } catch (error) {
       console.error('Error values:', error)
-      message.error('Update failed')
+      message.error('Add failed')
     } finally {
       setIsLoading(false)
     }
@@ -174,7 +174,7 @@ const AddDriverPage: React.FC = () => {
             loading={isLoading}
             disabled={isLoading}
           >
-            Update
+            Add
           </Button>
         </Col>
       </Row>
