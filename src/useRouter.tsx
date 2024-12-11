@@ -35,6 +35,7 @@ import TotalTicketPage from './pages/private/Total-Ticket'
 import TripsPages from './pages/private/trips'
 import UnauthorizedPage from './pages/private/Unauthorized'
 import UserProfilePage from './pages/private/UserProfile'
+import VehicleOwnerPage from './pages/private/Vehicle-Owner'
 import VehiclesPage from './pages/private/Vehicles'
 import AddVehiclePage from './pages/private/Vehicles/add'
 import EditVehiclePage from './pages/private/Vehicles/edit'
@@ -48,6 +49,11 @@ const staffRoutes = [
     path: '/vehicles',
     component: <VehiclesPage />,
     allowedRoles: [RoleType.STAFF, RoleType.VEHICLE_OWNER, RoleType.DRIVER]
+  },
+  {
+    path: '/vehicles-owner',
+    component: <VehicleOwnerPage />,
+    allowedRoles: [RoleType.STAFF]
   },
   {
     path: '/vehicles/add',

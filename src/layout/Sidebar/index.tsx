@@ -11,6 +11,7 @@ import {
   StarFilled,
   SwitcherFilled,
   TruckFilled,
+  TruckOutlined,
   UnlockFilled,
   UserOutlined,
   UserSwitchOutlined
@@ -50,6 +51,11 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
             key: 'vehicles',
             icon: <CarOutlined />,
             label: <Link to='/vehicles'>Vehicles</Link> // Link added
+          },
+          {
+            key: 'vehicles-owner',
+            icon: <TruckOutlined />,
+            label: <Link to='/vehicles-owner'>Vehicles Owner</Link> // Link added
           },
           {
             key: 'vehicles-using',
