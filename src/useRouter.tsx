@@ -35,9 +35,11 @@ import EditVehiclePage from './pages/private/Vehicles/edit'
 import VehicleUsingPage from './pages/private/VehicleUsing'
 import LoginPage from './pages/public/login'
 import ExcelVehiclePage from './pages/private/Vehicles/excel'
+import AddTripPage from './pages/private/trips/add'
 
 const staffRoutes = [
   { path: '/trips', component: <TripsPages />, allowedRoles: [RoleType.STAFF] },
+  { path: '/trips/add', component: <AddTripPage />, allowedRoles: [RoleType.STAFF] },
   {
     path: '/vehicles',
     component: <VehiclesPage />,
