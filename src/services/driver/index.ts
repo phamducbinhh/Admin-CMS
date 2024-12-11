@@ -21,6 +21,12 @@ class DriverApiRequest {
       config: { method: METHOD_TYPE.POST, cors: false }
     })
   }
+  public BlockDriver({ id }: { id: string | number | null }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.DRIVER.BLOCK_DRIVER({ id }),
+      config: { method: METHOD_TYPE.POST, cors: false }
+    })
+  }
   public AddDriver({ body }: { body: any }): Promise<any> {
     return apiBaseServiceInstance.Http({
       path: APP_API_ENDPOINT.DRIVER.ADD_DRIVER,

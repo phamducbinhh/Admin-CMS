@@ -1,9 +1,9 @@
 import useColumnSearch from '@/hooks/useColumnSearch'
-import { useQueryDriver } from '@/queries/driver'
+import { useBlockDriverMutation, useQueryDriver } from '@/queries/driver'
 import renderWithLoading from '@/utils/renderWithLoading'
 import { PlusOutlined } from '@ant-design/icons'
-import { Avatar, Button, Popconfirm, Space, Table, TableProps } from 'antd'
-import React from 'react'
+import { Avatar, Button, message, Popconfirm, Space, Table, TableProps } from 'antd'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 interface DataType {
@@ -17,7 +17,30 @@ interface DataType {
 }
 
 const DriverPage: React.FC = () => {
-  const { data, isLoading } = useQueryDriver()
+  const { data, isLoading, refetch } = useQueryDriver()
+  const [isLoadingBlock, setIsLoadingBlock] = useState<boolean>(false)
+
+  const blockMutation = useBlockDriverMutation()
+
+  const handleBlockDriver = async (id: number) => {
+    try {
+      setIsLoadingBlock(true)
+      await blockMutation.mutateAsync(
+        { id },
+        {
+          onSuccess: () => {
+            message.success('Block driver successfully')
+            refetch()
+          }
+        }
+      )
+    } catch (error) {
+      console.error('Error when block driver:', error)
+      message.error('Block driver failed')
+    } finally {
+      setIsLoadingBlock(false)
+    }
+  }
 
   const columns: TableProps<DataType>['columns'] = [
     {
@@ -65,12 +88,16 @@ const DriverPage: React.FC = () => {
           <Link to={`edit?id=${record.id}`}>
             <Button type='primary'>Edit</Button>
           </Link>
-          <Popconfirm title='Are you sure to delete this item?' okText='Yes' cancelText='No'>
-            <Button type='primary' danger>
-              Delete
+          <Popconfirm
+            title='Bạn có chắc chắn muốn kích hoạt tài khoản này không?'
+            okText='Yes'
+            cancelText='No'
+            onConfirm={() => handleBlockDriver(record.id)}
+          >
+            <Button type='primary' danger loading={isLoadingBlock} disabled={isLoadingBlock}>
+              {record.status ? 'Lock' : 'Unlock'}
             </Button>
           </Popconfirm>
-          <Button type='default'>Block</Button>
         </Space>
       )
     }

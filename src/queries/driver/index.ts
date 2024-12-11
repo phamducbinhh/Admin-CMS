@@ -46,3 +46,12 @@ export const useUpdateDriverMutation = (
     mutationFn: ({ id, body }: { id: string | number; body: any }) => driverApiRequest.UpdateDriver({ id, body })
   })
 }
+
+export const useBlockDriverMutation = (
+  options?: UseMutationOptions<any, unknown, { id: string | number }, unknown>
+) => {
+  return useMutation({
+    ...options,
+    mutationFn: ({ id }: { id: string | number }) => driverApiRequest.BlockDriver({ id })
+  })
+}
