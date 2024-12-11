@@ -40,10 +40,14 @@ import EditVehiclePage from './pages/private/Vehicles/edit'
 import ExcelVehiclePage from './pages/private/Vehicles/excel'
 import VehicleUsingPage from './pages/private/VehicleUsing'
 import LoginPage from './pages/public/login'
+import ExcelVehiclePage from './pages/private/Vehicles/excel'
+import AddTripPage from './pages/private/trips/add'
 import TotalTicketPage from './pages/private/Total-Ticket'
+
 
 const staffRoutes = [
   { path: '/trips', component: <TripsPages />, allowedRoles: [RoleType.STAFF] },
+  { path: '/trips/add', component: <AddTripPage />, allowedRoles: [RoleType.STAFF] },
   {
     path: '/vehicles',
     component: <VehiclesPage />,

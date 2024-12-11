@@ -5,6 +5,8 @@ export const APP_API_ENDPOINT = Object.freeze({
   },
   TRIPS: {
     GET_TRIPS: '/api/Trip',
+    GET_TYPE_OF_TRIPS: '/api/TypeOfTrip',
+    ADD_TRIP: '/api/Trip/addTrip',
     UPDATE_TRIPS: ({ id }: { id: string | number | null }) => `/api/Trip/updateTrip/${id}`
   },
   VEHICLES: {
