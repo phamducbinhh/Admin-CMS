@@ -22,6 +22,13 @@ class TripsApiRequest {
       config: { method: METHOD_TYPE.POST, body, cors: false }
     })
   }
+
+  public UpdateTicket({ id, body }: { id: string | number | null; body: any }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.TRIPS.UPDATE_TRIPS({ id }),
+      config: { method: METHOD_TYPE.POST, body, cors: false }
+    })
+  }
 }
 
 const tripsApiRequest = new TripsApiRequest()

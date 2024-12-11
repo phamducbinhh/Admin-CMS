@@ -1,4 +1,5 @@
 export interface DataType {
+  id: number | any
   key: string
   name?: string
   numberSeat?: number

@@ -52,8 +52,6 @@ const AddTripPage: React.FC = () => {
   }
 
   const [fields, setFields] = useState<Field[]>([])
-  const [pointStartDetailCount, setPointStartDetailCount] = useState<number>(0)
-  const [condition, setCondition] = useState<boolean>(0)
 
   useEffect(() => {
     if (!isLoadingVehicles && !isLoading && dataTypeTrips && dataVehicles) {
@@ -72,7 +70,7 @@ const AddTripPage: React.FC = () => {
               showSearch
               placeholder='Select a License Plate'
               filterOption={(input: any, option: any) => (option?.label ?? '').includes(input.toLowerCase())}
-              options={getOnlyLicensePlate.map((item: any, index: any) => ({
+              options={getOnlyLicensePlate.map((item: any) => ({
                 value: `${item.value}`, // Ensure uniqueness by appending the index
                 label: item.label,
                 key: `${item.value}` // Optionally include key for clarity
@@ -167,6 +165,7 @@ const AddTripPage: React.FC = () => {
         }
       ])
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, dataTypeTrips, isLoadingVehicles, dataVehicles])
 
   const handleAddFields = () => {
@@ -263,12 +262,10 @@ const AddTripPage: React.FC = () => {
       // Step 5: Validate the output data
       if (Object.keys(outputData.pointStartDetail).length < 3) {
         message.error(`Need ${3 - Object.keys(pointStartDetail).length} or more point start details`)
-        setPointStartDetailCount(Object.keys(pointStartDetail).length)
         isValid = false
       }
 
       // Set the condition state based on validation results
-      setCondition(isValid)
 
       // Step 6: If valid, proceed to submit
       if (isValid) {
@@ -277,6 +274,7 @@ const AddTripPage: React.FC = () => {
         const response = await addMutation.mutateAsync(outputData)
         if (response.status === HttpStatusCode.Ok) {
           message.success('Add successfully')
+          navigate('/trips')
         } else {
           message.error('Add failed')
         }
