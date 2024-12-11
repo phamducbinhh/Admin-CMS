@@ -1,5 +1,6 @@
 export interface DataType {
   key: string
+  id: number
   name?: string
   numberSeat?: number
   startTime?: number | string
