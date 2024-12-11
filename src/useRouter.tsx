@@ -3,6 +3,7 @@ import { RoleType } from './enums/enum'
 import PrivateRoute from './middleware'
 import PrivateLayout from './pages/private'
 import AccountPage from './pages/private/Account'
+import EditAccountPage from './pages/private/Account/edit'
 import CostTypePage from './pages/private/CostType'
 import AddCostTypePage from './pages/private/CostType/add'
 import EditCostTypePage from './pages/private/CostType/edit'
@@ -137,6 +138,7 @@ const staffRoutes = [
 
 const adminRoutes = [
   { path: '/account', component: <AccountPage />, allowedRoles: [RoleType.ADMIN] },
+  { path: '/account/edit', component: <EditAccountPage />, allowedRoles: [RoleType.ADMIN] },
   { path: '/role', component: <RolePage />, allowedRoles: [RoleType.ADMIN] }
 ]
 

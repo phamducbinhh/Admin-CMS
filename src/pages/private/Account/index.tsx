@@ -3,9 +3,11 @@ import { useQueryAccount } from '@/queries/account'
 import renderWithLoading from '@/utils/renderWithLoading'
 import { Avatar, Button, Popconfirm, Space, Table, TableProps } from 'antd'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 interface DataType {
   key: string
+  id: number
   avatar: string
   email: string
   fullName: string
@@ -72,9 +74,11 @@ const AccountPage: React.FC = () => {
       title: 'Action',
       key: 'action',
       align: 'center',
-      render: () => (
+      render: (_, record) => (
         <Space size='middle'>
-          <Button type='primary'>Edit</Button>
+          <Link to={`edit?id=${record.id}`}>
+            <Button type='primary'>Edit</Button>
+          </Link>
           <Popconfirm title='Are you sure to delete this item?' okText='Yes' cancelText='No'>
             <Button type='primary' danger>
               Delete
