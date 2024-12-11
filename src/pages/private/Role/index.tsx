@@ -50,14 +50,22 @@ const RolePage: React.FC = () => {
       dataIndex: 'id',
       key: 'id',
       align: 'center',
-      width: '45%'
+      width: '30%'
     },
     {
       title: 'Role name',
       dataIndex: 'roleName',
       key: 'roleName',
       align: 'center',
-      width: '45%'
+      width: '30%'
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'status',
+      key: 'status',
+      align: 'center',
+      render: (status) => <p>{status === true ? 'Khả dụng' : 'Không khả dụng'}</p>,
+      width: '30%'
     },
     {
       title: 'Action',
