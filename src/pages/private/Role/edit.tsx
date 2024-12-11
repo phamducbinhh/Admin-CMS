@@ -1,6 +1,6 @@
-import { useQueryAccount, useQueryAccountDetails, useQueryRole, useUpdateRoleAccountMutation } from '@/queries/account'
+import { useQueryRole, useUpdateRoleMutation } from '@/queries/account'
 import { DataTypeUser } from '@/types/DataType'
-import { Button, Col, Form, message, Row, Select, Table, TableColumnsType } from 'antd'
+import { Button, Col, Form, Input, message, Row, Switch, Table, TableColumnsType } from 'antd'
 import { HttpStatusCode } from 'axios'
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
@@ -11,7 +11,7 @@ interface TableData {
   value: JSX.Element | string | undefined
 }
 
-const EditAccountPage: React.FC = () => {
+const EditRolePage: React.FC = () => {
   const [searchParams] = useSearchParams()
 
   const navigate = useNavigate()
@@ -20,13 +20,9 @@ const EditAccountPage: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const { data } = useQueryAccountDetails({ id: route_id })
+  const { data, refetch } = useQueryRole()
 
-  const { refetch } = useQueryAccount()
-
-  const { data: roleData } = useQueryRole()
-
-  const updateMutation = useUpdateRoleAccountMutation()
+  const updateMutation = useUpdateRoleMutation()
 
   if (route_id === null) {
     throw new Error('Invalid cost type ID')
@@ -35,29 +31,30 @@ const EditAccountPage: React.FC = () => {
   const [form] = Form.useForm()
 
   useEffect(() => {
-    if (data) {
-      form.setFieldsValue(data)
+    if (data && Array.isArray(data)) {
+      const formData = data.find((item) => item.id === Number(route_id))
+      if (formData) {
+        form.setFieldsValue(formData)
+      }
     }
-  }, [data, form])
+  }, [data, form, route_id])
 
   const tableData: TableData[] = [
-    { key: 'username', label: 'Username', value: data?.username || 'N/A' },
-    { key: 'email', label: 'Email', value: data?.email || 'N/A' },
-    { key: 'numberPhone', label: 'Số điện thoại', value: data?.numberPhone || 'N/A' },
-    { key: 'fullName', label: 'Họ và tên', value: data?.fullName || 'N/A' },
-    { key: 'address', label: 'Địa chỉ', value: data?.address || 'N/A' },
     {
-      key: 'role',
+      key: 'roleName',
       label: 'Quyền',
       value: (
-        <Form.Item name='role' rules={[{ required: true, message: 'Vui lòng chọn Role!' }]}>
-          <Select placeholder='Chọn Role' style={{ width: '30%' }}>
-            {roleData?.map((item: any) => (
-              <Select.Option key={item.id} value={item.id}>
-                {item.roleName}
-              </Select.Option>
-            ))}
-          </Select>
+        <Form.Item name='roleName' rules={[{ required: true, message: 'Vui lòng chọn Role!' }]}>
+          <Input style={{ width: '30%' }} placeholder='Chọn Role' />
+        </Form.Item>
+      )
+    },
+    {
+      key: 'status',
+      label: 'Trạng thái',
+      value: (
+        <Form.Item name='status' rules={[{ required: true, message: 'Vui lòng nhập trạng thái!' }]}>
+          <Switch checkedChildren='Khả dụng' unCheckedChildren='Không khả dụng' />
         </Form.Item>
       )
     }
@@ -82,11 +79,11 @@ const EditAccountPage: React.FC = () => {
   const handleFormSubmit = async (values: DataTypeUser) => {
     setIsLoading(true)
     try {
-      const response = await updateMutation.mutateAsync({ id: route_id, newRoleId: values.role })
+      const response = await updateMutation.mutateAsync({ id: route_id, body: values })
       if (response.status === HttpStatusCode.Ok) {
         message.success('Update successfully')
         refetch()
-        navigate('/account')
+        navigate('/role')
       } else {
         message.error('Update failed')
       }
@@ -117,4 +114,4 @@ const EditAccountPage: React.FC = () => {
   )
 }
 
-export default EditAccountPage
+export default EditRolePage

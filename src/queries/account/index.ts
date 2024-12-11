@@ -52,11 +52,34 @@ export const useUpdateRoleAccountMutation = (
       accountApiRequest.UpdateRoleAccount({ id, newRoleId })
   })
 }
+export const useUpdateRoleMutation = (
+  options?: UseMutationOptions<any, unknown, { id: string | number; body: any }, unknown>
+) => {
+  return useMutation({
+    ...options,
+    mutationFn: ({ id, body }: { id: string | number; body: any }) => accountApiRequest.UpdateRole({ id, body })
+  })
+}
+
+export const useAddRoleMutation = (options?: UseMutationOptions<any, unknown, any, unknown>) => {
+  return useMutation({
+    ...options,
+    mutationFn: (body: Omit<any, 'addLossCost'>) => accountApiRequest.AddRole({ body })
+  })
+}
 export const useDeleteAccountMutation = (
   options?: UseMutationOptions<any, unknown, { id: string | number | null }, unknown>
 ) => {
   return useMutation({
     ...options,
     mutationFn: ({ id }: { id: string | number | null }) => accountApiRequest.DeleteAccount({ id })
+  })
+}
+export const useDeleteRoleAccountMutation = (
+  options?: UseMutationOptions<any, unknown, { id: string | number | null }, unknown>
+) => {
+  return useMutation({
+    ...options,
+    mutationFn: ({ id }: { id: string | number | null }) => accountApiRequest.DeleteRole({ id })
   })
 }

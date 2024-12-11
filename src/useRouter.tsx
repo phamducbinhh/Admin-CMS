@@ -25,6 +25,8 @@ import DetailsRequestPage from './pages/private/Request/details'
 import RevenuePage from './pages/private/Revenue'
 import ReviewsPage from './pages/private/Reviews'
 import RolePage from './pages/private/Role'
+import AddRolePage from './pages/private/Role/add'
+import EditRolePage from './pages/private/Role/edit'
 import TicketPage from './pages/private/Ticket'
 import TicketNotPaidPage from './pages/private/Ticket-Not-Paid'
 import DetailTicketPage from './pages/private/Ticket/detail'
@@ -139,7 +141,9 @@ const staffRoutes = [
 const adminRoutes = [
   { path: '/account', component: <AccountPage />, allowedRoles: [RoleType.ADMIN] },
   { path: '/account/edit', component: <EditAccountPage />, allowedRoles: [RoleType.ADMIN] },
-  { path: '/role', component: <RolePage />, allowedRoles: [RoleType.ADMIN] }
+  { path: '/role', component: <RolePage />, allowedRoles: [RoleType.ADMIN] },
+  { path: '/role/edit', component: <EditRolePage />, allowedRoles: [RoleType.ADMIN] },
+  { path: '/role/add', component: <AddRolePage />, allowedRoles: [RoleType.ADMIN] }
 ]
 
 const driverRoutes = [{ path: '/vehicles-using', component: <VehicleUsingPage />, allowedRoles: [RoleType.DRIVER] }]
