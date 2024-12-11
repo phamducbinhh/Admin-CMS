@@ -58,6 +58,16 @@ export interface DataTypeCost {
   updateAt: number
   status: boolean
 }
+export interface DataTypeDriver {
+  userName: string
+  name: string
+  numberPhone: string
+  password: string
+  license: string
+  avatar: string
+  dob: string // ISO Date string
+  status: boolean
+}
 export interface DataTypeFixedCost {
   id: number | any
   dateIncurred: string // ISO Date string

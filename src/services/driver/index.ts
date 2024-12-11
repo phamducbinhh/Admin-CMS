@@ -27,6 +27,12 @@ class DriverApiRequest {
       config: { method: METHOD_TYPE.POST, body, cors: false }
     })
   }
+  public UpdateDriver({ id, body }: { id: string | number | null; body: any }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.DRIVER.UPDATE_DRIVER({ id }),
+      config: { method: METHOD_TYPE.POST, body, cors: false }
+    })
+  }
 }
 
 const driverApiRequest = new DriverApiRequest()

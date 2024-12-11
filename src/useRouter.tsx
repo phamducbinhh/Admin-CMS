@@ -7,6 +7,8 @@ import CostTypePage from './pages/private/CostType'
 import AddCostTypePage from './pages/private/CostType/add'
 import EditCostTypePage from './pages/private/CostType/edit'
 import DriverPage from './pages/private/Driver'
+import AddDriverPage from './pages/private/Driver/add'
+import EditDriverPage from './pages/private/Driver/edit'
 import FixedCostPage from './pages/private/FixedCost'
 import AddFixedCostPage from './pages/private/FixedCost/add'
 import EditFixedCostPage from './pages/private/FixedCost/edit'
@@ -32,9 +34,9 @@ import UserProfilePage from './pages/private/UserProfile'
 import VehiclesPage from './pages/private/Vehicles'
 import AddVehiclePage from './pages/private/Vehicles/add'
 import EditVehiclePage from './pages/private/Vehicles/edit'
+import ExcelVehiclePage from './pages/private/Vehicles/excel'
 import VehicleUsingPage from './pages/private/VehicleUsing'
 import LoginPage from './pages/public/login'
-import ExcelVehiclePage from './pages/private/Vehicles/excel'
 
 const staffRoutes = [
   { path: '/trips', component: <TripsPages />, allowedRoles: [RoleType.STAFF] },
@@ -75,6 +77,8 @@ const staffRoutes = [
     allowedRoles: [RoleType.STAFF]
   },
   { path: '/driver', component: <DriverPage />, allowedRoles: [RoleType.STAFF, RoleType.ADMIN] },
+  { path: '/driver/edit', component: <EditDriverPage />, allowedRoles: [RoleType.STAFF] },
+  { path: '/driver/add', component: <AddDriverPage />, allowedRoles: [RoleType.STAFF] },
   {
     path: '/history-rent-vehicle',
     component: <HistoryRentVehiclePage />,

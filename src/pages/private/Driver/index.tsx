@@ -1,11 +1,14 @@
 import useColumnSearch from '@/hooks/useColumnSearch'
 import { useQueryDriver } from '@/queries/driver'
 import renderWithLoading from '@/utils/renderWithLoading'
+import { PlusOutlined } from '@ant-design/icons'
 import { Avatar, Button, Popconfirm, Space, Table, TableProps } from 'antd'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 interface DataType {
   key: string
+  id: number
   name: string
   numberPhone: string
   avatar?: string
@@ -57,9 +60,11 @@ const DriverPage: React.FC = () => {
       title: 'Action',
       key: 'action',
       align: 'center',
-      render: () => (
+      render: (_, record) => (
         <Space size='middle'>
-          <Button type='primary'>Edit</Button>
+          <Link to={`edit?id=${record.id}`}>
+            <Button type='primary'>Edit</Button>
+          </Link>
           <Popconfirm title='Are you sure to delete this item?' okText='Yes' cancelText='No'>
             <Button type='primary' danger>
               Delete
@@ -82,6 +87,13 @@ const DriverPage: React.FC = () => {
         isLoading,
         content: (
           <>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
+              <Link to='add'>
+                <Button type='primary' icon={<PlusOutlined />} ghost>
+                  Thêm mới
+                </Button>
+              </Link>
+            </div>
             <Table columns={columns} dataSource={dataSource} />
           </>
         )

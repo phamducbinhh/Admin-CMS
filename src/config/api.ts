@@ -34,6 +34,7 @@ export const APP_API_ENDPOINT = Object.freeze({
     GET_DRIVER: '/api/Driver',
     DELETE_DRIVER: ({ id }: { id: string | number | null }) => `/api/Driver/${id}`,
     DRIVER_DETAILS: ({ id }: { id: string | number | null }) => `/api/Driver/${id}`,
+    UPDATE_DRIVER: ({ id }: { id: string | number | null }) => `/api/Driver/${id}`,
     ADD_DRIVER: '/api/Driver/Driver'
   },
   LOSS_COST_VEHICLE: {
