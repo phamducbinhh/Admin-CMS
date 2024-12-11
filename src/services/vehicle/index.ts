@@ -15,6 +15,12 @@ class VehicleApiRequest {
       config: { method: METHOD_TYPE.GET, cors: false }
     })
   }
+  public GetVehiclesOwner(): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.VEHICLES.GET_VEHICLES_OWNER,
+      config: { method: METHOD_TYPE.GET, cors: false }
+    })
+  }
   public GetTypeOfVehicles(): Promise<any> {
     return apiBaseServiceInstance.Http({
       path: APP_API_ENDPOINT.VEHICLES.TYPE_OF_VEHICLES,
@@ -61,6 +67,12 @@ class VehicleApiRequest {
     return apiBaseServiceInstance.Http({
       path: APP_API_ENDPOINT.VEHICLES.ADD_VEHICLES_FROM_EXCEL,
       config: { method: METHOD_TYPE.POST, body, cors: false }
+    })
+  }
+  public ExportVehicleExcel(): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.VEHICLES.EXPORT_VEHICLE,
+      config: { method: METHOD_TYPE.POST, cors: false }
     })
   }
 }

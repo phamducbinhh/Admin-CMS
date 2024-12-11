@@ -1,6 +1,6 @@
 export interface DataType {
-  id: number | any
   key: string
+  id: number
   name?: string
   numberSeat?: number
   startTime?: number | string
@@ -59,6 +59,16 @@ export interface DataTypeCost {
   updateAt: number
   status: boolean
 }
+export interface DataTypeDriver {
+  userName: string
+  name: string
+  numberPhone: string
+  password: string
+  license: string
+  avatar: string
+  dob: string // ISO Date string
+  status: boolean
+}
 export interface DataTypeFixedCost {
   id: number | any
   dateIncurred: string // ISO Date string
@@ -100,7 +110,6 @@ export interface RequestOption {
   driverId?: number
 }
 
-// Define the type for a single field
 export interface Field {
   name?: string
   label?: string
@@ -109,4 +118,18 @@ export interface Field {
   type?: string
   valuePropName?: string
   initialValue?: boolean
+}
+
+export interface DataTypeUser {
+  id: number
+  username: string
+  email: string
+  numberPhone: string
+  password: string
+  role: string | number
+  avatar: string
+  fullName: string
+  address: string
+  status: boolean
+  dob: string // ISO Date string
 }

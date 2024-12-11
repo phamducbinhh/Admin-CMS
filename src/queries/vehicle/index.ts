@@ -28,6 +28,20 @@ export const useQueryVehiclesNoTrip = (options?: Omit<UseQueryOptions<any>, 'que
   })
 }
 
+export const useQueryVehiclesOwner = (options?: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'>) => {
+  return useQuery<any>({
+    ...options,
+    queryKey: ['vehicles_owner'],
+    queryFn: async () => {
+      const response = await vehicleApiRequest.GetVehiclesOwner()
+
+      if (response.status === HttpStatusCode.Ok) {
+        return response.data
+      }
+    }
+  })
+}
+
 export const useQueryTypeOfVehicles = (options?: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'>) => {
   return useQuery<any>({
     ...options,
@@ -103,5 +117,10 @@ export const useAddVehiclesFromExcelMutation = (options?: UseMutationOptions<any
   return useMutation({
     ...options,
     mutationFn: (body: Omit<any, 'addVehicleFromExcel'>) => vehicleApiRequest.AddVehiclesFromExcel({ body })
+  })
+}
+export const useExportVehiclesFromExcelMutation = () => {
+  return useMutation({
+    mutationFn: () => vehicleApiRequest.ExportVehicleExcel()
   })
 }

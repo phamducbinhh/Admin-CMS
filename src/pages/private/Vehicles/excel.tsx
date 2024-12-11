@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
 import { Button, message, Table } from 'antd'
+import React, { useState } from 'react'
 
-import { useLocalStorage } from '@/utils/localStorage/localStorageService'
-import { useAddVehiclesFromExcelMutation, useImportExcel } from '@/queries/vehicle'
+import { useAddVehiclesFromExcelMutation, useExportVehiclesFromExcelMutation, useImportExcel } from '@/queries/vehicle'
 import { HttpStatusCode } from 'axios'
 import { useNavigate } from 'react-router-dom'
 
@@ -12,18 +11,13 @@ interface DownloadExcelProps {
 }
 
 const DownloadExcel: React.FC<DownloadExcelProps> = ({ exportedFile, setExportedFile }) => {
-  const token = useLocalStorage.getLocalStorageData('token')
+  const exportMutation = useExportVehiclesFromExcelMutation()
 
   const downloadFile = async () => {
     try {
-      const response = await fetch('https://boring-wiles.202-92-7-204.plesk.page/api/Vehicle/export_template_vehicel', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+      const response = await exportMutation.mutateAsync()
 
-      if (!response.ok) {
+      if (response.status !== HttpStatusCode.Ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
 
@@ -95,7 +89,6 @@ const ExcelVehiclePage = () => {
   }
 
   const handleImportToVehicleList = async () => {
-    // console.log(data.validEntries)
     try {
       const values = data.validEntries
 
