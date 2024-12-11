@@ -91,3 +91,8 @@ export const useAddVehiclesFromExcelMutation = (options?: UseMutationOptions<any
     mutationFn: (body: Omit<any, 'addVehicleFromExcel'>) => vehicleApiRequest.AddVehiclesFromExcel({ body })
   })
 }
+export const useExportVehiclesFromExcelMutation = () => {
+  return useMutation({
+    mutationFn: () => vehicleApiRequest.ExportVehicleExcel()
+  })
+}

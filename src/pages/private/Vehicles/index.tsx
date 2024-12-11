@@ -4,7 +4,7 @@ import { useDeleteVehiclesMutation, useQueryVehicles } from '@/queries/vehicle'
 import { DataTypeVehicle } from '@/types/DataType'
 import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
 import renderWithLoading from '@/utils/renderWithLoading'
-import { PlusOutlined } from '@ant-design/icons'
+import { DownloadOutlined, ExportOutlined, PlusOutlined } from '@ant-design/icons'
 import type { TableProps } from 'antd'
 import { Button, message, Popconfirm, Space, Table } from 'antd'
 import React, { useEffect } from 'react'
@@ -143,11 +143,11 @@ const VehiclesPage: React.FC = () => {
                 </Button>
               </Link>
               <Link to='excel'>
-                <Button type='primary' icon={<PlusOutlined />} ghost>
+                <Button type='primary' icon={<ExportOutlined />} ghost>
                   Import Excel
                 </Button>
               </Link>
-              <Button type='primary' onClick={handleExportToExcel} icon={<PlusOutlined />} ghost>
+              <Button type='primary' onClick={handleExportToExcel} icon={<DownloadOutlined />} ghost>
                 Export Excel
               </Button>
             </div>

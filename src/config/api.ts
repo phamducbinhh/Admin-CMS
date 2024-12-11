@@ -18,6 +18,7 @@ export const APP_API_ENDPOINT = Object.freeze({
     TYPE_OF_VEHICLES: '/api/Vehicle/listVehicleType',
     TYPE_VEHICLES_OWNER: '/api/Account/listVehicleOwner',
     IMPORT_VEHICLE: '/api/Vehicle/import_vehicle',
+    EXPORT_VEHICLE: '/api/Vehicle/export_template_vehicel',
     ADD_VEHICLES_FROM_EXCEL: '/api/Vehicle/confirmImportVehicle'
   },
   VEHICLES_USING: {
