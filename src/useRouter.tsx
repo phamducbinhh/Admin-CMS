@@ -40,6 +40,7 @@ import EditVehiclePage from './pages/private/Vehicles/edit'
 import ExcelVehiclePage from './pages/private/Vehicles/excel'
 import VehicleUsingPage from './pages/private/VehicleUsing'
 import LoginPage from './pages/public/login'
+import TotalTicketPage from './pages/private/Total-Ticket'
 
 const staffRoutes = [
   { path: '/trips', component: <TripsPages />, allowedRoles: [RoleType.STAFF] },
@@ -127,6 +128,7 @@ const staffRoutes = [
   },
   { path: '/revenue', component: <RevenuePage />, allowedRoles: [RoleType.STAFF, RoleType.VEHICLE_OWNER] },
   { path: '/ticket', component: <TicketPage />, allowedRoles: [RoleType.STAFF] },
+  { path: '/total-ticket', component: <TotalTicketPage />, allowedRoles: [RoleType.STAFF] },
   { path: '/ticket/detail', component: <DetailTicketPage />, allowedRoles: [RoleType.STAFF] },
   { path: '/ticket/edit', component: <EditTicketPage />, allowedRoles: [RoleType.STAFF] },
   { path: '/ticket-not-paid', component: <TicketNotPaidPage />, allowedRoles: [RoleType.STAFF, RoleType.DRIVER] },

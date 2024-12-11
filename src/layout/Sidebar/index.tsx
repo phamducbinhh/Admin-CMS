@@ -5,6 +5,7 @@ import {
   EuroCircleFilled,
   GiftOutlined,
   HistoryOutlined,
+  ReconciliationFilled,
   ShopFilled,
   ShoppingFilled,
   StarFilled,
@@ -94,6 +95,11 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
             key: 'ticket',
             icon: <SwitcherFilled />,
             label: <Link to='/ticket'>Ticket</Link> // Link added
+          },
+          {
+            key: 'total-ticket',
+            icon: <ReconciliationFilled />,
+            label: <Link to='/total-ticket'>Total Ticket</Link> // Link added
           },
           {
             key: 'ticket-not-paid',
