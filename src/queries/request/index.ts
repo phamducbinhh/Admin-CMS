@@ -60,12 +60,24 @@ export const useAddVehicleByStaffMutation = (
   })
 }
 export const useUpdateConvenientTripMutation = (
-  options?: UseMutationOptions<any, unknown, { id: string | number | null; choose: boolean }, unknown>
+  options?: UseMutationOptions<
+    any,
+    unknown,
+    { id: string | number | null; choose: boolean; vehicleId: string | number | null },
+    unknown
+  >
 ) => {
   return useMutation({
     ...options,
-    mutationFn: ({ id, choose }: { id: string | number | null; choose: boolean }) =>
-      requestApiRequest.UpdateConvenientTrip({ id, choose })
+    mutationFn: ({
+      id,
+      choose,
+      vehicleId
+    }: {
+      id: string | number | null
+      choose: boolean
+      vehicleId: string | number | null
+    }) => requestApiRequest.UpdateConvenientTrip({ id, choose, vehicleId })
   })
 }
 

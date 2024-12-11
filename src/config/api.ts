@@ -57,8 +57,15 @@ export const APP_API_ENDPOINT = Object.freeze({
     REQUEST_DETAILS: ({ id }: { id: string | number | null }) => `/GetRequestDetailById/${id}`,
     ACCEPT_CANCLE_REQUEST: ({ id }: { id: string | number | null }) => `/api/Request/acceptCancleTicket/${id}`,
     DELETE_REQUEST: ({ id }: { id: string | number | null }) => `/api/Request/Delete/${id}`,
-    UPDATE_CONVENIENT_TRIP: ({ id, choose }: { id: string | number | null; choose: boolean }) =>
-      `/api/Request/ConvenientTripUpdateForStaff?requestId=${id}&choose=${choose}`
+    UPDATE_CONVENIENT_TRIP: ({
+      id,
+      choose,
+      vehicleId
+    }: {
+      id: string | number | null
+      choose: boolean
+      vehicleId: string | number | null
+    }) => `/api/Request/ConvenientTripUpdateForStaff?requestId=${id}&choose=${choose}&vehicleId=${vehicleId}`
   },
   TICKET: {
     GET_TICKET: '/api/Ticket',

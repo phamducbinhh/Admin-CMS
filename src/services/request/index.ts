@@ -59,9 +59,17 @@ class RequestApiRequest {
       config: { method: METHOD_TYPE.POST, cors: false }
     })
   }
-  public UpdateConvenientTrip({ id, choose }: { id: string | number | null; choose: boolean }): Promise<any> {
+  public UpdateConvenientTrip({
+    id,
+    choose,
+    vehicleId
+  }: {
+    id: string | number | null
+    choose: boolean
+    vehicleId: string | number | null
+  }): Promise<any> {
     return apiBaseServiceInstance.Http({
-      path: APP_API_ENDPOINT.REQUEST.UPDATE_CONVENIENT_TRIP({ id, choose }),
+      path: APP_API_ENDPOINT.REQUEST.UPDATE_CONVENIENT_TRIP({ id, choose, vehicleId }),
       config: { method: METHOD_TYPE.POST, cors: false }
     })
   }
