@@ -41,6 +41,15 @@ export const useAcceptCancleRequestMutation = (
   })
 }
 
+export const useDeleteRequestMutation = (
+  options?: UseMutationOptions<any, unknown, { id: string | number | null }, unknown>
+) => {
+  return useMutation({
+    ...options,
+    mutationFn: ({ id }: { id: string | number | null }) => requestApiRequest.DeleteRequest({ id })
+  })
+}
+
 export const useAddVehicleByStaffMutation = (
   options?: UseMutationOptions<any, unknown, { id: string | number | null; isApprove: boolean }, unknown>
 ) => {

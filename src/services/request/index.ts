@@ -22,6 +22,12 @@ class RequestApiRequest {
       config: { method: METHOD_TYPE.POST, cors: false }
     })
   }
+  public DeleteRequest({ id }: { id: string | number | null }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.REQUEST.DELETE_REQUEST({ id }),
+      config: { method: METHOD_TYPE.POST, cors: false }
+    })
+  }
 
   public CreateTicketForRentCar({ body }: { body: RequestOption }): Promise<any> {
     return apiBaseServiceInstance.Http({

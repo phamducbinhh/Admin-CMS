@@ -55,6 +55,7 @@ export const APP_API_ENDPOINT = Object.freeze({
     CREATE_REQUEST_DRIVER: '/api/Request/CreateRentVehicleForDriverRequest',
     REQUEST_DETAILS: ({ id }: { id: string | number | null }) => `/GetRequestDetailById/${id}`,
     ACCEPT_CANCLE_REQUEST: ({ id }: { id: string | number | null }) => `/api/Request/acceptCancleTicket/${id}`,
+    DELETE_REQUEST: ({ id }: { id: string | number | null }) => `/api/Request/Delete/${id}`,
     UPDATE_CONVENIENT_TRIP: ({ id, choose }: { id: string | number | null; choose: boolean }) =>
       `/api/Request/ConvenientTripUpdateForStaff?requestId=${id}&choose=${choose}`
   },
