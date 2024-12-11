@@ -48,7 +48,7 @@ const DownloadExcel: React.FC<DownloadExcelProps> = ({ exportedFile, setExported
   )
 }
 
-const ExcelVehiclePage = () => {
+const ExcelTripPage = () => {
   const [exportedFile, setExportedFile] = useState(false)
   const [fileName, setFileName] = useState('')
   const [data, setData] = useState({ validEntries: [], invalidEntries: [], hasData: false })
@@ -191,4 +191,4 @@ const ExcelVehiclePage = () => {
   )
 }
 
-export default ExcelVehiclePage
+export default ExcelTripPage

@@ -14,6 +14,20 @@ export const useQueryVehicles = (options?: Omit<UseQueryOptions<any>, 'queryKey'
     }
   })
 }
+
+export const useQueryVehiclesNoTrip = (options?: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'>) => {
+  return useQuery<any>({
+    ...options,
+    queryKey: ['vehicles_no_trips'],
+    queryFn: async () => {
+      const response = await vehicleApiRequest.GetVehiclesNoTrip()
+      if (response.status === HttpStatusCode.Ok) {
+        return response.data
+      }
+    }
+  })
+}
+
 export const useQueryTypeOfVehicles = (options?: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'>) => {
   return useQuery<any>({
     ...options,

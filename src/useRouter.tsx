@@ -37,11 +37,15 @@ import LoginPage from './pages/public/login'
 import ExcelVehiclePage from './pages/private/Vehicles/excel'
 import AddTripPage from './pages/private/trips/add'
 import EditTripPage from './pages/private/trips/edit'
+import ListTripDetailPage from './pages/private/trips/list-trip-detail'
+import ExcelTripPage from './pages/private/trips/excel'
 
 const staffRoutes = [
   { path: '/trips', component: <TripsPages />, allowedRoles: [RoleType.STAFF] },
   { path: '/trips/add', component: <AddTripPage />, allowedRoles: [RoleType.STAFF] },
+  { path: '/trips/excel', component: <ExcelTripPage />, allowedRoles: [RoleType.STAFF] },
   { path: '/trips/edit', component: <EditTripPage />, allowedRoles: [RoleType.STAFF] },
+  { path: '/trips/list-trip-detail', component: <ListTripDetailPage />, allowedRoles: [RoleType.STAFF] },
   {
     path: '/vehicles',
     component: <VehiclesPage />,

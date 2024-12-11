@@ -9,6 +9,18 @@ class TripsApiRequest {
       config: { method: METHOD_TYPE.GET, cors: false }
     })
   }
+  public GetTripDetail({ id }: { id: string | number | null }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.TRIPS.GET_TRIP_DETAIL({ id }),
+      config: { method: METHOD_TYPE.GET, cors: false }
+    })
+  }
+  public GetListTripDetail({ id }: { id: string | number | null }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.TRIPS.GET_LIST_TRIP_DETAIL({ id }),
+      config: { method: METHOD_TYPE.GET, cors: false }
+    })
+  }
   public GetTypeOfTrips(): Promise<any> {
     return apiBaseServiceInstance.Http({
       path: APP_API_ENDPOINT.TRIPS.GET_TYPE_OF_TRIPS,
@@ -23,7 +35,7 @@ class TripsApiRequest {
     })
   }
 
-  public UpdateTicket({ id, body }: { id: string | number | null; body: any }): Promise<any> {
+  public UpdateTrip({ id, body }: { id: string | number | null; body: any }): Promise<any> {
     return apiBaseServiceInstance.Http({
       path: APP_API_ENDPOINT.TRIPS.UPDATE_TRIPS({ id }),
       config: { method: METHOD_TYPE.POST, body, cors: false }

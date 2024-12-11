@@ -99,3 +99,14 @@ export interface RequestOption {
   price?: number
   driverId?: number
 }
+
+// Define the type for a single field
+export interface Field {
+  name?: string
+  label?: string
+  component?: JSX.Element
+  rules?: { required: boolean; message: string }[]
+  type?: string
+  valuePropName?: string
+  initialValue?: boolean
+}

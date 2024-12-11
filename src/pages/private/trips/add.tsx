@@ -2,6 +2,7 @@ import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
 import { useAddTripMutation, useQueryTypeOfTrips } from '@/queries/trip'
 // import { useQueryDriver } from '@/queries/driver'
 import { useQueryVehicles } from '@/queries/vehicle'
+import { Field } from '@/types/DataType'
 import renderWithLoading from '@/utils/renderWithLoading'
 
 import { Button, DatePicker, Form, Input, message, Select, Switch } from 'antd'
@@ -9,17 +10,6 @@ import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 // import TextArea from 'antd/es/input/TextArea'
 import { useNavigate } from 'react-router-dom'
-
-// Define the type for a single field
-interface Field {
-  name?: string
-  label?: string
-  component?: JSX.Element
-  rules?: { required: boolean; message: string }[]
-  type?: string
-  valuePropName?: string
-  initialValue?: boolean
-}
 
 const AddTripPage: React.FC = () => {
   const [form] = Form.useForm()
