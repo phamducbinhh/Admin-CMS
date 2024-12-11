@@ -20,6 +20,7 @@ export const APP_API_ENDPOINT = Object.freeze({
     TYPE_OF_VEHICLES: '/api/Vehicle/listVehicleType',
     TYPE_VEHICLES_OWNER: '/api/Account/listVehicleOwner',
     IMPORT_VEHICLE: '/api/Vehicle/import_vehicle',
+    EXPORT_VEHICLE: '/api/Vehicle/export_template_vehicel',
     ADD_VEHICLES_FROM_EXCEL: '/api/Vehicle/confirmImportVehicle'
   },
   VEHICLES_USING: {
@@ -36,6 +37,8 @@ export const APP_API_ENDPOINT = Object.freeze({
     GET_DRIVER: '/api/Driver',
     DELETE_DRIVER: ({ id }: { id: string | number | null }) => `/api/Driver/${id}`,
     DRIVER_DETAILS: ({ id }: { id: string | number | null }) => `/api/Driver/${id}`,
+    BLOCK_DRIVER: ({ id }: { id: string | number | null }) => `/api/Driver/banDrive/${id}`,
+    UPDATE_DRIVER: ({ id }: { id: string | number | null }) => `/api/Driver/${id}`,
     ADD_DRIVER: '/api/Driver/Driver'
   },
   LOSS_COST_VEHICLE: {
@@ -55,11 +58,20 @@ export const APP_API_ENDPOINT = Object.freeze({
     CREATE_REQUEST_DRIVER: '/api/Request/CreateRentVehicleForDriverRequest',
     REQUEST_DETAILS: ({ id }: { id: string | number | null }) => `/GetRequestDetailById/${id}`,
     ACCEPT_CANCLE_REQUEST: ({ id }: { id: string | number | null }) => `/api/Request/acceptCancleTicket/${id}`,
-    UPDATE_CONVENIENT_TRIP: ({ id, choose }: { id: string | number | null; choose: boolean }) =>
-      `/api/Request/ConvenientTripUpdateForStaff?requestId=${id}&choose=${choose}`
+    DELETE_REQUEST: ({ id }: { id: string | number | null }) => `/api/Request/Delete/${id}`,
+    UPDATE_CONVENIENT_TRIP: ({
+      id,
+      choose,
+      vehicleId
+    }: {
+      id: string | number | null
+      choose: boolean
+      vehicleId: string | number | null
+    }) => `/api/Request/ConvenientTripUpdateForStaff?requestId=${id}&choose=${choose}&vehicleId=${vehicleId}`
   },
   TICKET: {
     GET_TICKET: '/api/Ticket',
+    GET_TOTAL_TICKET: '/api/Ticket/RevenueTicket',
     CREATE_FOR_RENT_CAR: '/api/Ticket/createTicketForRentCar',
     UPDATE_TICKET: ({ id }: { id: string | number | null }) => `/api/Ticket/updateTicket/${id}`,
     TICKET_DETAILS: ({ id }: { id: string | number | null }) => `/api/Ticket/ticketById/${id}`,
@@ -78,7 +90,13 @@ export const APP_API_ENDPOINT = Object.freeze({
   ACCOUNT: {
     GET_ACCOUNT: '/api/Account/listAccount',
     GET_ROLE: '/api/Account/listRole',
-    GET_ACCOUNT_DETAILS: ({ id }: { id: string | number | null }) => `/api/Account/detailsAccount/${id}`
+    ADD_ROLE: '/api/Role/addRole',
+    UPDATE_ROLE: ({ id }: { id: string | number | null }) => `/api/Role/updateRole/id?id=${id}`,
+    DELETE_ROLE: ({ id }: { id: string | number | null }) => `/api/Role/deleteRole/id?id=${id}`,
+    GET_ACCOUNT_DETAILS: ({ id }: { id: string | number | null }) => `/api/Account/detailsAccount/${id}`,
+    DELETE_ACCOUNT: ({ id }: { id: string | number | null }) => `/api/Account/deleteAccount/id?id=${id}`,
+    UPDATE_ACCOUNT: ({ id, newRoleId }: { id: string | number | null; newRoleId: string | number | null }) =>
+      `/api/Account/updateAccount/userId/newRoleId?userId=${id}&newRoleId=${newRoleId}`
   },
   HISTORY_RENT_VEHICLE: {
     GET_HISTORY_RENT_VEHICLE: '/api/HistoryRentVehicle/listHistoryRentVehicle',

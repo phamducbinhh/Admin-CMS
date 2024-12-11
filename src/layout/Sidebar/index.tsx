@@ -1,26 +1,22 @@
 import {
   AccountBookOutlined,
-  AppstoreOutlined,
-  BarChartOutlined,
   CarOutlined,
   DashboardOutlined,
   EuroCircleFilled,
-  FileTextOutlined,
   GiftOutlined,
   HistoryOutlined,
-  SettingOutlined,
+  ReconciliationFilled,
   ShopFilled,
   ShoppingFilled,
   StarFilled,
   SwitcherFilled,
-  ToolOutlined,
   TruckFilled,
   UnlockFilled,
   UserOutlined,
   UserSwitchOutlined
 } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
-import { Badge, Layout, Menu } from 'antd'
+import { Layout, Menu } from 'antd'
 import React, { useEffect, useState } from 'react'
 
 import logo from '@/assets/logo.png'
@@ -71,11 +67,6 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
             label: <Link to='/driver'>Drivers</Link> // Link added
           },
           {
-            key: 'rent-driver',
-            icon: <CarOutlined />,
-            label: <Link to='/rent-driver'>Rent Driver</Link> // Link added
-          },
-          {
             key: 'history-rent-driver',
             icon: <CarOutlined />,
             label: <Link to='/history-rent-driver'>History Rent Driver</Link> // Link added
@@ -106,6 +97,11 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
             label: <Link to='/ticket'>Ticket</Link> // Link added
           },
           {
+            key: 'total-ticket',
+            icon: <ReconciliationFilled />,
+            label: <Link to='/total-ticket'>Total Ticket</Link> // Link added
+          },
+          {
             key: 'ticket-not-paid',
             icon: <ShopFilled />,
             label: <Link to='/ticket-not-paid'>Ticket Not Paid</Link> // Link added
@@ -131,83 +127,6 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
             label: <Link to='/role'>Role</Link> // Link added
           }
         ]
-      },
-      {
-        label: 'WIDGETS',
-        key: 'widgets',
-        type: 'group', // Non-clickable heading
-        children: [
-          {
-            key: 'widgets-item',
-            icon: <AppstoreOutlined />,
-            label: <Link to='/widgets'>Widgets</Link> // Link added
-          }
-        ]
-      },
-      {
-        label: 'Navigation Three - Submenu',
-        key: 'SubMenu',
-        icon: <SettingOutlined />,
-        children: [
-          {
-            type: 'group',
-            label: 'Item 1',
-            children: [
-              { label: 'Option 1', key: 'setting:1' },
-              { label: 'Option 2', key: 'setting:2' }
-            ]
-          },
-          {
-            type: 'group',
-            label: 'Item 2',
-            children: [
-              { label: 'Option 3', key: 'setting:3' },
-              { label: 'Option 4', key: 'setting:4' }
-            ]
-          }
-        ]
-      },
-      {
-        label: 'GENERAL',
-        key: 'general',
-        type: 'group', // Non-clickable heading
-        children: [
-          {
-            key: 'ui-elements',
-            icon: <ToolOutlined />,
-            label: 'UI Elements'
-          },
-          {
-            key: 'utilities',
-            icon: <SettingOutlined />,
-            label: 'Utilities'
-          },
-          {
-            key: 'charts',
-            icon: <BarChartOutlined />,
-            label: 'Charts'
-          },
-          {
-            key: 'forms',
-            icon: <FileTextOutlined />,
-            label: (
-              <span>
-                Forms <Badge count={6} style={{ marginLeft: '10px' }} />
-              </span>
-            )
-          },
-          {
-            key: 'advanced-ui',
-            icon: <ToolOutlined />,
-            label: 'Advanced UI'
-          }
-        ]
-      },
-      {
-        label: 'WEB APPS',
-        key: 'web-apps',
-        type: 'group', // Non-clickable heading
-        children: []
       }
     ]
 

@@ -57,6 +57,12 @@ class VehicleApiRequest {
       config: { method: METHOD_TYPE.POST, body, cors: false }
     })
   }
+  public ExportVehicleExcel(): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.VEHICLES.EXPORT_VEHICLE,
+      config: { method: METHOD_TYPE.POST, cors: false }
+    })
+  }
 }
 
 const vehicleApiRequest = new VehicleApiRequest()
