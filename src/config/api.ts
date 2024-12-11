@@ -87,7 +87,9 @@ export const APP_API_ENDPOINT = Object.freeze({
   ACCOUNT: {
     GET_ACCOUNT: '/api/Account/listAccount',
     GET_ROLE: '/api/Account/listRole',
-    GET_ACCOUNT_DETAILS: ({ id }: { id: string | number | null }) => `/api/Account/detailsAccount/${id}`
+    GET_ACCOUNT_DETAILS: ({ id }: { id: string | number | null }) => `/api/Account/detailsAccount/${id}`,
+    UPDATE_ACCOUNT: ({ id, newRoleId }: { id: string | number | null; newRoleId: string | number | null }) =>
+      `/api/Account/updateAccount/userId/newRoleId?userId=${id}&newRoleId=${newRoleId}`
   },
   HISTORY_RENT_VEHICLE: {
     GET_HISTORY_RENT_VEHICLE: '/api/HistoryRentVehicle/listHistoryRentVehicle',

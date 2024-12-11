@@ -108,3 +108,17 @@ export interface RequestOption {
   price?: number
   driverId?: number
 }
+
+export interface DataTypeUser {
+  id: number
+  username: string
+  email: string
+  numberPhone: string
+  password: string
+  role: string | number
+  avatar: string
+  fullName: string
+  address: string
+  status: boolean
+  dob: string // ISO Date string
+}

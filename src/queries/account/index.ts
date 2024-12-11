@@ -1,6 +1,6 @@
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
 import accountApiRequest from '@/services/account'
-import { useQuery, UseQueryOptions } from '@tanstack/react-query'
+import { useMutation, UseMutationOptions, useQuery, UseQueryOptions } from '@tanstack/react-query'
 
 export const useQueryAccount = (options?: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'>) => {
   return useQuery<any>({
@@ -40,5 +40,15 @@ export const useQueryAccountDetails = (
         return response.data
       }
     }
+  })
+}
+
+export const useUpdateRoleAccountMutation = (
+  options?: UseMutationOptions<any, unknown, { id: string | number; newRoleId: string | number }, unknown>
+) => {
+  return useMutation({
+    ...options,
+    mutationFn: ({ id, newRoleId }: { id: string | number; newRoleId: string | number }) =>
+      accountApiRequest.UpdateRoleAccount({ id, newRoleId })
   })
 }

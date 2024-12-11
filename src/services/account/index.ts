@@ -21,6 +21,18 @@ class AccountApiRequest {
       config: { method: METHOD_TYPE.GET, cors: false }
     })
   }
+  public UpdateRoleAccount({
+    id,
+    newRoleId
+  }: {
+    id: string | number | null
+    newRoleId: string | number | null
+  }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.ACCOUNT.UPDATE_ACCOUNT({ id, newRoleId }),
+      config: { method: METHOD_TYPE.POST, cors: false }
+    })
+  }
 }
 
 const accountApiRequest = new AccountApiRequest()

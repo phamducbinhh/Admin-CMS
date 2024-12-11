@@ -1,11 +1,7 @@
-import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
-import { useQueryCostType } from '@/queries/cost-type'
-import { useQueryLossCost, useUpdatelossCostMutation } from '@/queries/fixed-cost'
-import { useQueryVehicles } from '@/queries/vehicle'
-import { DataTypeCost } from '@/types/DataType'
-import { Button, Col, DatePicker, Form, InputNumber, message, Row, Select, Table, TableColumnsType } from 'antd'
-import TextArea from 'antd/es/input/TextArea'
-import dayjs from 'dayjs'
+import { useQueryAccount, useQueryAccountDetails, useQueryRole, useUpdateRoleAccountMutation } from '@/queries/account'
+import { DataTypeUser } from '@/types/DataType'
+import { Button, Col, Form, message, Row, Select, Table, TableColumnsType } from 'antd'
+import { HttpStatusCode } from 'axios'
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
@@ -18,102 +14,50 @@ interface TableData {
 const EditAccountPage: React.FC = () => {
   const [searchParams] = useSearchParams()
 
-  const fixedcostTypeID: string | number | null = searchParams.get('id')
+  const navigate = useNavigate()
+
+  const route_id: string | number | null = searchParams.get('id')
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  if (fixedcostTypeID === null) {
+  const { data } = useQueryAccountDetails({ id: route_id })
+
+  const { refetch } = useQueryAccount()
+
+  const { data: roleData } = useQueryRole()
+
+  const updateMutation = useUpdateRoleAccountMutation()
+
+  if (route_id === null) {
     throw new Error('Invalid cost type ID')
   }
 
   const [form] = Form.useForm()
 
-  const updateMutation = useUpdatelossCostMutation()
-
-  const navigate = useNavigate()
-
-  const { data, refetch } = useQueryLossCost()
-
-  const { data: vehicleData } = useQueryVehicles()
-
-  const { data: costTypeData } = useQueryCostType()
-
   useEffect(() => {
-    if (data && Array.isArray(data)) {
-      const formData = data.find((item) => item.id === Number(fixedcostTypeID))
-      if (formData) {
-        const updatedFormData = {
-          ...formData,
-          dateIncurred: dayjs(formData.dateIncurred)
-        }
-
-        form.setFieldsValue(updatedFormData)
-      }
+    if (data) {
+      form.setFieldsValue(data)
     }
-  }, [data, fixedcostTypeID, form])
+  }, [data, form])
 
   const tableData: TableData[] = [
+    { key: 'username', label: 'Username', value: data?.username || 'N/A' },
+    { key: 'email', label: 'Email', value: data?.email || 'N/A' },
+    { key: 'numberPhone', label: 'Số điện thoại', value: data?.numberPhone || 'N/A' },
+    { key: 'fullName', label: 'Họ và tên', value: data?.fullName || 'N/A' },
+    { key: 'address', label: 'Địa chỉ', value: data?.address || 'N/A' },
     {
-      key: 'description',
-      label: 'Mô tả',
+      key: 'role',
+      label: 'Quyền',
       value: (
-        <Form.Item name='description' rules={[{ required: true, message: 'Vui lòng nhập Mô tả!' }]}>
-          <TextArea style={{ width: '30%' }} />
-        </Form.Item>
-      )
-    },
-    {
-      key: 'price',
-      label: 'Giá chi phí',
-      value: (
-        <Form.Item name='price' rules={[{ required: true, message: 'Vui lòng nhập giá chi phí!' }]}>
-          <InputNumber style={{ width: '30%' }} />
-        </Form.Item>
-      )
-    },
-    {
-      key: 'vehicleId',
-      label: 'Biển số xe',
-      value: (
-        <Form.Item name='vehicleId' rules={[{ required: true, message: 'Vui lòng chọn xe!' }]}>
-          <Select placeholder='Chọn xe' style={{ width: '30%' }}>
-            {vehicleData?.map((item: any) => (
+        <Form.Item name='role' rules={[{ required: true, message: 'Vui lòng chọn Role!' }]}>
+          <Select placeholder='Chọn Role' style={{ width: '30%' }}>
+            {roleData?.map((item: any) => (
               <Select.Option key={item.id} value={item.id}>
-                {item.licensePlate}
+                {item.roleName}
               </Select.Option>
             ))}
           </Select>
-        </Form.Item>
-      )
-    },
-    {
-      key: 'lossCostTypeId',
-      label: 'Loại chi phí',
-      value: (
-        <Form.Item name='lossCostTypeId' rules={[{ required: true, message: 'Vui lòng chọn loại chi phí!' }]}>
-          <Select placeholder='Chọn loại chi phí' style={{ width: '30%' }}>
-            {costTypeData?.map((item: any) => (
-              <Select.Option key={item.id} value={item.id}>
-                {item.description}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-      )
-    },
-    {
-      key: 'dateIncurred',
-      label: 'Ngày phát sinh',
-      value: (
-        <Form.Item name='dateIncurred' rules={[{ required: true, message: 'Vui lòng chọn ngày phát sinh!' }]}>
-          <DatePicker
-            showTime={{
-              format: 'HH:mm:ss' // Optional: Customize the time format
-            }}
-            format='YYYY-MM-DD HH:mm:ss'
-            style={{ width: '30%' }}
-            onChange={(date) => console.log(date?.toISOString())}
-          />
         </Form.Item>
       )
     }
@@ -135,14 +79,15 @@ const EditAccountPage: React.FC = () => {
     }
   ]
 
-  const handleFormSubmit = async (values: DataTypeCost) => {
+  const handleFormSubmit = async (values: DataTypeUser) => {
     setIsLoading(true)
+    console.log(values)
     try {
-      const response = await updateMutation.mutateAsync({ id: fixedcostTypeID, body: values })
+      const response = await updateMutation.mutateAsync({ id: route_id, newRoleId: values.role })
       if (response.status === HttpStatusCode.Ok) {
         message.success('Update successfully')
         refetch()
-        navigate('/fixed-cost')
+        navigate('/account')
       } else {
         message.error('Update failed')
       }
