@@ -17,6 +17,9 @@ const DownloadExcel: React.FC<DownloadExcelProps> = ({ exportedFile, setExported
     try {
       const response = await exportMutation.mutateAsync()
 
+      console.log(response);
+      
+
       if (response.status !== HttpStatusCode.Ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
