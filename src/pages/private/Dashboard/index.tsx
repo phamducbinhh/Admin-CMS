@@ -1,12 +1,17 @@
+import { RoleType } from '@/enums/enum'
 import { formatPrize } from '@/helpers'
 import { useQueryRevenue } from '@/queries/revenue'
+import { useQueryUserProfile } from '@/queries/user-profile'
 import renderWithLoading from '@/utils/renderWithLoading'
-import { Button } from 'antd'
+import { Button, Result } from 'antd'
 import React, { useState } from 'react'
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
 const DashBoardChartPage: React.FC = () => {
-  const { data, isLoading } = useQueryRevenue()
+  const { data: account } = useQueryUserProfile()
+  const { data, isLoading } = useQueryRevenue({
+    enabled: [RoleType.STAFF, RoleType.VEHICLE_OWNER].includes(account?.role)
+  })
   const [showAllData, setShowAllData] = useState(false)
   const revenueTicketData = data?.revenueTicketDTOs[0]?.listTicket || []
   const totalLossCosts = data?.totalLossCosts[0]?.listLossCostVehicle || []
@@ -88,6 +93,10 @@ const DashBoardChartPage: React.FC = () => {
       </div>
     </div>
   )
+
+  if (![RoleType.STAFF, RoleType.VEHICLE_OWNER].includes(account?.role)) {
+    return <Result status='warning' title='Phải là Staff hoặc Vehicle Owner mới đươc truy cập' />
+  }
 
   return (
     <>
