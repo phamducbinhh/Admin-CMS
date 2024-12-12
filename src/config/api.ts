@@ -85,7 +85,8 @@ export const APP_API_ENDPOINT = Object.freeze({
     TICKET_DETAILS: ({ id }: { id: string | number | null }) => `/api/Ticket/ticketById/${id}`,
     TICKET_NOT_PAID: ({ id }: { id: string | number | null }) => `/api/Ticket/tickeNotPaid/${id}`,
     DELETE_TICKET: ({ id }: { id: string | number | null }) => `/api/Ticket/deleteTicketTimeOut/${id}`,
-    UPDATE_STATUS_TICKET: ({ id }: { id: string | number | null }) => `/api/Ticket/updateStatusticketNotPaid/${id}`,
+    UPDATE_STATUS_TICKET: ({ id }: { id: string | number | null }) =>
+      `/api/Ticket/updateStatusticketNotPaid/id?id=${id}`,
     GET_TRAVEL_CAR_BY_REQUEST: ({ id }: { id: string | number | null }) => `/api/Ticket/GetTravelCarByRequest/${id}`
   },
   REVENUE: {
