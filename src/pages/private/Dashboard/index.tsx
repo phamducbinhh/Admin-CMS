@@ -48,12 +48,11 @@ const DashBoardChartPage: React.FC = () => {
           <XAxis
             dataKey='name'
             tick={{ fontSize: 12 }}
-            label={{ value: 'Name', position: 'insideBottom', offset: -10, fontSize: 14 }}
+            label={{ position: 'insideBottom', offset: -10, fontSize: 14 }}
           />
           <YAxis
             tick={{ fontSize: 12 }}
             label={{
-              value: 'Price',
               angle: -90,
               position: 'insideLeft',
               offset: 0,
