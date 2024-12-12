@@ -43,7 +43,8 @@ const TicketNotPaidPage: React.FC = () => {
     return {
       ...item,
       key: item.ticketId || item.someUniqueField,
-      ticketId: ticketDetails?.description
+      ticketId: ticketDetails?.description,
+      id: item.ticketId
     }
   })
 
