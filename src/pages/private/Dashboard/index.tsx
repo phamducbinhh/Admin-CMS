@@ -35,6 +35,11 @@ const DashBoardChartPage: React.FC = () => {
     price: item.price || 0
   }))
 
+  // Tính tổng giá trị cho từng loại dữ liệu
+  const getTotalPrice = (data: { price: number }[]) => {
+    return data.reduce((total, item) => total + item.price, 0)
+  }
+
   const chartStyle = {
     marginBottom: 40
   }
@@ -77,6 +82,11 @@ const DashBoardChartPage: React.FC = () => {
           <Bar dataKey='price' fill={barColor} barSize={40} radius={[10, 10, 0, 0]} name='Price' />
         </BarChart>
       </ResponsiveContainer>
+      {/* Hiển thị tổng giá trị */}
+      <div style={{ textAlign: 'center', fontSize: 16, marginTop: 10 }}>
+        <strong>Total: </strong>
+        {formatPrize(getTotalPrice(data))}
+      </div>
     </div>
   )
 
