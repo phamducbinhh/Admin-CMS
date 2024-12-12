@@ -35,7 +35,6 @@ const DashBoardChartPage: React.FC = () => {
     price: item.price || 0
   }))
 
-  // Tính tổng giá trị cho từng loại dữ liệu
   const getTotalPrice = (data: { price: number }[]) => {
     return data.reduce((total, item) => total + item.price, 0)
   }
