@@ -1,24 +1,24 @@
 import { formatPrize } from '@/helpers'
 import { useQueryRevenue } from '@/queries/revenue'
 import renderWithLoading from '@/utils/renderWithLoading'
-import React from 'react'
+import { Button } from 'antd'
+import React, { useState } from 'react'
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
 const DashBoardChartPage: React.FC = () => {
   const { data, isLoading } = useQueryRevenue()
-
+  const [showAllData, setShowAllData] = useState(false)
   const revenueTicketData = data?.revenueTicketDTOs[0]?.listTicket || []
   const totalLossCosts = data?.totalLossCosts[0]?.listLossCostVehicle || []
   const rentDriverData = data?.totalPayementRentDrivers[0]?.paymentRentDriverDTOs || []
   const rentVehicleData = data?.totalPaymentRentVehicleDTOs[0]?.paymentRentVehicelDTOs || []
 
   const revenueTicketChartData: { name: string; price: number }[] = revenueTicketData
+    .filter((item: any) => item.pricePromotion !== null && item.pricePromotion !== 0)
     .map((item: any) => ({
       name: item.vehicleOwner || 'Unknown',
       price: item.pricePromotion || 0
     }))
-    .sort((a: any, b: any) => b.price - a.price)
-    .slice(0, 10)
 
   const totalLossCostsData = totalLossCosts.map((item: any) => ({
     name: item.vehicleOwner || 'Unknown',
@@ -97,10 +97,36 @@ const DashBoardChartPage: React.FC = () => {
             >
               Dashboard
             </h2>
-            {renderChart(revenueTicketChartData, '#4A90E2', 'Revenue Ticket')}
-            {renderChart(rentDriverChartData, '#50C878', 'Rent Driver')}
-            {renderChart(rentVehicleChartData, '#FF7F50', 'Rent Vehicle')}
-            {renderChart(totalLossCostsData, '#FF4500', 'Total Loss Costs')}
+            <div style={{ textAlign: 'right', marginBottom: 20 }}>
+              <Button type='primary' onClick={() => setShowAllData(!showAllData)} style={{ fontSize: 16 }} ghost>
+                {showAllData ? 'Hide All Data' : 'Show All Data'}
+              </Button>
+            </div>
+            {renderChart(
+              showAllData ? revenueTicketChartData : revenueTicketChartData.slice(0, 20),
+              '#4A90E2',
+              'Revenue Ticket'
+            )}
+            {renderChart(
+              showAllData ? rentDriverChartData : rentDriverChartData.slice(0, 20),
+              '#50C878',
+              'Rent Driver'
+            )}
+            {renderChart(
+              showAllData ? rentVehicleChartData : rentVehicleChartData.slice(0, 20),
+              '#FF7F50',
+              'Rent Vehicle'
+            )}
+            {renderChart(
+              showAllData ? totalLossCostsData : totalLossCostsData.slice(0, 20),
+              '#FF4500',
+              'Total Loss Costs'
+            )}
+
+            <div style={{ marginTop: 40, textAlign: 'center' }}>
+              <span style={{ fontSize: 18, fontWeight: 'normal' }}> Tổng Doanh Thu </span>:{' '}
+              <span style={{ fontSize: 30 }}>{formatPrize(data?.totalRevenue)}</span>
+            </div>
           </div>
         )
       })}
