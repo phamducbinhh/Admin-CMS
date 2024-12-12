@@ -12,7 +12,8 @@ interface DataType {
   driverName: string
   timeStart: number
   timeEnd: number
-  vehicleOwner: string
+  price: number
+  carOwner: string
 }
 
 const HistoryRentVehiclePage: React.FC = () => {
@@ -29,40 +30,40 @@ const HistoryRentVehiclePage: React.FC = () => {
     },
     {
       title: 'Giá xe',
-      dataIndex: 'vehiclePrice',
-      key: 'vehiclePrice',
+      dataIndex: 'price',
+      key: 'price',
       align: 'center',
       render: (text) => <span>{formatPrize(text)}</span>,
-      sorter: (a, b) => handlingTsUndefined(a.vehiclePrice) - handlingTsUndefined(b.vehiclePrice),
+      sorter: (a, b) => handlingTsUndefined(a.price) - handlingTsUndefined(b.price),
       width: '20%'
     },
     {
       title: 'Chủ xe',
-      dataIndex: 'vehicleOwner',
-      key: 'vehicleOwner',
+      dataIndex: 'carOwner',
+      key: 'carOwner',
       align: 'center',
-      ...useColumnSearch().getColumnSearchProps('vehicleOwner'),
+      ...useColumnSearch().getColumnSearchProps('carOwner'),
       render: (text) => <span>{text ?? 'null'}</span>,
       width: '20%'
     },
     {
       title: 'Thời gian bắt đầu',
-      dataIndex: 'timeStart',
-      key: 'timeStart',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
       align: 'center',
       render: (date) => <span>{formatTime(date) ?? 'null'}</span>,
       width: '20%'
     },
     {
-      title: 'Thời gian kết thúc',
-      dataIndex: 'endStart',
-      key: 'endStart',
+      title: 'Biển số xe',
+      dataIndex: 'licenseVehicle',
+      key: 'licenseVehicle',
       align: 'center',
-      render: (date) => <span>{formatTime(date) ?? 'null'}</span>,
+      ...useColumnSearch().getColumnSearchProps('licenseVehicle'),
       width: '20%'
     }
   ]
-  const dataSource = data?.map((item: any) => ({
+  const dataSource = data?.paymentRentVehicelDTOs?.map((item: any) => ({
     ...item,
     key: item.id || item.someUniqueField
   }))
@@ -74,6 +75,9 @@ const HistoryRentVehiclePage: React.FC = () => {
         content: (
           <>
             <Table columns={columns} dataSource={dataSource} />
+            <div>
+              Total : <span style={{ fontSize: 20 }}>{formatPrize(data?.total)}</span>
+            </div>
           </>
         )
       })}

@@ -47,22 +47,22 @@ const HistoryRentDriverPage: React.FC = () => {
     },
     {
       title: 'Thời gian bắt đầu',
-      dataIndex: 'timeStart',
-      key: 'timeStart',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
       align: 'center',
       render: (date) => <span>{formatTime(date) ?? 'null'}</span>,
       width: '20%'
     },
     {
-      title: 'Thời gian kết thúc',
-      dataIndex: 'endStart',
-      key: 'endStart',
+      title: 'Biển số xe',
+      dataIndex: 'licenseVehicle',
+      key: 'licenseVehicle',
       align: 'center',
-      render: (date) => <span>{formatTime(date) ?? 'null'}</span>,
+      ...useColumnSearch().getColumnSearchProps('licenseVehicle'),
       width: '20%'
     }
   ]
-  const dataSource = data?.map((item: any) => ({
+  const dataSource = data?.paymentRentDriverDTOs?.map((item: any) => ({
     ...item,
     key: item.id || item.someUniqueField
   }))
@@ -74,6 +74,9 @@ const HistoryRentDriverPage: React.FC = () => {
         content: (
           <>
             <Table columns={columns} dataSource={dataSource} />
+            <div>
+              Total : <span style={{ fontSize: 20 }}>{formatPrize(data?.total)}</span>
+            </div>
           </>
         )
       })}
