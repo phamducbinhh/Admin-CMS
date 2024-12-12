@@ -64,7 +64,6 @@ const TicketNotPaidPage: React.FC = () => {
   }, 500)
 
   const handleAccept = async (id: number) => {
-    console.log('id', id)
     try {
       setIsAcceptLoading(true)
       const response = await acceptMutaion.mutateAsync({ id })
