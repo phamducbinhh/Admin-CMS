@@ -147,7 +147,11 @@ const staffRoutes = [
     allowedRoles: [RoleType.DRIVER]
   },
   { path: '/revenue', component: <RevenuePage />, allowedRoles: [RoleType.STAFF, RoleType.VEHICLE_OWNER] },
-  { path: '/ticket', component: <TicketPage />, allowedRoles: [RoleType.STAFF, RoleType.VEHICLE_OWNER] },
+  {
+    path: '/ticket',
+    component: <TicketPage />,
+    allowedRoles: [RoleType.STAFF, RoleType.VEHICLE_OWNER, RoleType.DRIVER]
+  },
   { path: '/total-ticket', component: <TotalTicketPage />, allowedRoles: [RoleType.STAFF, RoleType.VEHICLE_OWNER] },
   { path: '/ticket/detail', component: <DetailTicketPage />, allowedRoles: [RoleType.STAFF, RoleType.DRIVER] },
   { path: '/ticket/edit', component: <EditTicketPage />, allowedRoles: [RoleType.STAFF] },
