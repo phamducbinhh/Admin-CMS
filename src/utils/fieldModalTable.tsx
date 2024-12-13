@@ -105,10 +105,11 @@ export const fieldModalTable: ModalFormProps<DataType>['fields'] = [
     component: (
       <DatePicker
         showTime={{
-          format: 'HH:mm:ss' // Optional: Customize the time format
+          format: 'HH:mm:ss' // Ensures the popup time format is clear
         }}
-        format='YYYY-MM-DD HH:mm:ss'
-        // onChange={(date) => console.log(date?.toISOString())}
+        format='HH:mm:ss' // Format for the input field
+        picker='time' // Ensure this matches 'time' for selecting only time
+        placeholder='Select Time' // Placeholder text for clarity
       />
     ),
     rules: [{ required: true, message: 'Vui lòng nhập Thời gian bắt đầu chi tiết!' }]
@@ -119,10 +120,11 @@ export const fieldModalTable: ModalFormProps<DataType>['fields'] = [
     component: (
       <DatePicker
         showTime={{
-          format: 'HH:mm:ss' // Optional: Customize the time format
+          format: 'HH:mm:ss' // Ensures the popup time format is clear
         }}
-        format='YYYY-MM-DD HH:mm:ss'
-        // onChange={(date) => console.log(date?.toISOString())}
+        format='HH:mm:ss' // Format for the input field
+        picker='time' // Ensure this matches 'time' for selecting only time
+        placeholder='Select Time' // Placeholder text for clarity
       />
     ),
     rules: [{ required: true, message: 'Vui lòng nhập Thời gian kết thúc chi tiết!' }]
@@ -144,6 +146,5 @@ export const fieldModalTable: ModalFormProps<DataType>['fields'] = [
     label: 'Ảnh mã khuyến mại',
     component: <Input />,
     rules: [{ required: true, message: 'Vui lòng nhập ảnh mã khuyến mại!' }]
-  },
-
+  }
 ]

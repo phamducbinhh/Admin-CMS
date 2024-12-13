@@ -1,10 +1,11 @@
 import useColumnSearch from '@/hooks/useColumnSearch'
-import { useQueryListTripDetail } from '@/queries/trip'
+import { useQueryListTripDetail } from '@/queries/trip-list-detail'
+
 import { DataType } from '@/types/DataType'
 import renderWithLoading from '@/utils/renderWithLoading'
 import { PlusOutlined } from '@ant-design/icons'
 import { Button, Space, Table, TableProps } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 
 const ListTripDetailPage: React.FC = () => {
@@ -12,9 +13,13 @@ const ListTripDetailPage: React.FC = () => {
 
   const tripDetailID: string | number | null = searchParams.get('id')
 
-  const { data, isLoading } = useQueryListTripDetail({ id: tripDetailID })
+  const { data, refetch, isLoading } = useQueryListTripDetail({ id: tripDetailID })
 
-  console.log(data)
+  useEffect(() => {
+    if (tripDetailID) {
+      refetch()
+    }
+  }, [refetch, tripDetailID])
 
   const columns: TableProps<DataType>['columns'] = [
     {

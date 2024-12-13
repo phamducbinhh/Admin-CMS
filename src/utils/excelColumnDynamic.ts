@@ -90,13 +90,14 @@ function moveToLast(array: any, keysToMove: any) {
 
 // Main function
 export const processResponseData = (responseData: any) => {
-  const entries = responseData.map((item: any) => {
+  const entries = responseData.map((item: any, index: number) => {
     const flattenedStartDetails = flattenPointStartDetail(item.pointStartDetail)
     const flattenedEndDetails = flattenPointEndDetail(item.pointEndDetail)
 
     const filteredItem = filterItemKeys(item)
 
     return {
+      key: item.id || index,
       ...filteredItem,
       ...flattenedStartDetails,
       ...flattenedEndDetails
