@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import DashBoardChartPage from './Dashboard'
 
-const { Content, Footer } = Layout
+const { Content } = Layout
 
 const PrivateLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false)
@@ -59,7 +59,6 @@ const PrivateLayout: React.FC = () => {
             {isChildRoute() ? <Outlet /> : <DashBoardChartPage />}
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>VeXeRe CMS ©{new Date().getFullYear()}</Footer>
       </Layout>
     </Layout>
   )
