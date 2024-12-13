@@ -46,12 +46,7 @@ const DownloadExcel: React.FC<DownloadExcelProps> = ({
 
   return (
     <div>
-      <Select
-        disabled={exportedFile}
-        style={{ width: 200, marginRight: 20 }}
-        placeholder='Choose an option'
-        onChange={handleSelectChange}
-      >
+      <Select style={{ width: 200, marginRight: 20 }} placeholder='Choose an option' onChange={handleSelectChange}>
         <Option value='1'>Template Trip Inter Provincial</Option>
         <Option value='2'>Template Trip Convenience</Option>
       </Select>
