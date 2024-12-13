@@ -57,7 +57,7 @@ const ListTripDetailPage: React.FC = () => {
       align: 'center',
       render: (_, record) => (
         <Space size='middle'>
-          <Link to={`edit?id=${record.id}`}>
+          <Link to={`edit?id=${record.id}&tripID=${tripDetailID}`}>
             <Button type='primary'>Edit</Button>
           </Link>
         </Space>
@@ -77,7 +77,7 @@ const ListTripDetailPage: React.FC = () => {
         content: (
           <>
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
-              <Link to='add'>
+              <Link to={`add?tripID=${tripDetailID}`}>
                 <Button type='primary' icon={<PlusOutlined />} ghost>
                   Thêm mới
                 </Button>

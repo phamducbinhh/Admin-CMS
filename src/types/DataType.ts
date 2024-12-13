@@ -29,6 +29,10 @@ export interface DataType {
   seatCode?: string | null // Added
   timeFrom?: string // Added
   timeTo?: string // Added
+  timeStartDetils?: string
+  timeEndDetails?: string
+  pointStartDetails?: string
+  pointEndDetails?: string
 }
 
 export interface DataTypeVehicle {

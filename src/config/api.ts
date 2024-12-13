@@ -7,6 +7,7 @@ export const APP_API_ENDPOINT = Object.freeze({
     GET_TRIPS: '/api/Trip',
     GET_TYPE_OF_TRIPS: '/api/TypeOfTrip',
     ADD_TRIP: '/api/Trip/addTrip',
+    ADD_TRIP_DETAIL: ({ id }: { id: string | number | null }) => `/api/TripDetails/addTripDetails/${id}`,
     UPDATE_TRIPS: ({ id }: { id: string | number | null }) => `/api/Trip/updateTrip/${id}`,
     GET_TRIP_DETAIL: ({ id }: { id: string | number | null }) => `/api/Trip/getListTripById/${id}`,
     GET_LIST_TRIP_DETAIL: ({ id }: { id: string | number | null }) => `/api/TripDetails/tripId?TripId=${id}`,
