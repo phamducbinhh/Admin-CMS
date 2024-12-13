@@ -2,6 +2,7 @@ import TemplateTripConvenience from '@/assets/Template_Trip_Convenience.xlsx'
 import TemplateInterProvincial from '@/assets/Template_Inter_Provincial.xlsx'
 
 import { Button, Select } from 'antd'
+import { useState } from 'react'
 
 interface DownloadExcelProps {
   exportedFile: boolean
@@ -16,6 +17,7 @@ const DownloadExcel: React.FC<DownloadExcelProps> = ({
   exportedFile,
   setExportedFile
 }) => {
+  const [open, setOpen] = useState(false)
   const { Option } = Select
 
   const downloadFile = async () => {
@@ -39,6 +41,7 @@ const DownloadExcel: React.FC<DownloadExcelProps> = ({
 
   const handleSelectChange = (value: string) => {
     setSelectedOption(value)
+    setOpen(true)
   }
 
   return (
@@ -53,7 +56,7 @@ const DownloadExcel: React.FC<DownloadExcelProps> = ({
         <Option value='2'>Template Trip Convenience</Option>
       </Select>
 
-      {selectedOption && (
+      {open && (
         <Button style={{ marginRight: 20 }} disabled={exportedFile} onClick={downloadFile}>
           Download Template Trip
         </Button>
