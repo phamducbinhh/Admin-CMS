@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 
 const ExcelTripPage = () => {
   const [selectedOption, setSelectedOption] = useState('1')
-  const [exportedFile, setExportedFile] = useState(true)
+  const [exportedFile, setExportedFile] = useState(false)
   const [fileName, setFileName] = useState('')
   const [data, setData] = useState({
     showValidEntries: [],
@@ -61,6 +61,14 @@ const ExcelTripPage = () => {
     } catch (error) {
       console.error('Error:', error)
       message.error('Upload failed')
+      setColumns([])
+      setData({
+        showValidEntries: [],
+        showInvalidEntries: [],
+        hasData: false,
+        validEntries: [],
+        invalidEntries: []
+      })
     } finally {
       setIsLoading(false)
     }
