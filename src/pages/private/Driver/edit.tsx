@@ -67,21 +67,21 @@ const EditDriverPage: React.FC = () => {
         </Form.Item>
       )
     },
-    {
-      key: 'password',
-      label: 'Mật khẩu',
-      value: (
-        <Form.Item
-          name='password'
-          rules={[
-            { required: true, message: 'Vui lòng nhập mật khẩu!' },
-            { min: 6, message: 'Mật khẩu phải có tối thiểu 6 ký tự!' }
-          ]}
-        >
-          <Input placeholder='Nhập mật khẩu' style={{ width: '30%' }} type='password' />
-        </Form.Item>
-      )
-    },
+    // {
+    //   key: 'password',
+    //   label: 'Mật khẩu',
+    //   value: (
+    //     <Form.Item
+    //       name='password'
+    //       rules={[
+    //         { required: true, message: 'Vui lòng nhập mật khẩu!' },
+    //         { min: 6, message: 'Mật khẩu phải có tối thiểu 6 ký tự!' }
+    //       ]}
+    //     >
+    //       <Input placeholder='Nhập mật khẩu' style={{ width: '30%' }} type='password' />
+    //     </Form.Item>
+    //   )
+    // },
     {
       key: 'email',
       label: 'Email',
@@ -122,7 +122,7 @@ const EditDriverPage: React.FC = () => {
       key: 'avatar',
       label: 'Hình ảnh',
       value: (
-        <Form.Item name='avatar' rules={[{ required: true, message: 'Vui lòng nhập hình ảnh!' }]}>
+        <Form.Item name='avatar'>
           <Input placeholder='Nhập link ảnh đại diện' style={{ width: '30%' }} />
         </Form.Item>
       )
