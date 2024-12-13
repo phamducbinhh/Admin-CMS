@@ -61,7 +61,6 @@ const RevenuePage: React.FC = () => {
     }),
     generateColumn('driverName', 'Driver Name'),
     generateColumn('carOwner', 'Vehicle Owner'),
-    generateColumn('price', 'Price'),
     generateColumn('price', 'Price', { formatter: formatPrize }),
     generateColumn('createdAt', 'Date', { formatter: formatDate })
   ]

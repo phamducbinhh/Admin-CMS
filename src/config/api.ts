@@ -7,11 +7,20 @@ export const APP_API_ENDPOINT = Object.freeze({
     GET_TRIPS: '/api/Trip',
     GET_TYPE_OF_TRIPS: '/api/TypeOfTrip',
     ADD_TRIP: '/api/Trip/addTrip',
+    ADD_TRIP_DETAIL: ({ id }: { id: string | number | null }) => `/api/TripDetails/addTripDetails/${id}`,
     UPDATE_TRIPS: ({ id }: { id: string | number | null }) => `/api/Trip/updateTrip/${id}`,
     GET_TRIP_DETAIL: ({ id }: { id: string | number | null }) => `/api/Trip/getListTripById/${id}`,
-    GET_LIST_TRIP_DETAIL: ({ id }: { id: string | number | null }) => `/api/TripDetails/tripId?TripId=${id}`,
     IMPORT_TRIPS: ({ typeOfTrip }: { typeOfTrip: string | number | null }) =>
-      `/api/Trip/importTrip/typeOfTrip?typeOfTrip=${typeOfTrip}`
+      `/api/Trip/importTrip/typeOfTrip?typeOfTrip=${typeOfTrip}`,
+    CONFIRM_IMPORT_TRIPS: ({ typeOfTrip }: { typeOfTrip: string | number | null }) =>
+      `/api/Trip/confirmImportTrip/typeOfTrip?typeOfTrip=${typeOfTrip}`
+  },
+  TRIP_DETAIL: {
+    ADD_TRIP_DETAIL: ({ id }: { id: string | number | null }) => `/api/TripDetails/addTripDetails/${id}`,
+    UPDATE_TRIP_DETAIL: ({ id, tripID }: { id: string | number | null; tripID: string | number | null }) =>
+      `/api/TripDetails/updateTripDetails/${tripID}/${id}`,
+    GET_LIST_TRIP_DETAIL: ({ id }: { id: string | number | null }) => `/api/TripDetails/tripId?TripId=${id}`,
+    GET_TRIP_DETAIL_ID: ({ id }: { id: string | number | null }) => `/api/TripDetails/GetTripDetailData/${id}`
   },
   VEHICLES: {
     GET_NO_TRIPS: '/api/Vehicle/VehicleNoTrip',

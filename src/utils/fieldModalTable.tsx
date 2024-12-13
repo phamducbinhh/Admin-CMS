@@ -100,6 +100,48 @@ export const fieldModalTable: ModalFormProps<DataType>['fields'] = [
     rules: [{ required: true, message: 'Vui lòng nhập Thời gian kết thúc khuyến mãi!' }]
   },
   {
+    name: 'timeStartDetils',
+    label: 'Time Start Detail',
+    component: (
+      <DatePicker
+        showTime={{
+          format: 'HH:mm:ss' // Ensures the popup time format is clear
+        }}
+        format='HH:mm:ss' // Format for the input field
+        picker='time' // Ensure this matches 'time' for selecting only time
+        placeholder='Select Time' // Placeholder text for clarity
+      />
+    ),
+    rules: [{ required: true, message: 'Vui lòng nhập Thời gian bắt đầu chi tiết!' }]
+  },
+  {
+    name: 'timeEndDetails',
+    label: 'Time End Detail',
+    component: (
+      <DatePicker
+        showTime={{
+          format: 'HH:mm:ss' // Ensures the popup time format is clear
+        }}
+        format='HH:mm:ss' // Format for the input field
+        picker='time' // Ensure this matches 'time' for selecting only time
+        placeholder='Select Time' // Placeholder text for clarity
+      />
+    ),
+    rules: [{ required: true, message: 'Vui lòng nhập Thời gian kết thúc chi tiết!' }]
+  },
+  {
+    name: 'pointStartDetails',
+    label: 'Point Start Details',
+    component: <Input />,
+    rules: [{ required: true, message: 'Vui lòng nhập điểm bắt đầu chi tiết!' }]
+  },
+  {
+    name: 'pointEndDetails',
+    label: 'Point End Details',
+    component: <Input />,
+    rules: [{ required: true, message: 'Vui lòng nhập điểm kết thúc chi tiết!' }]
+  },
+  {
     name: 'imagePromotion',
     label: 'Ảnh mã khuyến mại',
     component: <Input />,
