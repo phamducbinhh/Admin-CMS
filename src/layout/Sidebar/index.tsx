@@ -88,7 +88,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
             label: <Link to='/history-rent-vehicle'>History Rent Vehicle</Link> // Link added
           },
           {
-            key: 'cost_type',
+            key: 'cost-type',
             icon: <EuroCircleFilled />,
             label: <Link to='/cost-type'>Cost Type</Link> // Link added
           },
