@@ -11,9 +11,9 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 const ListTripDetailEditPage: React.FC = () => {
   const [form] = Form.useForm()
   const [searchParams] = useSearchParams()
-  const tripDetailID = searchParams.get('id')
+  const id = searchParams.get('id')
   const tripId = searchParams.get('tripID')
-  const { data: formData, isLoading, refetch } = useQueryGetTripDetail({ id: tripDetailID })
+  const { data: formData, isLoading, refetch } = useQueryGetTripDetail({ id })
 
   const updateMutation = useUpdateListTripDetailMutation()
 
@@ -37,7 +37,7 @@ const ListTripDetailEditPage: React.FC = () => {
 
   useEffect(() => {
     refetch()
-  }, [tripDetailID, refetch])
+  }, [id, refetch])
 
   const order = ['pointStartDetails', 'timeStartDetils', 'pointEndDetails', 'timeEndDetails', 'status']
 
@@ -53,8 +53,8 @@ const ListTripDetailEditPage: React.FC = () => {
     }
 
     try {
-      if (tripDetailID && tripId) {
-        const response = await updateMutation.mutateAsync({ id: tripDetailID, tripID: tripId, body: data })
+      if (id && tripId) {
+        const response = await updateMutation.mutateAsync({ id, tripID: tripId, body: data })
         if (response.status === HttpStatusCode.Ok) {
           message.success('Update successfully')
           navigate(`/trips/list-trip-detail?id=${tripId}`)
