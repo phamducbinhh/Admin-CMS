@@ -9,6 +9,7 @@ export const APP_API_ENDPOINT = Object.freeze({
     ADD_TRIP: '/api/Trip/addTrip',
     ADD_TRIP_DETAIL: ({ id }: { id: string | number | null }) => `/api/TripDetails/addTripDetails/${id}`,
     UPDATE_TRIPS: ({ id }: { id: string | number | null }) => `/api/Trip/updateTrip/${id}`,
+    UPDATE_STATUS_TRIP: ({ id }: { id: string | number | null }) => `/api/Trip/updateStatusTrip/${id}`,
     GET_TRIP_DETAIL: ({ id }: { id: string | number | null }) => `/api/Trip/getListTripById/${id}`,
     IMPORT_TRIPS: ({ typeOfTrip }: { typeOfTrip: string | number | null }) =>
       `/api/Trip/importTrip/typeOfTrip?typeOfTrip=${typeOfTrip}`,
@@ -99,7 +100,8 @@ export const APP_API_ENDPOINT = Object.freeze({
     GET_TRAVEL_CAR_BY_REQUEST: ({ id }: { id: string | number | null }) => `/api/Ticket/GetTravelCarByRequest/${id}`
   },
   REVENUE: {
-    GET_REVENUE: '/api/Revenue/getRevenue'
+    GET_REVENUE: '/api/Revenue/getRevenue',
+    EXPORT_REVENUE: '/api/Revenue/exportRevenue'
   },
   REVIEWS: {
     GET_REVIEW: '/api/Review',
@@ -128,6 +130,7 @@ export const APP_API_ENDPOINT = Object.freeze({
     ADD_HISTORY_DRIVER: '/api/HistoryRentDriver/AddHistoryDriver'
   },
   USER_PROFILE: {
-    GET_DATA: '/api/Auth/userProfile'
+    GET_DATA: '/api/Auth/userProfile',
+    UPDATE_DATA: '/api/User/EditProfile'
   }
 })
