@@ -166,16 +166,15 @@ const RequestPage: React.FC = () => {
         isLoading,
         content: (
           <>
-            {(account && account?.role === RoleType.DRIVER) ||
-              (account?.role === RoleType.VEHICLE_OWNER && (
-                <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
-                  <Link to='add'>
-                    <Button type='primary' icon={<PlusOutlined />} ghost>
-                      Thuê xe
-                    </Button>
-                  </Link>
-                </div>
-              ))}
+            {account && account?.role === RoleType.DRIVER && (
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
+                <Link to='add'>
+                  <Button type='primary' icon={<PlusOutlined />} ghost>
+                    Thuê xe
+                  </Button>
+                </Link>
+              </div>
+            )}
             <Table columns={columns} dataSource={dataSource} />
           </>
         )
