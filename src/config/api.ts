@@ -128,7 +128,7 @@ export const APP_API_ENDPOINT = Object.freeze({
       `/api/Account/updateAccount/userId/newRoleId?userId=${id}&newRoleId=${newRoleId}`
   },
   HISTORY_RENT_VEHICLE: {
-    GET_HISTORY_RENT_VEHICLE: '/api/PaymentRentVehicel/getPaymentRentVehicle',
+    GET_HISTORY_RENT_VEHICLE: '/api/HistoryRentVehicle/listHistoryRentVehicle',
     GET_LIST_VEHICLE_RENT: ({ id }: { id: string | number | null }) =>
       `/api/HistoryRentVehicle/GetVehicleForDriverRent/${id}`,
     GET_LIST_VEHICLE_USE_RENT: ({ date }: { date: string | null }) =>
@@ -136,7 +136,7 @@ export const APP_API_ENDPOINT = Object.freeze({
     ADD_HISTORY_VEHICLE: '/api/HistoryRentVehicle/AddHistoryVehicle'
   },
   HISTORY_RENT_DRIVER: {
-    GET_HISTORY_RENT_DRIVER: '/api/HistoryRentDriver/rent-details-with-total-for-owner',
+    GET_HISTORY_RENT_DRIVER: '/api/HistoryRentDriver/listHistoryRentDriver',
     GET_LIST_DRIVER_RENT: '/api/HistoryRentDriver/ListDriverRent',
     ADD_HISTORY_DRIVER: '/api/HistoryRentDriver/AddHistoryDriver'
   },
