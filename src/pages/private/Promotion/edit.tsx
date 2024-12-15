@@ -1,6 +1,8 @@
-import { useQueryPromotionDetails, useUpdatePromotionMutation } from '@/queries/promotions'
+import UploadComponent from '@/components/upload'
+import { useQueryPromotionDetails } from '@/queries/promotions'
 import { DataType } from '@/types/DataType'
 import { fieldModalTable } from '@/utils/fieldModalTable'
+import { useLocalStorage } from '@/utils/localStorage/localStorageService'
 import { Button, Form, message } from 'antd'
 import { HttpStatusCode } from 'axios'
 import dayjs from 'dayjs'
@@ -13,21 +15,21 @@ const EditPromotionPage: React.FC = () => {
   const [form] = Form.useForm()
   const navigate = useNavigate()
 
-  const updateMutation = useUpdatePromotionMutation()
+  // const updateMutation = useUpdatePromotionMutation()
 
-  const { data: formData, refetch } = useQueryPromotionDetails({ id: promotionID })
+  const { data, refetch } = useQueryPromotionDetails({ id: promotionID })
 
   useEffect(() => {
-    if (formData) {
+    if (data) {
       const updatedFormData = {
-        ...formData,
-        startDate: dayjs(formData.startDate),
-        endDate: dayjs(formData.endDate)
+        ...data,
+        startDate: dayjs(data.startDate),
+        endDate: dayjs(data.endDate)
       }
 
       form.setFieldsValue(updatedFormData)
     }
-  }, [formData, form])
+  }, [data, form])
 
   useEffect(() => {
     refetch()
@@ -43,7 +45,35 @@ const EditPromotionPage: React.FC = () => {
 
   const handleSubmit = async (values: DataType) => {
     try {
-      const response = await updateMutation.mutateAsync({ id: promotionID, body: values })
+      const token = useLocalStorage.getLocalStorageData('token')
+      // Initialize FormData
+      const formData = new FormData()
+
+      Object.keys(values).forEach((key) => {
+        formData.append(key, values[key])
+      })
+
+      // Append image file (if it exists)
+      const imageFile = form.getFieldValue('imagePromotion') // Replace 'form' with the actual Form instance
+      if (imageFile) {
+        formData.append('imageFile', imageFile) // Ensure 'imageFile' matches backend expectations
+      }
+
+      const response = await fetch(
+        `https://boring-wiles.202-92-7-204.plesk.page/api/Promotion/updatePromotion/id?id=${promotionID}`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: formData
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
       if (response.status === HttpStatusCode.Ok) {
         message.success('Update successfully')
 
@@ -57,15 +87,14 @@ const EditPromotionPage: React.FC = () => {
   }
 
   return (
-    <Form onFinish={handleSubmit} form={form} layout='vertical' initialValues={{}}>
+    <Form onFinish={handleSubmit} form={form} layout='vertical'>
       {filteredFields.map((field) => (
-        <Form.Item
-          key={String(field.name)} // Ensure key is a string
-          name={field.name as string} // Ensure name is always a string
-          label={field.label}
-          rules={field.rules || []}
-        >
-          {field.component}
+        <Form.Item key={String(field.name)} name={field.name as string} label={field.label} rules={field.rules || []}>
+          {field.name === 'imagePromotion' ? (
+            <UploadComponent initialImage={data?.imagePromotion} fieldName={'imagePromotion'} form={form} /> // Hiển thị component upload khi field là avatar
+          ) : (
+            field.component // Hiển thị component mặc định cho các field khác
+          )}
         </Form.Item>
       ))}
       <Button type='primary' htmlType='submit'>

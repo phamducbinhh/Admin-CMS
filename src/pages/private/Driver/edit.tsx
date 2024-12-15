@@ -1,6 +1,8 @@
+import UploadComponent from '@/components/upload'
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
-import { useQueryDriver, useQueryDriverDetails, useUpdateDriverMutation } from '@/queries/driver'
+import { useQueryDriver, useQueryDriverDetails } from '@/queries/driver'
 import { DataTypeDriver } from '@/types/DataType'
+import { useLocalStorage } from '@/utils/localStorage/localStorageService'
 import { Button, Col, DatePicker, Form, Input, message, Row, Switch, Table, TableColumnsType } from 'antd'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
@@ -23,7 +25,7 @@ const EditDriverPage: React.FC = () => {
 
   const { refetch } = useQueryDriver()
 
-  const updateMutation = useUpdateDriverMutation()
+  // const updateMutation = useUpdateDriverMutation()
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -121,11 +123,7 @@ const EditDriverPage: React.FC = () => {
     {
       key: 'avatar',
       label: 'Hình ảnh',
-      value: (
-        <Form.Item name='avatar'>
-          <Input placeholder='Nhập link ảnh đại diện' style={{ width: '30%' }} />
-        </Form.Item>
-      )
+      value: <UploadComponent initialImage={formData?.avatar} fieldName={'avatar'} form={form} />
     },
     {
       key: 'dob',
@@ -172,7 +170,36 @@ const EditDriverPage: React.FC = () => {
   const handleFormSubmit = async (values: DataTypeDriver) => {
     setIsLoading(true)
     try {
-      const response = await updateMutation.mutateAsync({ id: driverId, body: values })
+      // https://boring-wiles.202-92-7-204.plesk.page/api/Driver/23
+      // const response = await updateMutation.mutateAsync({ id: driverId, body: values })
+
+      const token = useLocalStorage.getLocalStorageData('token')
+      // Initialize FormData
+      const formData = new FormData()
+
+      Object.keys(values).forEach((key) => {
+        formData.append(key, values[key])
+      })
+
+      // Append image file (if it exists)
+      const imageFile = form.getFieldValue('avatar') // Replace 'form' with the actual Form instance
+
+      if (imageFile) {
+        formData.append('imageFile', imageFile) // Ensure 'imageFile' matches backend expectations
+      }
+
+      const response = await fetch(`https://boring-wiles.202-92-7-204.plesk.page/api/Driver/${driverId}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        body: formData
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
       if (response.status === HttpStatusCode.Ok) {
         message.success('Update successfully')
         refetch()

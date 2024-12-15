@@ -1,5 +1,7 @@
+import UploadComponent from '@/components/upload'
 import { useQueryVehiclesOwner, useUpdateVehiclesOwnerMutation } from '@/queries/vehicle'
 import { DataTypeUser } from '@/types/DataType'
+import { useLocalStorage } from '@/utils/localStorage/localStorageService'
 import { Button, Col, DatePicker, Form, Input, message, Row, Switch, Table, TableColumnsType } from 'antd'
 import { HttpStatusCode } from 'axios'
 import dayjs from 'dayjs'
@@ -93,11 +95,7 @@ const EditVehicleOwnerPage: React.FC = () => {
     {
       key: 'avatar',
       label: 'Hình ảnh',
-      value: (
-        <Form.Item name='avatar' rules={[{ required: true, message: 'Vui lòng nhập hình ảnh!' }]}>
-          <Input placeholder='Nhập link ảnh đại diện' style={{ width: '30%' }} />
-        </Form.Item>
-      )
+      value: <UploadComponent initialImage={data?.avatar} fieldName={'avatar'} form={form} />
     },
     {
       key: 'address',
@@ -153,10 +151,42 @@ const EditVehicleOwnerPage: React.FC = () => {
   const handleFormSubmit = async (values: DataTypeUser) => {
     setIsLoading(true)
     try {
-      const response = await updateMutation.mutateAsync({ id: route_id, body: values })
+      // https://boring-wiles.202-92-7-204.plesk.page/api/Account/updateVehicleOwner/route_id
+      // const response = await updateMutation.mutateAsync({ id: route_id, body: values })
+      const token = useLocalStorage.getLocalStorageData('token')
+      // Initialize FormData
+      const formData = new FormData()
+
+      Object.keys(values).forEach((key) => {
+        formData.append(key, values[key])
+      })
+
+      // Append image file (if it exists)
+      const imageFile = form.getFieldValue('avatar') // Replace 'form' with the actual Form instance
+
+      if (imageFile) {
+        formData.append('imageFile', imageFile) // Ensure 'imageFile' matches backend expectations
+      }
+
+      const response = await fetch(
+        `https://boring-wiles.202-92-7-204.plesk.page/api/Account/updateVehicleOwner/${route_id}`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: formData
+        }
+      )
+
+      if (!response.ok) {
+        // throw new Error(`HTTP error! status: ${response.status}`)
+        const errorData = await response.json(); // or response.text() to inspect the raw error
+        console.log(errorData);
+      }
+
       if (response.status === HttpStatusCode.Ok) {
         message.success('Update successfully')
-        refetch()
         navigate('/vehicles-owner')
       } else {
         message.error('Update failed')
