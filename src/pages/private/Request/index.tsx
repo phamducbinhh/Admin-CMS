@@ -166,7 +166,7 @@ const RequestPage: React.FC = () => {
         isLoading,
         content: (
           <>
-            {account && account?.role === RoleType.DRIVER && (
+            {account && [RoleType.DRIVER, RoleType.VEHICLE_OWNER].includes(account?.role as RoleType) && (
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
                 <Link to='add'>
                   <Button type='primary' icon={<PlusOutlined />} ghost>
