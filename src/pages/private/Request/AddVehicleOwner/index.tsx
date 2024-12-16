@@ -1,5 +1,6 @@
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
 import { useCreateRequestOwnerMutation, useQueryRequest } from '@/queries/request'
+import { useQueryVehicles } from '@/queries/vehicle'
 import { DataTypeCost } from '@/types/DataType'
 import { Button, DatePicker, Form, Input, InputNumber, message, Row, Select, Table, TableColumnsType } from 'antd'
 import { useState } from 'react'
@@ -22,7 +23,33 @@ const AddRequestVehicleOwner: React.FC = () => {
 
   const { refetch } = useQueryRequest()
 
+  const { data: vehicleData } = useQueryVehicles()
+
   const tableData: TableData[] = [
+    {
+      key: 'vehicleId',
+      label: 'Biển số xe',
+      value: (
+        <Form.Item name='vehicleId' rules={[{ required: true, message: 'Vui lòng chọn xe!' }]}>
+          <Select
+            placeholder='Chọn xe'
+            style={{ width: '30%' }}
+            onChange={(value) => {
+              const selectedVehicle = vehicleData?.find((item: any) => item.id === value)
+              form.setFieldsValue({ seats: selectedVehicle?.numberSeat || '' })
+            }}
+          >
+            {vehicleData
+              ?.filter((item: any) => !item.driverId)
+              .map((item: any) => (
+                <Select.Option key={item.id} value={item.id}>
+                  {item.licensePlate}
+                </Select.Option>
+              ))}
+          </Select>
+        </Form.Item>
+      )
+    },
     {
       key: 'price',
       label: 'Giá tiền',
@@ -52,16 +79,10 @@ const AddRequestVehicleOwner: React.FC = () => {
     },
     {
       key: 'seats',
-      label: 'Chọn số ghế',
+      label: 'Số ghế',
       value: (
-        <Form.Item name='seats' rules={[{ required: true, message: 'Vui lòng chọn xe!' }]}>
-          <Select placeholder='Chọn xe' style={{ width: '30%' }}>
-            {['5', '7', '29', '45'].map((item) => (
-              <Select.Option key={item} value={item}>
-                {item}
-              </Select.Option>
-            ))}
-          </Select>
+        <Form.Item name='seats'>
+          <Input placeholder='Số ghế' disabled style={{ width: '30%' }} />
         </Form.Item>
       )
     },
@@ -107,16 +128,16 @@ const AddRequestVehicleOwner: React.FC = () => {
       const response = await addMutation.mutateAsync(values)
       if (response.status === HttpStatusCode.Ok) {
         refetch()
-        message.success('Accept successfully')
+        message.success('Add Driver successfully')
         navigate('/request')
       } else {
-        message.error('Accept failed')
+        message.error('Add Driver failed')
       }
 
       console.log(values)
     } catch (error) {
       console.error('Error values:', error)
-      message.error('Accept failed')
+      message.error('Add Driver failed')
     } finally {
       setIsLoading(false)
     }
