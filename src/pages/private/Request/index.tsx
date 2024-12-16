@@ -7,7 +7,7 @@ import { PlusOutlined } from '@ant-design/icons'
 import type { TableProps } from 'antd'
 import { Button, message, Popconfirm, Space, Table } from 'antd'
 import { HttpStatusCode } from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 interface DataType {
@@ -38,10 +38,6 @@ const RequestPage: React.FC = () => {
     ...item,
     key: item.id || item.someUniqueField
   }))
-
-  useEffect(() => {
-    refetch()
-  }, [refetch])
 
   const handleAccept = async (id: number) => {
     try {
@@ -166,11 +162,11 @@ const RequestPage: React.FC = () => {
         isLoading,
         content: (
           <>
-            {account && account?.role === RoleType.DRIVER && (
+            {account && [RoleType.DRIVER, RoleType.VEHICLE_OWNER].includes(account?.role as RoleType) && (
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
                 <Link to='add'>
                   <Button type='primary' icon={<PlusOutlined />} ghost>
-                    Thuê xe
+                    {account?.role === RoleType.DRIVER ? 'Thuê xe' : 'Thuê tài xế'}
                   </Button>
                 </Link>
               </div>
