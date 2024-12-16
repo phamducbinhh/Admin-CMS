@@ -28,7 +28,7 @@ const AddRequestVehicleOwner: React.FC = () => {
       label: 'Giá tiền',
       value: (
         <Form.Item name='price' rules={[{ required: true, message: 'Vui lòng nhập giá tiền!' }]}>
-          <InputNumber style={{ width: '100%' }} placeholder='nhập giá tiền' />
+          <InputNumber style={{ width: '30%' }} placeholder='nhập giá tiền' />
         </Form.Item>
       )
     },
@@ -37,7 +37,7 @@ const AddRequestVehicleOwner: React.FC = () => {
       label: 'Điểm đến',
       value: (
         <Form.Item name='startLocation' rules={[{ required: true, message: 'Vui lòng nhập điểm đến!' }]}>
-          <Input placeholder='nhập điểm đến' />
+          <Input placeholder='nhập điểm đến' style={{ width: '30%' }} />
         </Form.Item>
       )
     },
@@ -46,7 +46,7 @@ const AddRequestVehicleOwner: React.FC = () => {
       label: 'Điểm đi',
       value: (
         <Form.Item name='endLocation' rules={[{ required: true, message: 'Vui lòng nhập điểm đi!' }]}>
-          <Input placeholder='nhập điểm đi' />
+          <Input placeholder='nhập điểm đi' style={{ width: '30%' }} />
         </Form.Item>
       )
     },
@@ -55,7 +55,7 @@ const AddRequestVehicleOwner: React.FC = () => {
       label: 'Chọn số ghế',
       value: (
         <Form.Item name='seats' rules={[{ required: true, message: 'Vui lòng chọn xe!' }]}>
-          <Select placeholder='Chọn xe' style={{ width: '100%' }}>
+          <Select placeholder='Chọn xe' style={{ width: '30%' }}>
             {['5', '7', '29', '45'].map((item) => (
               <Select.Option key={item} value={item}>
                 {item}
@@ -70,7 +70,7 @@ const AddRequestVehicleOwner: React.FC = () => {
       label: 'Ngày bắt đầu',
       value: (
         <Form.Item name='startTime' rules={[{ required: true, message: 'Vui lòng chọn ngày bắt đầu!' }]}>
-          <DatePicker showTime={{ format: 'HH:mm:ss' }} style={{ width: '100%' }} format='YYYY-MM-DD HH:mm:ss' />
+          <DatePicker showTime={{ format: 'HH:mm:ss' }} style={{ width: '30%' }} format='YYYY-MM-DD HH:mm:ss' />
         </Form.Item>
       )
     },
@@ -79,7 +79,7 @@ const AddRequestVehicleOwner: React.FC = () => {
       label: 'Ngày kết thúc',
       value: (
         <Form.Item name='endTime' rules={[{ required: true, message: 'Vui lòng chọn ngày kết thúc!' }]}>
-          <DatePicker showTime={{ format: 'HH:mm:ss' }} style={{ width: '100%' }} format='YYYY-MM-DD HH:mm:ss' />
+          <DatePicker showTime={{ format: 'HH:mm:ss' }} style={{ width: '30%' }} format='YYYY-MM-DD HH:mm:ss' />
         </Form.Item>
       )
     }

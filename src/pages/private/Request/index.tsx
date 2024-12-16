@@ -170,7 +170,7 @@ const RequestPage: React.FC = () => {
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
                 <Link to='add'>
                   <Button type='primary' icon={<PlusOutlined />} ghost>
-                    Thuê xe
+                    {account?.role === RoleType.DRIVER ? 'Thuê xe' : 'Thuê tài xế'}
                   </Button>
                 </Link>
               </div>
