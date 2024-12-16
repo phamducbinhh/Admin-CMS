@@ -62,7 +62,7 @@ const EditVehiclePage: React.FC = () => {
       key: 'driverId',
       label: 'Tài xế',
       value: (
-        <Form.Item name='driverId' rules={[{ required: true, message: 'Vui lòng chọn tài xế!' }]}>
+        <Form.Item name='driverId'>
           <Select placeholder='Chọn tài xế' style={{ width: '30%' }}>
             {dataTypeDriver?.map((item: any) => (
               <Select.Option key={item.id} value={item.id}>
