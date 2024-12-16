@@ -107,6 +107,12 @@ const RentDriverForm = ({ data }: { data: DataTypeRequest | undefined }) => {
     }
   }, [filtered, isCheck])
 
+  useEffect(() => {
+    if (data) {
+      form.setFieldsValue(data)
+    }
+  }, [data, form])
+
   const columns: TableColumnsType<TableData> = [
     {
       title: 'Key',

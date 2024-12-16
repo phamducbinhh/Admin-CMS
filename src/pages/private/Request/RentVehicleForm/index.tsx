@@ -49,6 +49,12 @@ const RentVehicleForm = ({ data }: { data: DataTypeRequest | undefined }) => {
     }
   }, [filtered, isCheck])
 
+  useEffect(() => {
+    if (data) {
+      form.setFieldsValue(data)
+    }
+  }, [data, form])
+
   const tableData: TableData[] = [
     {
       key: 'vehicleId',

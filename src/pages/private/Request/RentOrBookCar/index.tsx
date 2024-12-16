@@ -36,6 +36,12 @@ const RentOrBookCar = ({ data }: { data: DataTypeRequest | undefined }) => {
   }, [data?.requestId, requestData])
 
   useEffect(() => {
+    if (data) {
+      form.setFieldsValue(data)
+    }
+  }, [data, form])
+
+  useEffect(() => {
     if (filtered && filtered.status !== isCheck) {
       setIsCheck(filtered.status)
     }
