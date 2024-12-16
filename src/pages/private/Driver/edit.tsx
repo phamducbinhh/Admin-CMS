@@ -1,8 +1,7 @@
 import UploadComponent from '@/components/upload'
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
-import { useQueryDriver, useQueryDriverDetails } from '@/queries/driver'
+import { useQueryDriver, useQueryDriverDetails, useUpdateDriverMutation } from '@/queries/driver'
 import { DataTypeDriver } from '@/types/DataType'
-import { useLocalStorage } from '@/utils/localStorage/localStorageService'
 import { Button, Col, DatePicker, Form, Input, message, Row, Switch, Table, TableColumnsType } from 'antd'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
@@ -21,11 +20,11 @@ const EditDriverPage: React.FC = () => {
 
   const [form] = Form.useForm()
 
-  const { data: formData, refetch: refetchDriver } = useQueryDriverDetails({ id: driverId })
+  const { data, refetch: refetchDriver } = useQueryDriverDetails({ id: driverId })
 
   const { refetch } = useQueryDriver()
 
-  // const updateMutation = useUpdateDriverMutation()
+  const updateMutation = useUpdateDriverMutation()
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -36,15 +35,15 @@ const EditDriverPage: React.FC = () => {
   }
 
   useEffect(() => {
-    if (formData) {
+    if (data) {
       const updatedFormData = {
-        ...formData,
-        dob: dayjs(formData.dob)
+        ...data,
+        dob: dayjs(data.dob)
       }
 
       form.setFieldsValue(updatedFormData)
     }
-  }, [formData, form])
+  }, [data, form])
 
   useEffect(() => {
     refetchDriver()
@@ -66,21 +65,6 @@ const EditDriverPage: React.FC = () => {
       value: (
         <Form.Item name='userName' rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập!' }]}>
           <Input placeholder='Nhập tên đăng nhập' style={{ width: '30%' }} />
-        </Form.Item>
-      )
-    },
-    {
-      key: 'password',
-      label: 'Mật khẩu',
-      value: (
-        <Form.Item
-          name='password'
-          rules={[
-            { required: true, message: 'Vui lòng nhập mật khẩu!' },
-            { min: 6, message: 'Mật khẩu phải có tối thiểu 6 ký tự!' }
-          ]}
-        >
-          <Input placeholder='Nhập mật khẩu' style={{ width: '30%' }} type='password' />
         </Form.Item>
       )
     },
@@ -113,17 +97,17 @@ const EditDriverPage: React.FC = () => {
     },
     {
       key: 'license',
-      label: 'Bằng lái xe',
+      label: 'Biển số xe',
       value: (
-        <Form.Item name='license' rules={[{ required: true, message: 'Vui lòng nhập bằng lái xe!' }]}>
-          <Input placeholder='Nhập bằng lái xe' style={{ width: '30%' }} />
+        <Form.Item name='license' rules={[{ required: true, message: 'Vui lòng nhập biển số xe!' }]}>
+          <Input placeholder='Nhập biển số xe' style={{ width: '30%' }} />
         </Form.Item>
       )
     },
     {
       key: 'avatar',
       label: 'Hình ảnh',
-      value: <UploadComponent initialImage={formData?.avatar} fieldName={'avatar'} form={form} />
+      value: <UploadComponent initialImage={data?.avatar} fieldName={'avatar'} form={form} />
     },
     {
       key: 'dob',
@@ -170,36 +154,13 @@ const EditDriverPage: React.FC = () => {
   const handleFormSubmit = async (values: DataTypeDriver) => {
     setIsLoading(true)
     try {
-      // https://boring-wiles.202-92-7-204.plesk.page/api/Driver/23
-      // const response = await updateMutation.mutateAsync({ id: driverId, body: values })
-
-      const token = useLocalStorage.getLocalStorageData('token')
-      // Initialize FormData
       const formData = new FormData()
 
-      Object.keys(values).forEach((key) => {
-        formData.append(key, values[key])
+      Object.entries(values).forEach(([key, value]) => {
+        formData.append(key, value)
       })
 
-      // Append image file (if it exists)
-      const imageFile = form.getFieldValue('avatar') // Replace 'form' with the actual Form instance
-
-      if (imageFile) {
-        formData.append('imageFile', imageFile) // Ensure 'imageFile' matches backend expectations
-      }
-
-      const response = await fetch(`https://boring-wiles.202-92-7-204.plesk.page/api/Driver/${driverId}`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        body: formData
-      })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-
+      const response = await updateMutation.mutateAsync({ id: driverId, body: formData })
       if (response.status === HttpStatusCode.Ok) {
         message.success('Update successfully')
         refetch()

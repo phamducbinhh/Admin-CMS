@@ -1,7 +1,7 @@
 import UploadComponent from '@/components/upload'
+import { useLoading } from '@/context/LoadingContext'
 import { useQueryVehiclesOwner, useUpdateVehiclesOwnerMutation } from '@/queries/vehicle'
 import { DataTypeUser } from '@/types/DataType'
-import { useLocalStorage } from '@/utils/localStorage/localStorageService'
 import { Button, Col, DatePicker, Form, Input, message, Row, Switch, Table, TableColumnsType } from 'antd'
 import { HttpStatusCode } from 'axios'
 import dayjs from 'dayjs'
@@ -33,14 +33,22 @@ const EditVehicleOwnerPage: React.FC = () => {
 
   const [form] = Form.useForm()
 
+  const { isLoadingGlobal } = useLoading()
+
+  const [image, setImage] = useState()
+
   useEffect(() => {
     if (data && Array.isArray(data)) {
       const selectedItem = data.find((item) => item.id === Number(route_id))
+
       if (selectedItem) {
         const updatedFormData = {
           ...selectedItem,
           dob: dayjs(selectedItem.dob)
         }
+
+        setImage(updatedFormData.avatar)
+
         form.setFieldsValue(updatedFormData)
       }
     }
@@ -95,7 +103,7 @@ const EditVehicleOwnerPage: React.FC = () => {
     {
       key: 'avatar',
       label: 'Hình ảnh',
-      value: <UploadComponent initialImage={data?.avatar} fieldName={'avatar'} form={form} />
+      value: <UploadComponent fieldName='avatar' initialImage={image} form={form} />
     },
     {
       key: 'address',
@@ -151,42 +159,18 @@ const EditVehicleOwnerPage: React.FC = () => {
   const handleFormSubmit = async (values: DataTypeUser) => {
     setIsLoading(true)
     try {
-      // https://boring-wiles.202-92-7-204.plesk.page/api/Account/updateVehicleOwner/route_id
-      // const response = await updateMutation.mutateAsync({ id: route_id, body: values })
-      const token = useLocalStorage.getLocalStorageData('token')
-      // Initialize FormData
+      console.log(values)
+
       const formData = new FormData()
 
-      Object.keys(values).forEach((key) => {
-        formData.append(key, values[key])
+      Object.entries(values).forEach(([key, value]) => {
+        formData.append(key, value)
       })
 
-      // Append image file (if it exists)
-      const imageFile = form.getFieldValue('avatar') // Replace 'form' with the actual Form instance
-
-      if (imageFile) {
-        formData.append('imageFile', imageFile) // Ensure 'imageFile' matches backend expectations
-      }
-
-      const response = await fetch(
-        `https://boring-wiles.202-92-7-204.plesk.page/api/Account/updateVehicleOwner/${route_id}`,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          body: formData
-        }
-      )
-
-      if (!response.ok) {
-        // throw new Error(`HTTP error! status: ${response.status}`)
-        const errorData = await response.json(); // or response.text() to inspect the raw error
-        console.log(errorData);
-      }
-
+      const response = await updateMutation.mutateAsync({ id: route_id, body: values })
       if (response.status === HttpStatusCode.Ok) {
         message.success('Update successfully')
+        refetch()
         navigate('/vehicles-owner')
       } else {
         message.error('Update failed')
@@ -207,8 +191,8 @@ const EditVehicleOwnerPage: React.FC = () => {
             type='primary'
             htmlType='submit'
             style={{ marginRight: '10px' }}
-            loading={isLoading}
-            disabled={isLoading}
+            loading={isLoading || isLoadingGlobal}
+            disabled={isLoading || isLoadingGlobal}
           >
             Update
           </Button>

@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { PlusOutlined } from '@ant-design/icons'
-import { Form, Upload, Image, message } from 'antd'
+import { Form, Upload, Image, message, Spin } from 'antd'
 import type { GetProp, UploadFile, UploadProps } from 'antd'
-import { addWebImageLink } from '@/utils/showImage'
+import { useLocalStorage } from '@/utils/localStorage/localStorageService'
+import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
+import { useLoading } from '@/context/LoadingContext'
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
+
+const token = useLocalStorage.getLocalStorageData('token')
 
 const getBase64 = (file: FileType): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -18,7 +22,6 @@ interface Props {
   fieldName: string
   initialImage?: string | null
   form: any
-  addWebImageLink?: (url: string) => string
   setFileList?: (fileList: any[]) => void
 }
 
@@ -26,19 +29,19 @@ const UploadComponent: React.FC<Props> = ({ initialImage, form, fieldName }) => 
   const [previewOpen, setPreviewOpen] = useState(false)
   const [previewImage, setPreviewImage] = useState('')
   const [fileList, setFileList] = useState<UploadFile[]>([])
+  const { isLoadingGlobal, setLoading } = useLoading()
 
   useEffect(() => {
     if (initialImage) {
-      const fullImageUrl = addWebImageLink(initialImage)
       setFileList([
         {
           uid: '-1',
           name: 'Uploaded Image',
           status: 'done',
-          url: fullImageUrl
+          url: initialImage
         }
       ])
-      form.setFieldsValue({ [fieldName]: fullImageUrl }) // Set initial value in parent form
+      form.setFieldsValue({ [fieldName]: initialImage }) // Set initial value in parent form
     }
   }, [initialImage, form, fieldName])
 
@@ -50,17 +53,46 @@ const UploadComponent: React.FC<Props> = ({ initialImage, form, fieldName }) => 
     setPreviewOpen(true)
   }
 
-  const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
+  const handleChange: UploadProps['onChange'] = async ({ fileList: newFileList }) => {
     setFileList(newFileList)
 
     const lastFile = newFileList[newFileList.length - 1]
 
-    if (lastFile) {
-      message.success('Image uploaded successfully')
-      // Update the parent form field
-      form.setFieldsValue({
-        [fieldName]: lastFile?.originFileObj
-      })
+    if (lastFile && lastFile?.originFileObj) {
+      const formData = new FormData()
+      formData.append('file', lastFile.originFileObj)
+
+      // Start spinner
+      setLoading(true)
+
+      try {
+        const response = await fetch('https://boring-wiles.202-92-7-204.plesk.page/api/UploadImage/image', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: formData
+        })
+
+        const data = await response.json()
+
+        if (response.status === HttpStatusCode.Ok) {
+          message.success(data.message)
+
+          form.setFieldsValue({
+            [fieldName]: data.url
+          })
+        } else if (response.status === HttpStatusCode.BadRequest) {
+          message.error(data.message)
+        }
+      } catch (error) {
+        console.log(error)
+      } finally {
+        // Stop spinner
+        setLoading(false)
+      }
+    } else {
+      console.log('ok delete')
     }
   }
 
@@ -84,9 +116,29 @@ const UploadComponent: React.FC<Props> = ({ initialImage, form, fieldName }) => 
           beforeUpload={() => false} // Prevent automatic upload
           onPreview={handlePreview}
           onChange={handleChange}
+          disabled={isLoadingGlobal}
         >
           {fileList.length >= 1 ? null : uploadButton}
         </Upload>
+
+        {/* Spinner Overlay */}
+        {isLoadingGlobal && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '110px',
+              height: '110px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10
+            }}
+          >
+            <Spin />
+          </div>
+        )}
 
         {previewImage && (
           <Image

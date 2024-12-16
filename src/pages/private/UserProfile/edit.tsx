@@ -1,7 +1,8 @@
 import UploadComponent from '@/components/upload'
-import { useQueryUserProfile } from '@/queries/user-profile'
+import { useLoading } from '@/context/LoadingContext'
+import { useQueryUserProfile, useUpdateUserMutation } from '@/queries/user-profile'
+import { DataType } from '@/types/DataType'
 import { fieldUser } from '@/utils/fieldModalTable'
-import { useLocalStorage } from '@/utils/localStorage/localStorageService'
 import renderWithLoading from '@/utils/renderWithLoading'
 import { Form, Button, message } from 'antd'
 import { HttpStatusCode } from 'axios'
@@ -11,8 +12,9 @@ import { useNavigate } from 'react-router-dom'
 
 const EditUserProfile = () => {
   const [form] = Form.useForm()
-  const { data, isLoading, refetch } = useQueryUserProfile()
+  const { data, isLoading: loadingUserProfile } = useQueryUserProfile()
   const navigate = useNavigate()
+  const { isLoadingGlobal } = useLoading()
 
   useEffect(() => {
     if (data) {
@@ -28,12 +30,9 @@ const EditUserProfile = () => {
     }
   }, [data, form])
 
-  useEffect(() => {
-    refetch()
-  }, [refetch])
+  const updateMutation = useUpdateUserMutation()
 
   const order = [
-    'avatar',
     'fullName',
     'username',
     'email',
@@ -43,51 +42,29 @@ const EditUserProfile = () => {
     'numberPhone',
     'activeCode',
     'role',
-    'status'
+    'status',
+    'avatar'
   ]
 
   const filteredFields = fieldUser
     .filter((field) => field.name && order.includes(field.name))
     .sort((a, b) => order.indexOf(a.name as string) - order.indexOf(b.name as string))
 
-  const handleFormSubmit = async (values: any) => {
+  const handleFormSubmit = async (values: DataType) => {
     try {
-      const token = useLocalStorage.getLocalStorageData('token')
-      // Initialize FormData
+      const data = {
+        ...values,
+        dob: dayjs(values.dob)
+      }
+
       const formData = new FormData()
 
-      Object.keys(values).forEach((key) => {
-        if (key === 'dob' && dayjs.isDayjs(values[key])) {
-          // Convert dayjs instance to desired format (e.g., ISO string)
-          formData.append(key, values[key].format('YYYY-MM-DD')) // Adjust format as needed
-        } else if (key !== 'avatar') {
-          // Append other fields
-          formData.append(key, values[key])
-        }
+      Object.entries(data).forEach(([key, value]) => {
+        formData.append(key, value)
       })
 
-      formData.append('dob', values.dob)
-      // Append image file (if it exists)
-      const imageFile = form.getFieldValue('avatar') // Replace 'form' with the actual Form instance
-      if (imageFile) {
-        formData.append('imageFile', imageFile) // Ensure 'imageFile' matches backend expectations
-      }
+      const response = await updateMutation.mutateAsync(formData)
 
-      console.log(values)
-
-      const response = await fetch('https://boring-wiles.202-92-7-204.plesk.page/api/User/EditProfile', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        body: formData
-      })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-
-      // Handle the response
       if (response.status === HttpStatusCode.Ok) {
         message.success('Update successfully')
         navigate('/user-profile')
@@ -95,15 +72,14 @@ const EditUserProfile = () => {
         message.error('Update failed')
       }
     } catch (error) {
-      console.error('Error submitting form:', error)
-      message.error('An error occurred while updating.')
+      console.log(error)
     }
   }
 
   return (
     <>
       {renderWithLoading({
-        isLoading,
+        isLoading: loadingUserProfile,
         content: (
           <Form onFinish={handleFormSubmit} form={form} layout='vertical'>
             {filteredFields.map((field) => (
@@ -120,7 +96,7 @@ const EditUserProfile = () => {
                 )}
               </Form.Item>
             ))}
-            <Button type='primary' htmlType='submit'>
+            <Button disabled={isLoadingGlobal} type='primary' htmlType='submit'>
               Update
             </Button>
           </Form>

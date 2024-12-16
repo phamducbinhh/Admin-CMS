@@ -1,20 +1,20 @@
 import UploadComponent from '@/components/upload'
-// import { useAddPromotionMutation, useAddPromotionToAllUserMutation } from '@/queries/promotions'
+import { useLoading } from '@/context/LoadingContext'
+import { useAddPromotionMutation, useAddPromotionToAllUserMutation } from '@/queries/promotions'
 import { DataTypeVehicle } from '@/types/DataType'
 import { fieldModalTable } from '@/utils/fieldModalTable'
-import { useLocalStorage } from '@/utils/localStorage/localStorageService'
 import { PlusOutlined } from '@ant-design/icons'
 import { Form, Button, message } from 'antd'
 import { HttpStatusCode } from 'axios'
-// import TextArea from 'antd/es/input/TextArea'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const AddPromotionPage: React.FC = () => {
   const [form] = Form.useForm()
-  // const addMutation = useAddPromotionMutation()
-  // const addAllMutation = useAddPromotionToAllUserMutation()
+  const addMutation = useAddPromotionMutation()
+  const addAllMutation = useAddPromotionToAllUserMutation()
   const navigate = useNavigate()
+  const { isLoadingGlobal } = useLoading()
 
   const filteredFields = fieldModalTable.filter(
     (field) =>
@@ -26,38 +26,20 @@ const AddPromotionPage: React.FC = () => {
 
   const handleFormSubmit = async (values: DataTypeVehicle) => {
     try {
-      const token = useLocalStorage.getLocalStorageData('token')
-      // Initialize FormData
       const formData = new FormData()
 
-      Object.keys(values).forEach((key) => {
-        formData.append(key, values[key])
+      Object.entries(values).forEach(([key, value]) => {
+        formData.append(key, value)
       })
 
-      // Append image file (if it exists)
-      const imageFile = form.getFieldValue('imagePromotion') // Replace 'form' with the actual Form instance
-
-      console.log(imageFile)
-
-      if (imageFile) {
-        formData.append('imageFile', imageFile) // Ensure 'imageFile' matches backend expectations
-      }
-
-      const response = await fetch(`https://boring-wiles.202-92-7-204.plesk.page/api/Promotion/CreatePromotion`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        body: formData
-      })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
+      const response = await addMutation.mutateAsync(formData)
+      console.log(response)
 
       if (response.status === HttpStatusCode.Created) {
         message.success('Create promotion success')
         navigate('/promotion')
+      } else {
+        message.error(response.message)
       }
     } catch (error) {
       console.error('Error values:', error)
@@ -67,41 +49,19 @@ const AddPromotionPage: React.FC = () => {
   const handleAddPromotionToAllUser = async () => {
     try {
       const values = form.getFieldsValue()
-
-      const token = useLocalStorage.getLocalStorageData('token')
-      // Initialize FormData
       const formData = new FormData()
 
-      Object.keys(values).forEach((key) => {
-        formData.append(key, values[key])
+      Object.entries(values).forEach(([key, value]) => {
+        formData.append(key, value)
       })
 
-      console.log(values)
+      const response = await addAllMutation.mutateAsync(formData)
 
-      // Append image file (if it exists)
-      const imageFile = form.getFieldValue('imagePromotion') // Replace 'form' with the actual Form instance
-
-      if (imageFile) {
-        formData.append('imageFile', imageFile) // Ensure 'imageFile' matches backend expectations
-      }
-
-      const response = await fetch(`https://boring-wiles.202-92-7-204.plesk.page/api/Promotion/givePromotionAllUser`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        body: formData
-      })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-
-      // console.log(response)
-
-      if (response.status === HttpStatusCode.Created) {
+      if (response.status === HttpStatusCode.Ok) {
         message.success('Create promotion success')
         navigate('/promotion')
+      } else {
+        message.error(response.data)
       }
     } catch (error) {
       console.error('Error values:', error)
@@ -109,9 +69,14 @@ const AddPromotionPage: React.FC = () => {
   }
 
   return (
-    <Form onFinish={handleFormSubmit} form={form} layout='vertical'>
+    <Form onFinish={handleFormSubmit} form={form} layout='vertical' initialValues={{}}>
       {filteredFields.map((field) => (
-        <Form.Item key={String(field.name)} name={field.name as string} label={field.label} rules={field.rules || []}>
+        <Form.Item
+          key={String(field.name)} // Ensure key is a string
+          name={field.name as string} // Ensure name is always a string
+          label={field.label}
+          rules={field.rules || []}
+        >
           {field.name === 'imagePromotion' ? (
             <UploadComponent fieldName={'imagePromotion'} form={form} /> // Hiển thị component upload khi field là avatar
           ) : (
@@ -119,7 +84,7 @@ const AddPromotionPage: React.FC = () => {
           )}
         </Form.Item>
       ))}
-      <Button type='primary' htmlType='submit'>
+      <Button disabled={isLoadingGlobal} type='primary' htmlType='submit'>
         Add
       </Button>
       <Button
@@ -128,6 +93,7 @@ const AddPromotionPage: React.FC = () => {
         type='primary'
         icon={<PlusOutlined />}
         ghost
+        disabled={isLoadingGlobal}
       >
         Thêm promotion cho tất cả user
       </Button>

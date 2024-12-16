@@ -1,5 +1,4 @@
 export interface DataType {
-  [key: string]: any
   key: string
   id: number
   name?: string
@@ -66,7 +65,6 @@ export interface DataTypeCost {
   status: boolean
 }
 export interface DataTypeDriver {
-  [key: string]: any
   userName: string
   name: string
   numberPhone: string

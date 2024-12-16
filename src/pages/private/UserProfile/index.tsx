@@ -1,13 +1,16 @@
 import { useQueryUserProfile } from '@/queries/user-profile'
 import renderWithLoading from '@/utils/renderWithLoading'
-import { addWebImageLink } from '@/utils/showImage'
 import { Col, Form, Row, Table, Image, Button } from 'antd'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const UserProfilePage: React.FC = () => {
-  const { data, isLoading } = useQueryUserProfile()
+  const { data, isLoading, refetch } = useQueryUserProfile()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    refetch()
+  }, [refetch])
 
   const userData = useMemo(() => {
     return [
@@ -40,11 +43,7 @@ const UserProfilePage: React.FC = () => {
         render: (value: any, record: any) => {
           if (record.key === 'avatar') {
             return value !== null ? (
-              <Image
-                src={addWebImageLink(value)}
-                alt='Avatar'
-                style={{ width: '100px', height: '100px', borderRadius: '50%' }}
-              />
+              <Image src={value} alt='Avatar' style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
             ) : (
               'N/A'
             )

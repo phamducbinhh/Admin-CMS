@@ -1,5 +1,6 @@
 import UploadComponent from '@/components/upload'
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
+import { useLoading } from '@/context/LoadingContext'
 import { useQueryDriver } from '@/queries/driver'
 import {
   useQueryTypeOfVehicles,
@@ -29,17 +30,19 @@ const EditVehiclePage: React.FC = () => {
   const { data: dataTypeOfVehicles } = useQueryTypeOfVehicles()
   const { data: dataTypeOfVehiclesOwner } = useQueryTypeVehiclesOwner()
 
-  const { data: formData, refetch } = useQueryVehiclesDetails({ id: vehicleID })
+  const { data, refetch } = useQueryVehiclesDetails({ id: vehicleID })
 
   const updateMutation = useUpdateVehiclesMutation()
 
   const navigate = useNavigate()
 
+  const { isLoadingGlobal } = useLoading()
+
   useEffect(() => {
-    if (formData) {
-      form.setFieldsValue(formData)
+    if (data) {
+      form.setFieldsValue(data)
     }
-  }, [formData, form])
+  }, [data, form])
 
   useEffect(() => {
     refetch()
@@ -73,7 +76,7 @@ const EditVehiclePage: React.FC = () => {
     {
       key: 'image',
       label: 'Link ảnh',
-      value: <UploadComponent initialImage={formData?.image} form={form} fieldName='image' />
+      value: <UploadComponent fieldName='image' initialImage={data?.image} form={form} />
     },
     {
       key: 'numberSeat',
@@ -155,17 +158,11 @@ const EditVehiclePage: React.FC = () => {
       if (vehicleID) {
         const formData = new FormData()
 
-        // Append all non-image fields
-        Object.keys(values).forEach((key) => {
-          if (key !== 'image') {
-            formData.append(key, values[key])
-          }
+        Object.entries(values).forEach(([key, value]) => {
+          formData.append(key, value)
         })
 
-        formData.append('imageFile', form.getFieldValue('image')) // Use 'imageFile' or your backend's expected key
-
         const response = await updateMutation.mutateAsync({ id: vehicleID, body: formData })
-        // console.log(response)
 
         if (response.status === HttpStatusCode.Ok) {
           message.success('Update successfully')
@@ -184,7 +181,7 @@ const EditVehiclePage: React.FC = () => {
       <Table columns={columns} dataSource={tableData} pagination={false} bordered rowKey='key' />
       <Row justify='start' gutter={16} style={{ marginTop: '16px' }}>
         <Col>
-          <Button type='primary' htmlType='submit' style={{ marginRight: '10px' }}>
+          <Button disabled={isLoadingGlobal} type='primary' htmlType='submit' style={{ marginRight: '10px' }}>
             Update
           </Button>
         </Col>
