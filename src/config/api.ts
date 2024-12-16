@@ -120,13 +120,14 @@ export const APP_API_ENDPOINT = Object.freeze({
     GET_ACCOUNT: '/api/Account/listAccount',
     GET_ROLE: '/api/Account/listRole',
     ADD_ROLE: '/api/Role/addRole',
+    REGISTER_VEHICLE_OWNER: `/api/Account/registerVehicleOwner`,
     UPDATE_ROLE: ({ id }: { id: string | number | null }) => `/api/Role/updateRole/id?id=${id}`,
     UPDATE_VEHICLE_OWNER: ({ id }: { id: string | number | null }) => `/api/Account/updateVehicleOwner/${id}`,
     DELETE_ROLE: ({ id }: { id: string | number | null }) => `/api/Role/deleteRole/id?id=${id}`,
     GET_ACCOUNT_DETAILS: ({ id }: { id: string | number | null }) => `/api/Account/detailsAccount/${id}`,
     DELETE_ACCOUNT: ({ id }: { id: string | number | null }) => `/api/Account/deleteAccount/id?id=${id}`,
     UPDATE_ACCOUNT: ({ id, newRoleId }: { id: string | number | null; newRoleId: string | number | null }) =>
-      `/api/Account/updateAccount/userId/newRoleId?userId=${id}&newRoleId=${newRoleId}`
+      `/api/Account/updateAccount/userId/newRoleId?userId=${id}&newRoleId=${newRoleId}`,
   },
   HISTORY_RENT_VEHICLE: {
     GET_HISTORY_RENT_VEHICLE: '/api/HistoryRentVehicle/listHistoryRentVehicle',
