@@ -1,4 +1,5 @@
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
+import { RoleType } from '@/enums/enum'
 import { formatPrize, formatTime } from '@/helpers'
 import { useQueryVehicleUseRent } from '@/queries/history'
 import { useQueryRequest, useUpdateConvenientTripMutation } from '@/queries/request'
@@ -12,7 +13,7 @@ interface TableData {
   label: string
   value: string | number | JSX.Element | undefined
 }
-const RentOrBookCar = ({ data }: { data: DataTypeRequest | undefined }) => {
+const RentOrBookCar = ({ data, account }: { data: DataTypeRequest | undefined; account: { role: string } }) => {
   const [form] = Form.useForm()
 
   const { data: requestData, refetch } = useQueryRequest()
@@ -185,7 +186,7 @@ const RentOrBookCar = ({ data }: { data: DataTypeRequest | undefined }) => {
       onFinish={(values: any) => handleFormAction(true, 'Accept successfully', 'Accept failed', values.vehicleId)}
     >
       <Table columns={columns} dataSource={tableData} pagination={false} bordered />
-      {!isCheck && (
+      {!isCheck && [RoleType.STAFF].includes(account.role as RoleType) && (
         <Row justify='start' gutter={16} style={{ marginTop: '16px' }}>
           <Col>
             <Button type='primary' htmlType='submit' style={{ marginRight: '10px' }} loading={isLoading}>

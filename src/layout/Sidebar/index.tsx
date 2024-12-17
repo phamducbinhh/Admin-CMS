@@ -180,7 +180,8 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
           justifyContent: 'center',
           color: '#fff',
           fontWeight: 'bold',
-          fontSize: '18px'
+          fontSize: '18px',
+          padding: '10px'
         }}
       >
         <img src={logo} alt='logo' />
