@@ -4,12 +4,12 @@ import { useQueryRevenue } from '@/queries/revenue'
 import { useQueryUserProfile } from '@/queries/user-profile'
 import renderWithLoading from '@/utils/renderWithLoading'
 import { Button, Result } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
 const DashBoardChartPage: React.FC = () => {
   const { data: account, isLoading: accountLoading } = useQueryUserProfile()
-  const { data, isLoading } = useQueryRevenue({
+  const { data, isLoading, refetch } = useQueryRevenue({
     enabled: [RoleType.STAFF, RoleType.VEHICLE_OWNER].includes(account?.role)
   })
   const [showAllData, setShowAllData] = useState(false)
@@ -47,6 +47,10 @@ const DashBoardChartPage: React.FC = () => {
   const chartStyle = {
     marginBottom: 40
   }
+
+  useEffect(() => {
+    refetch()
+  }, [refetch])
 
   const renderChart = (data: any[], barColor: string, title: string) => (
     <div style={chartStyle}>
