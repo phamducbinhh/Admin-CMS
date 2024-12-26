@@ -1,4 +1,4 @@
-export const allowAdminRoute = ['account', 'role', 'driver', 'request']
+export const allowAdminRoute = ['account', 'role']
 
 export const allowStaffRoute = [
   'dashboard',
@@ -22,7 +22,6 @@ export const allowDriverRoute = [
   'vehicles',
   'vehicles-using',
   'history-rent-vehicle',
-  'history-rent-driver',
   'request',
   'ticket',
   'ticket-not-paid'

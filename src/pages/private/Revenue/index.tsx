@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, message, Table } from 'antd'
 import { useExportRevenueMutation, useQueryRevenue } from '@/queries/revenue'
 import useColumnSearch from '@/hooks/useColumnSearch'
@@ -9,13 +9,17 @@ import { HttpStatusCode } from 'axios'
 import { DownloadOutlined } from '@ant-design/icons'
 
 const RevenuePage: React.FC = () => {
-  const { data, isLoading } = useQueryRevenue()
+  const { data, isLoading, refetch } = useQueryRevenue()
   const { getColumnSearchProps } = useColumnSearch()
 
   const revenueTicketData = data?.revenueTicketDTOs[0]?.listTicket || []
   const totalLossCosts = data?.totalLossCosts[0]?.listLossCostVehicle || []
   const rentDriverData = data?.totalPayementRentDrivers[0]?.paymentRentDriverDTOs || []
   const rentVehicleData = data?.totalPaymentRentVehicleDTOs[0]?.paymentRentVehicelDTOs || []
+
+  useEffect(() => {
+    refetch()
+  }, [refetch])
 
   const total = data?.totalRevenue
 
