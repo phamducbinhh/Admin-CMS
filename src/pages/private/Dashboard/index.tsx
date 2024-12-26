@@ -48,9 +48,20 @@ const DashBoardChartPage: React.FC = () => {
     marginBottom: 40
   }
 
+
   useEffect(() => {
     refetch()
   }, [refetch])
+
+  if (
+    totalLossCostsData.length === 0 &&
+    revenueTicketChartData.length === 0 &&
+    rentDriverChartData.length === 0 &&
+    rentVehicleChartData.length === 0
+  ) {
+    return <Empty />
+  }
+
 
   const renderChart = (data: any[], barColor: string, title: string) => (
     <div style={chartStyle}>
