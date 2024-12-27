@@ -4,7 +4,6 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { useQueryClient } from '@tanstack/react-query'
 import { Avatar, Button, Tag, theme } from 'antd'
 import { Header } from 'antd/es/layout/layout'
-import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './Header.module.css'
 
@@ -30,12 +29,6 @@ const HeaderLayout: React.FC<HeaderProps> = ({ collapsed, setCollapsed }) => {
     queryClient.clear()
     navigate('/login')
   }
-
-  useEffect(() => {
-    if (account) {
-      console.log(account.avatar)
-    }
-  }, [account])
 
   return (
     <Header className={styles['header-test']} style={{ padding: 0, background: colorBgContainer }}>
