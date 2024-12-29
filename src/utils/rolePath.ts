@@ -18,14 +18,7 @@ export const allowStaffRoute = [
   'reviews'
 ]
 
-export const allowDriverRoute = [
-  'vehicles',
-  'vehicles-using',
-  'history-rent-vehicle',
-  'request',
-  'ticket',
-  'ticket-not-paid'
-]
+export const allowDriverRoute = ['vehicles-using', 'history-rent-vehicle', 'request', 'ticket', 'ticket-not-paid']
 
 export const allowVehicleOwnerRoute = [
   'dashboard',

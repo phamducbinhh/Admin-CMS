@@ -54,6 +54,7 @@ const HistoryRentVehiclePage: React.FC = () => {
       dataIndex: 'timeStart',
       key: 'timeStart',
       align: 'center',
+      sorter: (a, b) => new Date(a.timeStart).getTime() - new Date(b.timeStart).getTime(),
       filterDropdown: ({ setSelectedKeys, confirm, clearFilters }) => (
         <div style={{ padding: 8 }}>
           <DatePicker
@@ -97,6 +98,7 @@ const HistoryRentVehiclePage: React.FC = () => {
       dataIndex: 'endStart',
       key: 'endStart',
       align: 'center',
+      sorter: (a, b) => new Date(a.endStart).getTime() - new Date(b.endStart).getTime(),
       filterDropdown: ({ setSelectedKeys, confirm, clearFilters }) => (
         <div style={{ padding: 8 }}>
           <DatePicker

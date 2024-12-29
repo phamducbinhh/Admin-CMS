@@ -63,7 +63,7 @@ const staffRoutes = [
   {
     path: '/vehicles',
     component: <VehiclesPage />,
-    allowedRoles: [RoleType.STAFF, RoleType.VEHICLE_OWNER, RoleType.DRIVER]
+    allowedRoles: [RoleType.STAFF, RoleType.VEHICLE_OWNER]
   },
   {
     path: '/vehicles-owner',
