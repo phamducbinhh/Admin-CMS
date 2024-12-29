@@ -57,7 +57,8 @@ export const APP_API_ENDPOINT = Object.freeze({
     DRIVER_DETAILS: ({ id }: { id: string | number | null }) => `/api/Driver/${id}`,
     BLOCK_DRIVER: ({ id }: { id: string | number | null }) => `/api/Driver/banDrive/${id}`,
     UPDATE_DRIVER: ({ id }: { id: string | number | null }) => `/api/Driver/${id}`,
-    ADD_DRIVER: '/api/Driver'
+    ADD_DRIVER: '/api/Driver',
+    WITHOUT_VEHICLE: '/api/Driver/driversWithoutVehicle'
   },
   LOSS_COST_VEHICLE: {
     GET_COST: '/api/LossCostVehicle/totalLossVehicel',
@@ -127,7 +128,7 @@ export const APP_API_ENDPOINT = Object.freeze({
     GET_ACCOUNT_DETAILS: ({ id }: { id: string | number | null }) => `/api/Account/detailsAccount/${id}`,
     DELETE_ACCOUNT: ({ id }: { id: string | number | null }) => `/api/Account/deleteAccount/id?id=${id}`,
     UPDATE_ACCOUNT: ({ id, newRoleId }: { id: string | number | null; newRoleId: string | number | null }) =>
-      `/api/Account/updateAccount/userId/newRoleId?userId=${id}&newRoleId=${newRoleId}`,
+      `/api/Account/updateAccount/userId/newRoleId?userId=${id}&newRoleId=${newRoleId}`
   },
   HISTORY_RENT_VEHICLE: {
     GET_HISTORY_RENT_VEHICLE: '/api/HistoryRentVehicle/listHistoryRentVehicle',

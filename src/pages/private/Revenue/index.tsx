@@ -7,6 +7,7 @@ import { generateColumn } from '@/utils/tableColumns'
 import { formatDate, formatPrize } from '@/helpers'
 import { HttpStatusCode } from 'axios'
 import { DownloadOutlined } from '@ant-design/icons'
+// import { useTableWithTotal } from '@/hooks/useTableWithTotal'
 
 const RevenuePage: React.FC = () => {
   const { data, isLoading, refetch } = useQueryRevenue()
@@ -83,6 +84,12 @@ const RevenuePage: React.FC = () => {
   const lossCostSource = generateDataSource(totalLossCosts, 'id')
 
   const updateMutation = useExportRevenueMutation()
+
+  // const { totalPrice, tableProps, filteredData } = useTableWithTotal({
+  //   data: revenueTicketSource,
+  //   columns: revenueTicketDataColumns,
+  //   priceKey: 'pricePromotion' // This should match the key for price in your data
+  // })
 
   const downloadFile = async () => {
     try {
