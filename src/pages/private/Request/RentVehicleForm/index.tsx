@@ -1,5 +1,5 @@
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
-import { ActionType } from '@/enums/enum'
+import { ActionType, RoleType } from '@/enums/enum'
 import { formatPrize, formatTime } from '@/helpers'
 import { useCreateTicketForRentCarMutation, useQueryRequest } from '@/queries/request'
 import { useQueryTravelCarByRequest } from '@/queries/ticket'
@@ -13,7 +13,7 @@ interface TableData {
   label: string
   value: string | number | JSX.Element | undefined
 }
-const RentVehicleForm = ({ data }: { data: DataTypeRequest | undefined }) => {
+const RentVehicleForm = ({ data, account }: { data: DataTypeRequest | undefined; account: { role: string } }) => {
   const [form] = Form.useForm()
 
   const navigate = useNavigate()
@@ -179,7 +179,7 @@ const RentVehicleForm = ({ data }: { data: DataTypeRequest | undefined }) => {
       onFinish={(values) => handleAction({ choose: true, vehicleId: values.vehicleId, price: values.price })}
     >
       <Table columns={columns} dataSource={tableData} pagination={false} bordered />
-      {!isCheck && (
+      {!isCheck && [RoleType.STAFF].includes(account.role as RoleType) && (
         <Row justify='start' gutter={16} style={{ marginTop: '16px' }}>
           <Col>
             <Button type='primary' htmlType='submit' style={{ marginRight: '10px' }} loading={isLoading}>
