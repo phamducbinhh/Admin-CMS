@@ -3,8 +3,8 @@ export const allowAdminRoute = ['account', 'role']
 export const allowStaffRoute = [
   'dashboard',
   'trips',
+  'trips-convenient',
   'vehicles',
-  'vehicles-owner',
   'promotion',
   'driver',
   'history-rent-vehicle',
@@ -14,11 +14,20 @@ export const allowStaffRoute = [
   'request',
   'revenue',
   'ticket',
+  'total-ticket',
   'ticket-not-paid',
-  'reviews'
+  'reviews',
+  'check-seat'
 ]
 
-export const allowDriverRoute = ['vehicles-using', 'history-rent-vehicle', 'request', 'ticket', 'ticket-not-paid']
+export const allowDriverRoute = [
+  'vehicles-using',
+  'history-rent-vehicle',
+  'request',
+  'ticket',
+  'ticket-not-paid',
+  'check-seat'
+]
 
 export const allowVehicleOwnerRoute = [
   'dashboard',

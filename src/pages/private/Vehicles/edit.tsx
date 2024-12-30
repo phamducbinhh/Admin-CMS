@@ -25,7 +25,7 @@ const EditVehiclePage: React.FC = () => {
   const vehicleID = searchParams.get('id')
   const [form] = Form.useForm()
 
-  const { data: dataTypeDriver, refetch: refetchDataTypeDriver } = useQueryDriverWithoutVehicle()
+  const { data: dataTypeDriver, refetch: refetchDataTypeDriver } = useQueryDriverWithoutVehicle({ id: vehicleID })
   const { data: dataTypeOfVehicles } = useQueryTypeOfVehicles()
   const { data: dataTypeOfVehiclesOwner } = useQueryTypeVehiclesOwner()
 
