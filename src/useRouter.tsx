@@ -39,8 +39,6 @@ import ExcelTripPage from './pages/private/trips/excel'
 import ListTripDetailPage from './pages/private/trip-list-detail/list-trip-detail'
 import UnauthorizedPage from './pages/private/Unauthorized'
 import UserProfilePage from './pages/private/UserProfile'
-import VehicleOwnerPage from './pages/private/Vehicle-Owner'
-import EditVehicleOwnerPage from './pages/private/Vehicle-Owner/edit'
 import VehiclesPage from './pages/private/Vehicles'
 import AddVehiclePage from './pages/private/Vehicles/add'
 import EditVehiclePage from './pages/private/Vehicles/edit'
@@ -50,9 +48,16 @@ import LoginPage from './pages/public/login'
 import ListTripDetailAddPage from './pages/private/trip-list-detail/list-trip-detail-add'
 import ListTripDetailEditPage from './pages/private/trip-list-detail/list-trip-detail-edit'
 import EditUserProfile from './pages/private/UserProfile/edit'
-import AddVehicleOwnerPage from './pages/private/Vehicle-Owner/add'
+import CheckSeatPage from './pages/private/CheckSeat'
+import TripConvenientPage from './pages/private/Trip-Convenient'
+import AddTripConvenientPage from './pages/private/Trip-Convenient/add'
+// import AddVehicleOwnerPage from './pages/private/Vehicle-Owner/add'
+// import VehicleOwnerPage from './pages/private/Vehicle-Owner'
+// import EditVehicleOwnerPage from './pages/private/Vehicle-Owner/edit'
 
 const staffRoutes = [
+  { path: '/trips-convenient', component: <TripConvenientPage />, allowedRoles: [RoleType.STAFF] },
+  { path: '/trips-convenient/add', component: <AddTripConvenientPage />, allowedRoles: [RoleType.STAFF] },
   { path: '/trips', component: <TripsPages />, allowedRoles: [RoleType.STAFF] },
   { path: '/trips/add', component: <AddTripPage />, allowedRoles: [RoleType.STAFF] },
   { path: '/trips/excel', component: <ExcelTripPage />, allowedRoles: [RoleType.STAFF] },
@@ -65,21 +70,21 @@ const staffRoutes = [
     component: <VehiclesPage />,
     allowedRoles: [RoleType.STAFF, RoleType.VEHICLE_OWNER]
   },
-  {
-    path: '/vehicles-owner',
-    component: <VehicleOwnerPage />,
-    allowedRoles: [RoleType.STAFF]
-  },
-  {
-    path: '/vehicles-owner/add',
-    component: <AddVehicleOwnerPage />,
-    allowedRoles: [RoleType.STAFF]
-  },
-  {
-    path: '/vehicles-owner/edit',
-    component: <EditVehicleOwnerPage />,
-    allowedRoles: [RoleType.STAFF]
-  },
+  // {
+  //   path: '/vehicles-owner',
+  //   component: <VehicleOwnerPage />,
+  //   allowedRoles: [RoleType.STAFF]
+  // },
+  // {
+  //   path: '/vehicles-owner/add',
+  //   component: <AddVehicleOwnerPage />,
+  //   allowedRoles: [RoleType.STAFF]
+  // },
+  // {
+  //   path: '/vehicles-owner/edit',
+  //   component: <EditVehicleOwnerPage />,
+  //   allowedRoles: [RoleType.STAFF]
+  // },
   {
     path: '/vehicles/add',
     component: <AddVehiclePage />,
@@ -94,6 +99,11 @@ const staffRoutes = [
     path: '/vehicles/excel',
     component: <ExcelVehiclePage />,
     allowedRoles: [RoleType.STAFF]
+  },
+  {
+    path: '/check-seat',
+    component: <CheckSeatPage />,
+    allowedRoles: [RoleType.STAFF, RoleType.DRIVER]
   },
   { path: '/promotion', component: <PromotionPage />, allowedRoles: [RoleType.STAFF] },
   {

@@ -44,7 +44,10 @@ const HeaderLayout: React.FC<HeaderProps> = ({ collapsed, setCollapsed }) => {
       />
       <Link className={styles.avatar} to='user-profile'>
         <Avatar size={39} src={account?.avatar} />
-        <Tag color='blue'>{account?.username}</Tag>
+        <div>
+          <span>{account?.fullName}</span>
+          <Tag color='blue'>{account?.username}</Tag>
+        </div>
       </Link>
 
       <Button onClick={() => handleLogout()} style={{ marginRight: '20px' }}>
