@@ -95,7 +95,7 @@ const AddAccountPage: React.FC = () => {
       key: 'role',
       label: 'Quyền',
       value: (
-        <Form.Item name='role' rules={[{ required: true, message: 'Vui lòng chọn Role!' }]}>
+        <Form.Item name='roleId' rules={[{ required: true, message: 'Vui lòng chọn Role!' }]}>
           <Select placeholder='Chọn Role' style={{ width: '30%' }}>
             {roleData
               ?.filter((item: any) => item.status === true) // Only include items with status === true
