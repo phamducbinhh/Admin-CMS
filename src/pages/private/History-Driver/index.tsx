@@ -1,10 +1,10 @@
-import { formatPrize, formatTime } from '@/helpers'
+import { formatPrize } from '@/helpers'
 import useColumnSearch from '@/hooks/useColumnSearch'
 import { useQueryHistoryRentDriver } from '@/queries/history'
 import { useQueryVehicles } from '@/queries/vehicle'
 import { handlingTsUndefined } from '@/utils/handlingTsUndefined'
 import renderWithLoading from '@/utils/renderWithLoading'
-import { SearchOutlined } from '@ant-design/icons'
+// import { SearchOutlined } from '@ant-design/icons'
 import { Button, Col, DatePicker, Form, Row, Select, Table, TableProps } from 'antd'
 import dayjs from 'dayjs'
 import React from 'react'
@@ -57,101 +57,101 @@ const HistoryRentDriverPage: React.FC = () => {
       ...useColumnSearch().getColumnSearchProps('vehicleOwner'),
       render: (text) => <span>{text ?? 'null'}</span>,
       width: '20%'
-    },
-    {
-      title: 'Thời gian bắt đầu',
-      dataIndex: 'timeStart',
-      key: 'timeStart',
-      align: 'center',
-      filterDropdown: ({ setSelectedKeys, confirm, clearFilters }) => (
-        <div style={{ padding: 8 }}>
-          <DatePicker
-            onChange={(date, dateString: any) => {
-              if (date) {
-                setSelectedKeys([dateString])
-              } else {
-                setSelectedKeys([])
-              }
-            }}
-            format='YYYY-MM-DD'
-            style={{ marginBottom: 8, display: 'block' }}
-          />
-          <div>
-            <Button
-              type='primary'
-              onClick={confirm as any}
-              icon={<SearchOutlined />}
-              size='small'
-              style={{ width: 90, marginRight: 8 }}
-            >
-              Search
-            </Button>
-            <Button onClick={clearFilters as any} size='small' style={{ width: 90 }}>
-              Reset
-            </Button>
-          </div>
-        </div>
-      ),
-      onFilter: (value, record) => {
-        if (value) {
-          const recordDate = dayjs(record.timeStart)
-          return recordDate.isSame(dayjs(value as string), 'day')
-        }
-        return false
-      },
-      render: (text) => <span>{formatTime(text)}</span>
-    },
-    {
-      title: 'Thời gian kết thúc',
-      dataIndex: 'endStart',
-      key: 'endStart',
-      align: 'center',
-      filterDropdown: ({ setSelectedKeys, confirm, clearFilters }) => (
-        <div style={{ padding: 8 }}>
-          <DatePicker
-            onChange={(date, dateString: any) => {
-              if (date) {
-                setSelectedKeys([dateString])
-              } else {
-                setSelectedKeys([])
-              }
-            }}
-            format='YYYY-MM-DD'
-            style={{ marginBottom: 8, display: 'block' }}
-          />
-          <div>
-            <Button
-              type='primary'
-              onClick={confirm as any}
-              icon={<SearchOutlined />}
-              size='small'
-              style={{ width: 90, marginRight: 8 }}
-            >
-              Search
-            </Button>
-            <Button onClick={clearFilters as any} size='small' style={{ width: 90 }}>
-              Reset
-            </Button>
-          </div>
-        </div>
-      ),
-      onFilter: (value, record) => {
-        if (value) {
-          const recordDate = dayjs(record.endStart)
-          return recordDate.isSame(dayjs(value as string), 'day')
-        }
-        return false
-      },
-      render: (text) => <span>{formatTime(text)}</span>
     }
+    // {
+    //   title: 'Thời gian bắt đầu',
+    //   dataIndex: 'timeStart',
+    //   key: 'timeStart',
+    //   align: 'center',
+    //   filterDropdown: ({ setSelectedKeys, confirm, clearFilters }) => (
+    //     <div style={{ padding: 8 }}>
+    //       <DatePicker
+    //         onChange={(date, dateString: any) => {
+    //           if (date) {
+    //             setSelectedKeys([dateString])
+    //           } else {
+    //             setSelectedKeys([])
+    //           }
+    //         }}
+    //         format='YYYY-MM-DD'
+    //         style={{ marginBottom: 8, display: 'block' }}
+    //       />
+    //       <div>
+    //         <Button
+    //           type='primary'
+    //           onClick={confirm as any}
+    //           icon={<SearchOutlined />}
+    //           size='small'
+    //           style={{ width: 90, marginRight: 8 }}
+    //         >
+    //           Search
+    //         </Button>
+    //         <Button onClick={clearFilters as any} size='small' style={{ width: 90 }}>
+    //           Reset
+    //         </Button>
+    //       </div>
+    //     </div>
+    //   ),
+    //   onFilter: (value, record) => {
+    //     if (value) {
+    //       const recordDate = dayjs(record.timeStart)
+    //       return recordDate.isSame(dayjs(value as string), 'day')
+    //     }
+    //     return false
+    //   },
+    //   render: (text) => <span>{formatTime(text)}</span>
+    // },
+    // {
+    //   title: 'Thời gian kết thúc',
+    //   dataIndex: 'endStart',
+    //   key: 'endStart',
+    //   align: 'center',
+    //   filterDropdown: ({ setSelectedKeys, confirm, clearFilters }) => (
+    //     <div style={{ padding: 8 }}>
+    //       <DatePicker
+    //         onChange={(date, dateString: any) => {
+    //           if (date) {
+    //             setSelectedKeys([dateString])
+    //           } else {
+    //             setSelectedKeys([])
+    //           }
+    //         }}
+    //         format='YYYY-MM-DD'
+    //         style={{ marginBottom: 8, display: 'block' }}
+    //       />
+    //       <div>
+    //         <Button
+    //           type='primary'
+    //           onClick={confirm as any}
+    //           icon={<SearchOutlined />}
+    //           size='small'
+    //           style={{ width: 90, marginRight: 8 }}
+    //         >
+    //           Search
+    //         </Button>
+    //         <Button onClick={clearFilters as any} size='small' style={{ width: 90 }}>
+    //           Reset
+    //         </Button>
+    //       </div>
+    //     </div>
+    //   ),
+    //   onFilter: (value, record) => {
+    //     if (value) {
+    //       const recordDate = dayjs(record.endStart)
+    //       return recordDate.isSame(dayjs(value as string), 'day')
+    //     }
+    //     return false
+    //   },
+    //   render: (text) => <span>{formatTime(text)}</span>
+    // }
   ]
 
   const onFinish = async (values: any) => {
     try {
       const formattedValues = {
         ...values,
-        startDate: values.startDate === null ? '' : dayjs(values.startDate).format('YYYY-MM-DD')
-        // endDate: dayjs(values.endDate).format('YYYY-MM-DD')
+        startDate: values.startDate === null ? '' : dayjs(values.startDate).format('YYYY-MM-DD'),
+        endDate: values.startDate === null ? '' : dayjs(values.endDate).format('YYYY-MM-DD')
       }
 
       // Update the query parameters
@@ -174,7 +174,7 @@ const HistoryRentDriverPage: React.FC = () => {
           <>
             <Form
               initialValues={{
-                startDate: dayjs() // Set the default value for the DatePicker
+                fromDate: dayjs() // Set the default value for the DatePicker
               }}
               onFinish={onFinish}
               layout='horizontal'
@@ -182,15 +182,15 @@ const HistoryRentDriverPage: React.FC = () => {
             >
               <Row gutter={16}>
                 <Col span={4}>
-                  <Form.Item label='Create Date' name='startDate'>
+                  <Form.Item label='From Date' name='startDate'>
                     <DatePicker format='DD-MM-YYYY' />
                   </Form.Item>
                 </Col>
-                {/* <Col span={4}>
-                  <Form.Item label='End Date' name='endDate'>
+                <Col span={4}>
+                  <Form.Item label='To Date' name='endDate'>
                     <DatePicker format='DD-MM-YYYY' onChange={(date) => console.log(date?.toISOString())} />
                   </Form.Item>
-                </Col> */}
+                </Col>
                 <Col span={4}>
                   <Form.Item name='vehicleId'>
                     <Select placeholder='Chọn xe' style={{ width: '80%' }} allowClear>

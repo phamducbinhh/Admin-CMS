@@ -92,7 +92,8 @@ const HistoryRentVehiclePage: React.FC = () => {
     try {
       const formattedValues = {
         ...values,
-        startDate: values.startDate === null ? '' : dayjs(values.startDate).format('YYYY-MM-DD')
+        startDate: values.startDate === null ? '' : dayjs(values.startDate).format('YYYY-MM-DD'),
+        endDate: values.startDate === null ? '' : dayjs(values.endDate).format('YYYY-MM-DD')
         // endDate: dayjs(values.endDate).format('YYYY-MM-DD')
       }
 
@@ -124,15 +125,15 @@ const HistoryRentVehiclePage: React.FC = () => {
             >
               <Row gutter={16}>
                 <Col span={4}>
-                  <Form.Item label='Create Date' name='startDate'>
+                  <Form.Item label='From Date' name='startDate'>
                     <DatePicker format='DD-MM-YYYY' />
                   </Form.Item>
                 </Col>
-                {/* <Col span={4}>
-                  <Form.Item label='End Date' name='endDate'>
-                    <DatePicker format='DD-MM-YYYY' onChange={(date) => console.log(date?.toISOString())} />
+                <Col span={4}>
+                  <Form.Item label='To Date' name='endDate'>
+                    <DatePicker format='DD-MM-YYYY' />
                   </Form.Item>
-                </Col> */}
+                </Col>
                 <Col span={4}>
                   <Form.Item name='vehicleId'>
                     <Select placeholder='Chọn xe' style={{ width: '80%' }} allowClear>
