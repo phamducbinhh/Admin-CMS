@@ -188,6 +188,7 @@ export const APP_API_ENDPOINT = Object.freeze({
   },
   ACCOUNT: {
     GET_ACCOUNT: '/api/Account/listAccount',
+    CREATE_ACCOUNT: '/api/User/createAccount',
     GET_ROLE: '/api/Account/listRole',
     ADD_ROLE: '/api/Role/addRole',
     REGISTER_VEHICLE_OWNER: `/api/Account/registerVehicleOwner`,
