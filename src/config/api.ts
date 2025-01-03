@@ -42,6 +42,8 @@ export const APP_API_ENDPOINT = Object.freeze({
     GET_NO_TRIPS: '/api/Vehicle/VehicleNoTrip',
     GET_VEHICLES: '/api/Vehicle/listVehicle',
     GET_VEHICLES_OWNER: '/api/User/listVehicleOwner',
+    GET_START_POINT: ({ id }: { id: string | number | null }) =>
+      `/api/Vehicle/getStartPointTripFromVehicle/vehicleId?vehicleId=${id}`,
     DELETE_VEHICLES: ({ id }: { id: string | number | null }) => `/api/Vehicle/deleteVehicleByStatus/${id}`,
     DELETE_VEHICLES_OWNER: ({ id }: { id: string | number | null }) => `/api/Account/deleteVehicleOwner/${id}`,
     ADD_VEHICLES_STAFF: ({ id, isApprove }: { id: string | number | null; isApprove: boolean }) =>

@@ -1,7 +1,7 @@
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
 import { useCreateRequestDriverMutation, useQueryRequest } from '@/queries/request'
 import { DataTypeCost } from '@/types/DataType'
-import { Button, DatePicker, Form, InputNumber, message, Row, Select, Table, TableColumnsType } from 'antd'
+import { Button, Form, InputNumber, message, Row, Select, Table, TableColumnsType } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -23,20 +23,32 @@ const CreateBusTickets: React.FC = () => {
 
   const tableData: TableData[] = [
     {
-      key: 'startTime',
-      label: 'Ngày bắt đầu',
+      key: 'startPoint',
+      label: 'Điểm bắt đầu',
       value: (
-        <Form.Item name='startTime' rules={[{ required: true, message: 'Vui lòng chọn ngày bắt đầu!' }]}>
-          <DatePicker showTime={{ format: 'HH:mm:ss' }} style={{ width: '30%' }} format='YYYY-MM-DD HH:mm:ss' />
+        <Form.Item name='startPoint' rules={[{ required: true, message: 'Vui lòng chọn điểm bắt đầu!' }]}>
+          <Select placeholder='Chọn điểm bắt đầu' style={{ width: '30%' }}>
+            {['5', '7', '29', '45'].map((item) => (
+              <Select.Option key={item} value={item}>
+                {item}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
       )
     },
     {
-      key: 'endTime',
-      label: 'Ngày kết thúc',
+      key: 'endPoint',
+      label: 'Điểm kết thúc',
       value: (
-        <Form.Item name='endTime' rules={[{ required: true, message: 'Vui lòng chọn ngày kết thúc!' }]}>
-          <DatePicker showTime={{ format: 'HH:mm:ss' }} style={{ width: '30%' }} format='YYYY-MM-DD HH:mm:ss' />
+        <Form.Item name='endPoint' rules={[{ required: true, message: 'Vui lòng chọn điểm kết thúc!' }]}>
+          <Select placeholder='Chọn điểm kết thúc' style={{ width: '30%' }}>
+            {['5', '7', '29', '45'].map((item) => (
+              <Select.Option key={item} value={item}>
+                {item}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
       )
     },
