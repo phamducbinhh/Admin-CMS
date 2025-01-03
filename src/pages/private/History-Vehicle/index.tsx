@@ -124,12 +124,12 @@ const HistoryRentVehiclePage: React.FC = () => {
               form={form}
             >
               <Row gutter={16}>
-                <Col span={4}>
+                <Col span={6}>
                   <Form.Item label='From Date' name='startDate'>
                     <DatePicker format='DD-MM-YYYY' />
                   </Form.Item>
                 </Col>
-                <Col span={4}>
+                <Col span={6}>
                   <Form.Item label='To Date' name='endDate'>
                     <DatePicker format='DD-MM-YYYY' />
                   </Form.Item>
@@ -145,7 +145,7 @@ const HistoryRentVehiclePage: React.FC = () => {
                     </Select>
                   </Form.Item>
                 </Col>
-                <Col span={1}>
+                <Col span={2}>
                   <Button htmlType='submit' type='primary'>
                     Tìm
                   </Button>

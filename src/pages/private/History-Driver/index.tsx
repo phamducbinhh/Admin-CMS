@@ -172,27 +172,28 @@ const HistoryRentDriverPage: React.FC = () => {
         isLoading,
         content: (
           <>
-            <Form
-              initialValues={{
-                fromDate: dayjs() // Set the default value for the DatePicker
-              }}
-              onFinish={onFinish}
-              layout='horizontal'
-              form={form}
-            >
+            <Form onFinish={onFinish} layout='horizontal' form={form}>
               <Row gutter={16}>
-                <Col span={4}>
-                  <Form.Item label='From Date' name='startDate'>
+                <Col span={6}>
+                  <Form.Item
+                    label='Start Date'
+                    name='startDate'
+                    rules={[{ required: true, message: 'Vui lòng chọn ngày bắt đầu!' }]}
+                  >
+                    <DatePicker format='DD-MM-YYYY' />
+                  </Form.Item>
+                </Col>
+                <Col span={6}>
+                  <Form.Item
+                    label='End Date'
+                    name='endDate'
+                    rules={[{ required: true, message: 'Vui lòng chọn ngày kết thúc!' }]}
+                  >
                     <DatePicker format='DD-MM-YYYY' />
                   </Form.Item>
                 </Col>
                 <Col span={4}>
-                  <Form.Item label='To Date' name='endDate'>
-                    <DatePicker format='DD-MM-YYYY' onChange={(date) => console.log(date?.toISOString())} />
-                  </Form.Item>
-                </Col>
-                <Col span={4}>
-                  <Form.Item name='vehicleId'>
+                  <Form.Item name='vehicleId' rules={[{ required: true, message: 'Vui lòng chọn xe!' }]}>
                     <Select placeholder='Chọn xe' style={{ width: '80%' }} allowClear>
                       {vehicleData?.map((item: any) => (
                         <Select.Option key={item.id} value={item.id}>
@@ -213,9 +214,9 @@ const HistoryRentDriverPage: React.FC = () => {
               columns={columns}
               dataSource={data?.paymentRentDriverDTOs.map((item: any) => ({ ...item, key: item.id }))}
             />
-            {/* <div>
+            <div>
               Total : <span style={{ fontSize: 20 }}>{formatPrize(data?.total)}</span>
-            </div> */}
+            </div>
           </>
         )
       })}
