@@ -131,6 +131,7 @@ export const APP_API_ENDPOINT = Object.freeze({
   },
   TICKET: {
     GET_TICKET: '/api/Ticket',
+    CREATE_TICKET_BY_BUS: '/api/Ticket/createTicketFromDriver/vehicleId/numberTicket',
     GET_TOTAL_TICKET: ({
       startDate,
       endDate,

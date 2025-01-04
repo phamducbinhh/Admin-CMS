@@ -1,12 +1,9 @@
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
 import { useDebounce } from '@/hooks/useDebounce'
-import { useCreateRequestDriverMutation } from '@/queries/request'
-import { useQueryCheckPrice } from '@/queries/ticket'
+import { useCreateTicketByBusMutation, useQueryCheckPrice } from '@/queries/ticket'
 import { useQueryGetEndPointVehicles, useQueryGetStartPointVehicles } from '@/queries/vehicle'
-import { DataTypeCost } from '@/types/DataType'
 import { Button, Form, InputNumber, message, Row, Select, Table, TableColumnsType } from 'antd'
 import { useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 interface TableData {
   key: string
@@ -16,9 +13,8 @@ interface TableData {
 
 const CreateBusTickets: React.FC = () => {
   const [form] = Form.useForm()
-  const navigate = useNavigate()
 
-  const addMutation = useCreateRequestDriverMutation()
+  const addMutation = useCreateTicketByBusMutation()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const typeOfPayment = [
@@ -72,10 +68,10 @@ const CreateBusTickets: React.FC = () => {
   const tableData: TableData[] = useMemo(
     () => [
       {
-        key: 'startPoint',
+        key: 'pointStart',
         label: 'Điểm bắt đầu',
         value: (
-          <Form.Item name='startPoint' rules={[{ required: true, message: 'Vui lòng chọn điểm bắt đầu!' }]}>
+          <Form.Item name='pointStart' rules={[{ required: true, message: 'Vui lòng chọn điểm bắt đầu!' }]}>
             <Select
               placeholder='Chọn điểm bắt đầu'
               style={{ width: '30%' }}
@@ -92,10 +88,10 @@ const CreateBusTickets: React.FC = () => {
         )
       },
       {
-        key: 'endPoint',
+        key: 'pointEnd',
         label: 'Điểm kết thúc',
         value: (
-          <Form.Item name='endPoint' rules={[{ required: true, message: 'Vui lòng chọn điểm kết thúc!' }]}>
+          <Form.Item name='pointEnd' rules={[{ required: true, message: 'Vui lòng chọn điểm kết thúc!' }]}>
             <Select placeholder='Chọn điểm kết thúc' style={{ width: '30%' }} onChange={handleChange('endPoint')}>
               {endPoint?.map((item: any) => (
                 <Select.Option key={item.id} value={item.id}>
@@ -176,22 +172,27 @@ const CreateBusTickets: React.FC = () => {
     []
   )
 
-  const handleFormSubmit = async (values: DataTypeCost) => {
+  const handleFormSubmit = async (values: any) => {
     if (isLoading) return
     setIsLoading(true)
     try {
-      const response = await addMutation.mutateAsync(values)
+      const updateValues = {
+        ...values,
+        pointStart: values.pointStart.toString(),
+        pointEnd: values.pointEnd.toString()
+      }
+      const response = await addMutation.mutateAsync({ body: updateValues })
       if (response.status === HttpStatusCode.Ok) {
-        message.success('Accept successfully')
-        navigate('/request')
+        message.success('Create successfully')
       } else {
-        message.error('Accept failed')
+        message.error('Create failed')
       }
     } catch (error) {
       console.error('Error values:', error)
-      message.error('Accept failed')
+      message.error('Create failed')
     } finally {
       setIsLoading(false)
+      form.resetFields()
     }
   }
 

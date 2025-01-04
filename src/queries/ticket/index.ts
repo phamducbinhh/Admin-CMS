@@ -156,3 +156,10 @@ export const useQueryCheckPrice = (
     }
   })
 }
+
+export const useCreateTicketByBusMutation = (options?: UseMutationOptions<any, unknown, { body: any }, unknown>) => {
+  return useMutation({
+    ...options,
+    mutationFn: ({ body }: { body: any }) => ticketApiRequest.CreateTicketByBus({ body })
+  })
+}
