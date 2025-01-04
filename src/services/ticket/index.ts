@@ -74,6 +74,18 @@ class TicketApiRequest {
       config: { method: METHOD_TYPE.POST, body, cors: false }
     })
   }
+  public GetCheckPrice({
+    pointStart,
+    pointEnd
+  }: {
+    pointStart: string | number | null
+    pointEnd: string | number | null
+  }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.TICKET.CHECK_PRICE_BY_CREATE_TICKET({ pointStart, pointEnd }),
+      config: { method: METHOD_TYPE.GET, cors: false }
+    })
+  }
 }
 
 const ticketApiRequest = new TicketApiRequest()

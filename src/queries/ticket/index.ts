@@ -134,3 +134,25 @@ export const useUpdateTicketMutation = (
     mutationFn: ({ id, body }: { id: string | number; body: any }) => ticketApiRequest.UpdateTicket({ id, body })
   })
 }
+
+export const useQueryCheckPrice = (
+  {
+    pointStart,
+    pointEnd
+  }: {
+    pointStart: string | number | null | any
+    pointEnd: string | number | null | any
+  },
+  options?: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'>
+) => {
+  return useQuery<any>({
+    ...options,
+    queryKey: ['check_price', pointStart, pointEnd],
+    queryFn: async () => {
+      const response = await ticketApiRequest.GetCheckPrice({ pointStart, pointEnd })
+      if (response.status === HttpStatusCode.Ok) {
+        return response.data
+      }
+    }
+  })
+}

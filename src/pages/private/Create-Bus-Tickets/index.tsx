@@ -1,8 +1,11 @@
 import { HttpStatusCode } from '@/constants/httpStatusCode.enum'
-import { useCreateRequestDriverMutation, useQueryRequest } from '@/queries/request'
+import { useDebounce } from '@/hooks/useDebounce'
+import { useCreateRequestDriverMutation } from '@/queries/request'
+import { useQueryCheckPrice } from '@/queries/ticket'
+import { useQueryGetEndPointVehicles, useQueryGetStartPointVehicles } from '@/queries/vehicle'
 import { DataTypeCost } from '@/types/DataType'
 import { Button, Form, InputNumber, message, Row, Select, Table, TableColumnsType } from 'antd'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 interface TableData {
@@ -10,105 +13,164 @@ interface TableData {
   label: string
   value: string | number | JSX.Element | undefined
 }
+
 const CreateBusTickets: React.FC = () => {
   const [form] = Form.useForm()
-
   const navigate = useNavigate()
 
   const addMutation = useCreateRequestDriverMutation()
-
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const { refetch } = useQueryRequest()
+  const [selectedPoints, setSelectedPoints] = useState<{ startPoint: string | null; endPoint: string | null }>({
+    startPoint: null,
+    endPoint: null
+  })
 
-  const tableData: TableData[] = [
-    {
-      key: 'startPoint',
-      label: 'Điểm bắt đầu',
-      value: (
-        <Form.Item name='startPoint' rules={[{ required: true, message: 'Vui lòng chọn điểm bắt đầu!' }]}>
-          <Select placeholder='Chọn điểm bắt đầu' style={{ width: '30%' }}>
-            {['5', '7', '29', '45'].map((item) => (
-              <Select.Option key={item} value={item}>
-                {item}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-      )
-    },
-    {
-      key: 'endPoint',
-      label: 'Điểm kết thúc',
-      value: (
-        <Form.Item name='endPoint' rules={[{ required: true, message: 'Vui lòng chọn điểm kết thúc!' }]}>
-          <Select placeholder='Chọn điểm kết thúc' style={{ width: '30%' }}>
-            {['5', '7', '29', '45'].map((item) => (
-              <Select.Option key={item} value={item}>
-                {item}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-      )
-    },
-    {
-      key: 'price',
-      label: 'Giá tiền',
-      value: (
-        <Form.Item name='price' rules={[{ required: true, message: 'Vui lòng nhập giá tiền!' }]}>
-          <InputNumber style={{ width: '30%' }} placeholder='nhập giá tiền' />
-        </Form.Item>
-      )
-    },
-    {
-      key: 'numberTicket',
-      label: 'Số vé',
-      value: (
-        <Form.Item name='numberTicket' rules={[{ required: true, message: 'Vui lòng nhập số vé!' }]}>
-          <InputNumber style={{ width: '30%' }} placeholder='nhập số vé' />
-        </Form.Item>
-      )
-    },
-    {
-      key: 'seats',
-      label: 'Chọn số ghế',
-      value: (
-        <Form.Item name='seats' rules={[{ required: true, message: 'Vui lòng chọn xe!' }]}>
-          <Select placeholder='Chọn xe' style={{ width: '30%' }}>
-            {['5', '7', '29', '45'].map((item) => (
-              <Select.Option key={item} value={item}>
-                {item}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-      )
-    }
-  ]
+  const { data: startPoint, isLoading: loadingStartPoint } = useQueryGetStartPointVehicles()
 
-  const columns: TableColumnsType<TableData> = [
+  const { data: endPoint } = useQueryGetEndPointVehicles(
+    { startPoint: selectedPoints.startPoint },
     {
-      title: 'Key',
-      dataIndex: 'label',
-      key: 'label',
-      width: '30%'
+      enabled: selectedPoints.startPoint !== null
+    }
+  )
+
+  const {
+    data: priceTicket,
+    refetch,
+    isLoading: loadingPrice
+  } = useQueryCheckPrice(
+    {
+      pointStart: selectedPoints.startPoint,
+      pointEnd: selectedPoints.endPoint
     },
     {
-      title: 'Value',
-      dataIndex: 'value',
-      key: 'value',
-      width: '70%',
-      render: (_, record) => <>{record.value}</>
+      enabled: false
     }
-  ]
+  )
+
+  const handleChange = (field: 'startPoint' | 'endPoint') => (value: string) => {
+    setSelectedPoints((prev) => ({ ...prev, [field]: value }))
+  }
+
+  const handleCheckPrice = useDebounce(() => {
+    if (!selectedPoints.startPoint || !selectedPoints.endPoint) return
+    refetch()
+  }, 500)
+
+  const tableData: TableData[] = useMemo(
+    () => [
+      {
+        key: 'startPoint',
+        label: 'Điểm bắt đầu',
+        value: (
+          <Form.Item name='startPoint' rules={[{ required: true, message: 'Vui lòng chọn điểm bắt đầu!' }]}>
+            <Select
+              placeholder='Chọn điểm bắt đầu'
+              style={{ width: '30%' }}
+              onChange={handleChange('startPoint')}
+              loading={loadingStartPoint}
+            >
+              {startPoint?.map((item: any) => (
+                <Select.Option key={item.id} value={item.id}>
+                  {item.pointStart}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        )
+      },
+      {
+        key: 'endPoint',
+        label: 'Điểm kết thúc',
+        value: (
+          <Form.Item name='endPoint' rules={[{ required: true, message: 'Vui lòng chọn điểm kết thúc!' }]}>
+            <Select placeholder='Chọn điểm kết thúc' style={{ width: '30%' }} onChange={handleChange('endPoint')}>
+              {endPoint?.map((item: any) => (
+                <Select.Option key={item.id} value={item.id}>
+                  {item.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        )
+      },
+      {
+        key: 'price',
+        label: 'Giá tiền',
+        value: (
+          <>
+            <span>{priceTicket || '(Không)'}</span>
+            <Button
+              type='default'
+              danger
+              style={{ marginLeft: '40px' }}
+              onClick={handleCheckPrice}
+              loading={loadingPrice}
+              disabled={!selectedPoints.startPoint || !selectedPoints.endPoint}
+            >
+              Check giá vé
+            </Button>
+          </>
+        )
+      },
+      {
+        key: 'numberTicket',
+        label: 'Số vé',
+        value: (
+          <Form.Item name='numberTicket' rules={[{ required: true, message: 'Vui lòng nhập số vé!' }]}>
+            <InputNumber style={{ width: '30%' }} placeholder='nhập số vé' />
+          </Form.Item>
+        )
+      },
+      {
+        key: 'typeOfPayment',
+        label: 'Chọn phương thức thanh toán',
+        value: (
+          <Form.Item
+            name='typeOfPayment'
+            rules={[{ required: true, message: 'Vui lòng chọn phương thức thanh toán!' }]}
+          >
+            <Select placeholder='Chọn phương thức thanh toán' style={{ width: '30%' }}>
+              {['Tiền mặt', 'Chuyển khoản'].map((item) => (
+                <Select.Option key={item} value={item}>
+                  {item}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        )
+      }
+    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [startPoint, endPoint, priceTicket, loadingStartPoint, loadingPrice, selectedPoints]
+  )
+
+  const columns: TableColumnsType<TableData> = useMemo(
+    () => [
+      {
+        title: 'Key',
+        dataIndex: 'label',
+        key: 'label',
+        width: '30%'
+      },
+      {
+        title: 'Value',
+        dataIndex: 'value',
+        key: 'value',
+        width: '70%',
+        render: (_, record) => <>{record.value}</>
+      }
+    ],
+    []
+  )
+
   const handleFormSubmit = async (values: DataTypeCost) => {
     if (isLoading) return
     setIsLoading(true)
     try {
       const response = await addMutation.mutateAsync(values)
       if (response.status === HttpStatusCode.Ok) {
-        refetch()
         message.success('Accept successfully')
         navigate('/request')
       } else {
