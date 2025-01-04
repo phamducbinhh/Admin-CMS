@@ -21,6 +21,17 @@ const CreateBusTickets: React.FC = () => {
   const addMutation = useCreateRequestDriverMutation()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
+  const typeOfPayment = [
+    {
+      id: 1,
+      value: 'Tiền mặt'
+    },
+    {
+      id: 2,
+      value: 'Chuyển khoản'
+    }
+  ]
+
   const [selectedPoints, setSelectedPoints] = useState<{ startPoint: string | null; endPoint: string | null }>({
     startPoint: null,
     endPoint: null
@@ -132,9 +143,9 @@ const CreateBusTickets: React.FC = () => {
             rules={[{ required: true, message: 'Vui lòng chọn phương thức thanh toán!' }]}
           >
             <Select placeholder='Chọn phương thức thanh toán' style={{ width: '30%' }}>
-              {['Tiền mặt', 'Chuyển khoản'].map((item) => (
-                <Select.Option key={item} value={item}>
-                  {item}
+              {typeOfPayment.map((item) => (
+                <Select.Option key={item.id} value={item.id}>
+                  {item.value}
                 </Select.Option>
               ))}
             </Select>
