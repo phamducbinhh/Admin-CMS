@@ -1,6 +1,7 @@
 import useColumnSearch from '@/hooks/useColumnSearch'
 import { useDeleteAccountMutation, useQueryAccount } from '@/queries/account'
 import renderWithLoading from '@/utils/renderWithLoading'
+import { PlusOutlined } from '@ant-design/icons'
 import { Avatar, Button, message, Popconfirm, Space, Table, TableProps } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -132,6 +133,13 @@ const AccountPage: React.FC = () => {
         isLoading,
         content: (
           <>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
+              <Link to='add'>
+                <Button type='primary' icon={<PlusOutlined />} ghost>
+                  Thêm mới
+                </Button>
+              </Link>
+            </div>
             <Table columns={columns} dataSource={dataSource} />
           </>
         )
