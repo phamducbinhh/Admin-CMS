@@ -19,7 +19,7 @@ interface DataType {
 const AccountPage: React.FC = () => {
   const { data, isLoading, refetch } = useQueryAccount()
 
-  const [isLoadingDelete, setIsLoadingDelete] = useState<boolean>(false)
+  const [isLoadingToggle, setIsLoadingToggle] = useState<boolean>(false)
 
   const deleteMutation = useDeleteAccountMutation()
 
@@ -27,14 +27,14 @@ const AccountPage: React.FC = () => {
     refetch()
   }, [refetch])
 
-  const handleDeleteAccount = async (id: number) => {
+  const handleToggleAccount = async (id: number) => {
     try {
-      setIsLoadingDelete(true)
+      setIsLoadingToggle(true)
       await deleteMutation.mutateAsync(
         { id },
         {
-          onSuccess: () => {
-            message.success('Delete successfully')
+          onSuccess: (item) => {
+            message.success(item.data)
             refetch()
           }
         }
@@ -43,7 +43,7 @@ const AccountPage: React.FC = () => {
       console.error('Error when delete account:', error)
       message.error('Delete failed')
     } finally {
-      setIsLoadingDelete(false)
+      setIsLoadingToggle(false)
     }
   }
 
@@ -53,9 +53,7 @@ const AccountPage: React.FC = () => {
       dataIndex: 'avatar',
       key: 'avatar',
       align: 'center',
-      render: () => (
-        <Avatar src={'https://statics.oeg.vn/storage/DEFAULT%20AVATAR%20PROFILE/akirov6.webp'} alt='Avatar' />
-      ),
+      render: (item: any) => <Avatar src={item} alt='Avatar' />,
       width: '10%'
     },
     {
@@ -109,12 +107,12 @@ const AccountPage: React.FC = () => {
             <Button type='primary'>Edit</Button>
           </Link>
           <Popconfirm
-            title='Are you sure to lock this item?'
+            title={`Are you sure to ${record.status ? 'lock' : 'unlock'} this account?`}
             okText='Yes'
             cancelText='No'
-            onConfirm={() => handleDeleteAccount(record.id)}
+            onConfirm={() => handleToggleAccount(record.id)}
           >
-            <Button type='primary' danger loading={isLoadingDelete}>
+            <Button type='primary' danger loading={isLoadingToggle}>
               {record.status ? 'Lock' : 'Unlock'}
             </Button>
           </Popconfirm>
