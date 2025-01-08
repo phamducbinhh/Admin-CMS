@@ -44,8 +44,9 @@ const HeaderLayout: React.FC<HeaderProps> = ({ collapsed, setCollapsed }) => {
       />
       <Link className={styles.avatar} to='user-profile'>
         <div className={styles.info}>
+          <p>{account?.fullName || account?.username}</p>
           <Tag color='blue' className={styles.tag}>
-            <span>{account?.fullName}</span>
+            <span>{account?.role}</span>
           </Tag>
         </div>
         <Avatar size={39} src={account?.avatar} />
