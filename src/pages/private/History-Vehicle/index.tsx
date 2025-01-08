@@ -115,14 +115,7 @@ const HistoryRentVehiclePage: React.FC = () => {
         isLoading,
         content: (
           <>
-            <Form
-              initialValues={{
-                startDate: dayjs() // Set the default value for the DatePicker
-              }}
-              onFinish={onFinish}
-              layout='horizontal'
-              form={form}
-            >
+            <Form onFinish={onFinish} layout='horizontal' form={form}>
               <Row gutter={16}>
                 <Col span={6}>
                   <Form.Item label='From Date' name='startDate'>
