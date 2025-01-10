@@ -118,12 +118,20 @@ const HistoryRentVehiclePage: React.FC = () => {
             <Form onFinish={onFinish} layout='horizontal' form={form}>
               <Row gutter={16}>
                 <Col span={6}>
-                  <Form.Item label='From Date' name='startDate'>
+                  <Form.Item
+                    rules={[{ required: true, message: 'Vui lòng chọn ngày!' }]}
+                    label='From Date'
+                    name='startDate'
+                  >
                     <DatePicker format='DD-MM-YYYY' />
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label='To Date' name='endDate'>
+                  <Form.Item
+                    rules={[{ required: true, message: 'Vui lòng chọn ngày!' }]}
+                    label='To Date'
+                    name='endDate'
+                  >
                     <DatePicker format='DD-MM-YYYY' />
                   </Form.Item>
                 </Col>
